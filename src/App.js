@@ -1,14 +1,14 @@
 import './App.css';
-import {BrowserRouter, Route, Switch} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import UserLogin from './pages/Login/userLogin'
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Switch>
-          <Route path="/" component={UserLogin} />
+          <Route exact path="/" component={UserLogin} />
       </Switch>
-    </BrowserRouter>
+    </Router>
   );
 }
 
