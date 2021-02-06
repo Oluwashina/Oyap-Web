@@ -45,7 +45,9 @@ const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX
 
 const store = createStore(
   rootReducer,
-  composeEnhancers(applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })))
+  composeEnhancers(applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
+  reduxFirestore(firebase, fbConfig))
+  
 )
 
 const rrfProps = {
