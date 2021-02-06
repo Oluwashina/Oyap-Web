@@ -34,13 +34,19 @@ function AuthIsLoaded({ children }) {
 }
 
 
+// const store = createStore(
+//   rootReducer,    
+//   compose(
+//     applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
+//     reduxFirestore(firebase, fbConfig)
+//   )
+// );
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose
+
 const store = createStore(
-  rootReducer,    
-  compose(
-    applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
-    reduxFirestore(firebase, fbConfig)
-  )
-);
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })))
+)
 
 const rrfProps = {
   firebase: fbConfig,
