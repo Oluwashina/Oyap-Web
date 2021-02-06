@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { connect, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import * as actions from "../../store/actions";
 
@@ -8,10 +8,10 @@ const UserSignup = (props) => {
   const [user, setUser] = useState({
     email: "",
     password: "",
-    role: "Farmer",
   });
 
-  const history = useHistory();
+  const auth = useSelector((state) => state.firebase.auth)
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,9 +25,9 @@ const UserSignup = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     props.login(user);
-
-    history.push("/");
+    
   };
+  if(auth.uid) return <Redirect to = "/" />
   return (
     <div className="card w-50">
       <h2 className="text-center mt-4">Log In</h2>
