@@ -9,7 +9,7 @@ const UserSignup = (props) => {
         firstName: '',
         lastName: '',
         email: '',
-        role: 'Farmer',
+        role: 'Admin',
         password: '',
         confirmPassword: ''
     })
