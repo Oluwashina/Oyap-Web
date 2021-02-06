@@ -16,7 +16,7 @@ const authReducer = (state = initState, action) => {
       console.log("signup success");
       return {
         ...state,
-        error: null,
+        authError: null,
       };
     case actionTypes.SIGNUP_FAIL:
       console.log("signup failed");
