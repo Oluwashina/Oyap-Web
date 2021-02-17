@@ -1,0 +1,17 @@
+.logo{
+    margin-top: 58px;
+    margin-left: 158px;
+}
+.form-header{
+    font-weight: 700;
+    font-size: 30px;
+}
+.form-group{
+    font-size: 14px;
+}
+.form-group > label {
+    font-weight: 500;
+}
+.form-control{
+
+}
