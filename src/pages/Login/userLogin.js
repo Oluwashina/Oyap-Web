@@ -1,74 +1,37 @@
-import React, { useState } from "react";
-import { connect, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import React from "react";
+import Logo from "../../assets/images/logo.png";
+import WelcomeImg from "../../assets/images/welcome-img.png";
 
-import * as actions from "../../store/actions";
-
-const UserSignup = (props) => {
-  const [user, setUser] = useState({
-    email: "",
-    password: "",
-  });
-
-  const auth = useSelector((state) => state.firebase.auth)
-
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setUser({
-      ...user,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    props.login(user);
-    
-  };
-  if(auth.uid) return <Redirect to = "/" />
+const UserLogin = () => {
   return (
-    <div className="card w-50">
-      <h2 className="text-center mt-4">Log In</h2>
-      <div className="card-body">
-        <form onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">Email</label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              className="form-control"
-              required
-              onChange={handleChange}
-              value={user.email}
-            />
+    <div className="conatiner-fluid">
+      <div class="row">
+        <div class="col-sm">
+          <img src={Logo} alt="oyap logo" />
+          <div>
+            <p>Login As</p>
+            <form>
+              <div className="form-group">
+                <label htmlFor="Email">Enter your email address</label>
+                <input className="form-control" placeholder="sample@example.com" />
+              </div>
+              <div className="form-group">
+                <label htmlFor="Password">Enter your password</label>
+                <input className="form-control" placeholder="password" />
+              </div>
+              <button className="btn btn-primary btn-block">Login</button>
+            </form>
+            <p>Forget password?</p>
+            <hr/>
+            <button className="btn btn-primary btn-block">Sign Up</button>
           </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              type="password"
-              name="password"
-              id="password"
-              className="form-control"
-              required
-              onChange={handleChange}
-              value={user.password}
-            />
-          </div>          
-          <button type="submit" className="btn btn-primary btn-block">
-            Sign Up
-          </button>
-        </form>
+        </div>
+        <div class="col-sm">
+          <img src={WelcomeImg} alt="oyap" />
+        </div>
       </div>
     </div>
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    login: (credentials) => dispatch(actions.signIn(credentials)),
-  };
-};
-export default connect(null, mapDispatchToProps)(UserSignup);
+export default UserLogin;
