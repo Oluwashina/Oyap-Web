@@ -1,0 +1,13 @@
+
+.already-div{
+  text-align: center;
+  margin-top: 150px;
+}
+
+.buy-div{
+border: 1px solid #7BC30A;
+box-sizing: border-box;
+border-radius: 5px;
+padding: 10px 20px;
+cursor: pointer;
+}
