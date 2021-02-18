@@ -1,13 +1,44 @@
-body {
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  border: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #ffff;
+  color: #323335;
+  font-family: 'Poppins', sans-serif;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+/* Oyap button styles */
+.btn-oyap{
+  background: #7BC30A;
+  border-radius: 5px;
+  color: white;
+  padding: 10px 40px;
+  transition: all ease-in 0.5s;
 }
+
+.btn-outline-oyap{
+  border: 1px solid #7BC30A;
+  border-radius: 5px;
+  color: #7BC30A;
+  background-color: white;
+  padding: 10px 40px;
+  transition: all ease-in 0.5s;
+}
+
+.btn:focus,
+.btn:active {
+  outline: none !important;
+  box-shadow: none;
+}
+
+ .btn-oyap:hover{
+      color: white;     
+  } 
+
+  .btn-outline-oyap:hover{
+    background: #7BC30A;
+    color: white;
+  }

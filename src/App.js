@@ -1,6 +1,6 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import UserSignup from "./pages/SignUp/UserSignup";
+import UserSignup from "./pages/Signup/UserSignup";
 import UserLogin from "./pages/Login/userLogin";
 import Home from "./pages/Home/Home"
 import PrivateRoute from "./components/PrivateRoute"
@@ -13,7 +13,7 @@ function App() {
   console.log(auth);
   return (
     <>
-      <div className="container d-flex align-items-center justify-content-center min-vh-100">
+      <div className="">
         <Router>
           <Switch>
             <PrivateRoute exact path="/" component={Home} />
