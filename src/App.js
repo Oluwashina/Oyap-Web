@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux'
 
 
 function App() {
+  const state = useSelector((state) => state.firebase)
+  console.log(state);
   const auth = useSelector((state) => state.firebase.auth);
   console.log(auth);
   return (
