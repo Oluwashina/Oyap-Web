@@ -9,6 +9,8 @@ import { createStore, applyMiddleware, compose } from "redux";
 import rootReducer from "./store/reducers/rootReducer"
 import { Provider, useSelector } from "react-redux";
 import thunk from "redux-thunk";
+ 
+
 
 import {
   createFirestoreInstance,
@@ -41,7 +43,13 @@ function AuthIsLoaded({ children }) {
 //     reduxFirestore(firebase, fbConfig)
 //   )
 // );
-const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose
+const composeEnhancers =
+  typeof window === 'object' &&
+  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
+	window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
+	  // Specify extension’s options like name, actionsBlacklist, actionsCreators, serialize...
+	}) : compose;
+
 
 const store = createStore(
   rootReducer,

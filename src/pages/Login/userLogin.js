@@ -131,17 +131,17 @@ const UserLogin = (props) => {
 
 
               <div className="text-center mt-4">
-              <Link to="/forgotpassword" style={{textDecoration: 'none', color: '#323335'}}>
-                  <p>Forgot password?</p>
+                <Link to="/forgotpassword" style={{textDecoration: 'none', color: '#323335'}}>
+                  Forgot password?
                 </Link>
                 
               </div>
            
             <hr style={{borderTop: '1px solid rgba(123, 195, 10, 0.5)'}} />
 
-            <button className="btn btn-outline-oyap btn-block text-uppercase mt-4">
+            <Link to="/signup" className="btn btn-outline-oyap btn-block text-uppercase mt-4">
               Sign Up
-            </button>
+            </Link>
           </div>
 
         </div>

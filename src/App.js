@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import UserSignup from "./pages/Signup/UserSignup";
+import SignUpStart from './pages/Signup/signUpStart'
 import UserLogin from "./pages/Login/userLogin";
 import Home from "./pages/Home/Home"
 import PrivateRoute from "./components/PrivateRoute"
@@ -19,7 +20,8 @@ function App() {
         <Router>
           <Switch>
             <PrivateRoute exact path="/" component={Home} />
-            <Route path="/signup" component={UserSignup} />
+            <Route path="/signup/:id" component={UserSignup} />
+            <Route path="/signup" component={SignUpStart} />
             <Route path="/login" component={UserLogin} />
           </Switch>
         </Router>
