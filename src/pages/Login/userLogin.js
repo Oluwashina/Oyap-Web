@@ -22,20 +22,17 @@ const UserLogin = (props) => {
   ]);
 
 
-  const handleToggleAndSetRole = (id, role) => {
+  const handleTabToggleAndSetRole = (id, role) => {
     setTab(id);
     setRole(role);
-  }
-  // const ToggleTab = (id) => {
-  //   setTab(id)
-  // }
+  } 
 
   // tab Layout
   const tabLayout = tabData.map((item) => (
     <div 
     key={item.id}
       className={initialTab === item.id ? "active-tab" : "tab"}
-      onClick={() => handleToggleAndSetRole(item.id, item.text)}
+      onClick={() => handleTabToggleAndSetRole(item.id, item.text)}
      style={{flex: 1}}>
       <p className="mb-0 text-center">{item.text}</p>
     </div>
