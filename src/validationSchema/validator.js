@@ -8,6 +8,11 @@ export const loginValidator = Yup.object({
     .required("Password is required"),
 });
 
+export const forgotPasswordValidator = Yup.object({
+    email: Yup.string().email("Enter a valid email")
+    .required("Email is required"),
+});
+
 export const registerValidator = Yup.object({
     firstname: Yup.string().required("Firstname is required"),
     lastname: Yup.string().required("Lastname is required"),
