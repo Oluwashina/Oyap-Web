@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Logo from "../../assets/images/logo.png";
 import BuyImage from "../../assets/images/buy.png";
 import SellImage from "../../assets/images/sell.png";
@@ -11,6 +11,43 @@ import {Link} from 'react-router-dom'
 
 const UserLogin = (props) => {
 
+    const {history} = props
+
+  const [tabData] = useState([
+    { id: 1, name: "tab-1", text: "Buyer", imageUrl: BuyImage},
+    { id: 2, name: "tab-2", text: "Seller" , imageUrl: SellImage},
+    { id: 3, name: "tab-3", text: "Logistics", imageUrl: DeliveryImage },
+  ]);
+
+  
+  const ToggleTab = (id) => {
+    switch(id){
+      case 1:
+        history.push('/signup/Buyer')
+        break;
+      case 2:
+        history.push('/signup/Seller')
+        break;
+      case 3:
+        history.push('/signup/Logistics')
+        break;
+      default:
+        alert('buyer')
+    }
+  }
+
+
+   // tab Layout
+   const tabLayout = tabData.map((item) => (
+    <div 
+    key={item.id}
+      onClick={() => ToggleTab(item.id)}>
+        <div className="buy-div">
+            <img src={item.imageUrl} alt="oyap" width="70" height="70" />
+          </div>
+      <p className="mt-2 text-center" style={{fontWeight: 600}}>{item.text}</p>
+    </div>
+  ));
 
   return (
     <div className="">
@@ -21,37 +58,24 @@ const UserLogin = (props) => {
               <img src={Logo} alt="oyap logo" />
             </div>
 
+            {/* progress bar */}
+            <div className="mt-5" style={{display: 'flex',justifyContent: 'center'}}>
+                <div className="active-bar">
+                </div>
+                <div className="bar ml-2">
+                </div>
+            </div>
+
 
             <div className="login-container mb-4">
                  <h3 className="mt-5 login-head">Sign Up as</h3>
                  <p style={{color: 'rgba(44, 58, 80, 0.2)'}}>Please select how you will like to use Oyap</p>
 
             
-            {/* options to sign up layout */}
-            <div style={{display: "flex", justifyContent: 'space-between'}}>
-
-                <div>
-                    <div className="buy-div">
-                    <img src={BuyImage} alt="oyap" width="70" height="70" />
-                    </div>
-                    <p className="mt-2 text-center" style={{fontWeight: 500}}>Buyer</p>
-                </div>
-
-                <div>
-                    <div className="buy-div">
-                    <img src={SellImage} alt="oyap" width="70" height="70" />
-                    </div>
-                    <p className="mt-2 text-center" style={{fontWeight: 500}}>Seller</p>
-                </div>
-                
-                <div>
-                    <div className="buy-div">
-                    <img src={DeliveryImage} alt="oyap" width="70" height="70" />
-                    </div>
-                    <p className="mt-2 text-center" style={{fontWeight: 500}}>Logistics</p>
-                </div>
-            </div>
-
+              {/* options to sign up layout */}
+              <div className="mt-2" style={{display: "flex", justifyContent: 'space-between'}}>
+                  {tabLayout}
+              </div>
 
             </div>
 

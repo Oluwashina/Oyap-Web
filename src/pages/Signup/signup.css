@@ -1,7 +1,7 @@
 
 .already-div{
   text-align: center;
-  margin-top: 150px;
+  margin-top: 100px;
 }
 
 .buy-div{
@@ -10,4 +10,15 @@ box-sizing: border-box;
 border-radius: 5px;
 padding: 10px 20px;
 cursor: pointer;
+}
+.active-bar{
+  background: #7BC30A;
+  width: 58px;
+  height: 3px;
+}
+
+.bar{
+  width: 58px;
+  height: 3px;
+  background: #C4C4C4; 
 }
