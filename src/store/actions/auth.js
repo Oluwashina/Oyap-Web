@@ -2,31 +2,29 @@ import * as actionTypes from './actionTypes'
 import cogoToast from 'cogo-toast';
 
 export const signUp = (newUser) => {
-  return (dispatch, _ , { getFirebase, getFirestore }) => {
+  return async (dispatch, _ , { getFirebase, getFirestore }) => {
     dispatch({type: actionTypes.SIGNUP_START})
     const firebase = getFirebase();
     const firestore = getFirestore();
-
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(newUser.email, newUser.password)
-      .then((res) => {
-        return firestore
-          .collection("users")
-          .doc(res.user.uid)
-          .set({
-            firstName: newUser.firstName,
-            lastName: newUser.lastName,
-            role: newUser.role            
-          });
-      })
-      .then(() => {
-        dispatch({ type: actionTypes.SIGNUP_SUCCESS });
-      })
-      .catch((err) => {
-        dispatch({ type: actionTypes.SIGNUP_FAIL, err });
-        console.log(err);
+      try {
+       const res = await firebase
+            .auth()
+            .createUserWithEmailAndPassword(newUser.email, newUser.password)
+        await firestore
+      .collection("users")
+      .doc(res.user.uid)
+      .set({
+        firstName: newUser.firstname,
+        lastName: newUser.lastname,
+        role: newUser.role            
       });
+      dispatch({ type: actionTypes.SIGNUP_SUCCESS });
+      cogoToast.success('Registration Successful!, Login to continue')
+    } catch (err) {
+      console.log(err)
+      dispatch({ type: actionTypes.SIGNUP_FAIL, err });
+      console.log(err);
+    }
   };
 };
 
