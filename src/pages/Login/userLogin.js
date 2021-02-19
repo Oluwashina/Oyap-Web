@@ -13,6 +13,7 @@ const UserLogin = (props) => {
   const {login} = props
 
   const [initialTab, setTab] = useState(1);
+  const [role, setRole ] = useState("Buyer");
 
   const [tabData] = useState([
     { id: 1, name: "tab-1", text: "Buyer"},
@@ -21,24 +22,29 @@ const UserLogin = (props) => {
   ]);
 
 
-  const ToggleTab = (id) => {
-    setTab(id)
+  const handleToggleAndSetRole = (id, role) => {
+    setTab(id);
+    setRole(role);
   }
+  // const ToggleTab = (id) => {
+  //   setTab(id)
+  // }
 
   // tab Layout
   const tabLayout = tabData.map((item) => (
     <div 
     key={item.id}
       className={initialTab === item.id ? "active-tab" : "tab"}
-      onClick={() => ToggleTab(item.id)}
+      onClick={() => handleToggleAndSetRole(item.id, item.text)}
      style={{flex: 1}}>
       <p className="mb-0 text-center">{item.text}</p>
     </div>
   ));
 
   // submit login button
-  const handleSubmit = async (values, setSubmitting) =>{
-   console.log(values)
+  const handleSubmit = async (values) => {
+    const credentials = {...values, role}
+   console.log(credentials)
      await login(values);
   }
 
