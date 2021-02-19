@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes'
-
+import cogoToast from 'cogo-toast';
 
 export const signUp = (newUser) => {
   return (dispatch, _ , { getFirebase, getFirestore }) => {
@@ -31,18 +31,20 @@ export const signUp = (newUser) => {
 };
 
 export const signIn = (credentials) => {
-    return (dispatch, _, {getFirebase}) =>{
+    return async (dispatch, _, {getFirebase}) =>{
         //make async call to firebase
         const firebase = getFirebase()
-        firebase.auth().signInWithEmailAndPassword(
-            credentials.email,
-            credentials.password
-        ).then(() =>{
-            dispatch({ type: actionTypes.LOGIN_SUCCESS})
-        }).catch((err) =>{
-            console.log(err)
-            dispatch({type: actionTypes.LOGIN_FAIL, err})
-        });
+        try {
+            await firebase.auth().signInWithEmailAndPassword(
+              credentials.email,
+              credentials.password
+          )
+          dispatch({ type: actionTypes.LOGIN_SUCCESS})
+        } catch (err) {
+          console.log(err)
+          dispatch({type: actionTypes.LOGIN_FAIL, err})
+          cogoToast.error('Invalid Credentials!')
+        }
     }
 }
 

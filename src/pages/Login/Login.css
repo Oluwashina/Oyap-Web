@@ -1,23 +1,44 @@
-.logo{
-    margin-top: 58px;
-    margin-left: 158px;
-}
-.form-header{
-    font-weight: 700;
-    font-size: 30px;
-}
+
 .form-group{
     font-size: 14px;
 }
 .form-group > label {
     font-weight: 500;
 }
-.form-control{
+.login-container{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.login-head{
+    font-weight: 700;
+}
+.input-style{
     border: 1px solid rgba(95, 163, 14, 0.5);
     border-radius: 5px;
-    padding: 30px 34px;
-}
+    padding: 25px 20px;
+  }
+  .input-style:focus {
+    border: 1px solid rgba(95, 163, 14, 0.5);
+    box-shadow: none;
+    outline: 0 none;
+  }
+  .tab{
+      cursor: pointer;
+  }
+  .active-tab{
+    font-weight: 600;
+    position: relative;
+    cursor: pointer;
+  }
 
-.form-control:focus{
-    outline: none !important;
-}
+  .active-tab::after{
+      content: '';
+      height: 2px;
+      width: 100%;
+      background: #5FA30E;
+      position: absolute;
+      left: 0px;
+      bottom: -8px;
+      transition: 0.5s;
+  }
+  
