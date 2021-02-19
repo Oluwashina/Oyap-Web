@@ -13,6 +13,13 @@ export const forgotPasswordValidator = Yup.object({
     .required("Email is required"),
 });
 
+export const resetPasswordValidator = Yup.object({
+    password: Yup.string()
+    .min(3, "Password cannot be less than 3 characters")
+    .required("Password is required"),
+    confirm_password:Yup.string().required('Passwords must match').oneOf([Yup.ref('password'), null], 'Passwords must match')
+});
+
 export const registerValidator = Yup.object({
     firstname: Yup.string().required("Firstname is required"),
     lastname: Yup.string().required("Lastname is required"),
@@ -21,5 +28,5 @@ export const registerValidator = Yup.object({
     password: Yup.string()
     .min(3, "Password cannot be less than 3 characters")
     .required("Password is required"),
-    confirm_password:Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
+    confirm_password:Yup.string().required('Passwords must match').oneOf([Yup.ref('password'), null], 'Passwords must match')
 });
