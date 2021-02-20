@@ -2,5 +2,7 @@ export {
     signUp,
     signIn,
     signOut,
-    passwordReset
+    passwordReset,
+    verifyResetCode,
+    ResetPassword
 } from './auth'
