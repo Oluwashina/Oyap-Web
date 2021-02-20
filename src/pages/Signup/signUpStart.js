@@ -1,8 +1,8 @@
 import React, {useState} from "react";
 import Logo from "../../assets/images/logo.png";
-import BuyImage from "../../assets/images/buy.png";
-import SellImage from "../../assets/images/sell.png";
-import DeliveryImage from "../../assets/images/delivery.png";
+import BuyImage from "../../assets/images/buy.svg";
+import SellImage from "../../assets/images/sell.svg";
+import DeliveryImage from "../../assets/images/delivery.svg";
 import WelcomeImg from "../../assets/images/welcome-img.png";
 import {signIn} from '../../store/actions/auth'
 import "./signup.css";
