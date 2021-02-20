@@ -4,14 +4,14 @@ import WelcomeImg from "../../assets/images/welcome-img.png";
 import {Form, Formik} from 'formik'
 import {resetPasswordValidator} from '../../validationSchema/validator'
 import {connect} from 'react-redux'
-import* as actions from '../../store/actions/auth'
-import {useLocation, Link} from "react-router-dom";
+import * as actions from '../../store/actions'
+import {useLocation, Link, useHistory} from "react-router-dom";
 
 const UserLogin = (props) => {
 
   const search = useLocation().search;
-  const {Reset, verifyCode, code} = props
-
+  const {Reset, verifyCode, code, isLoading } = props
+  const history = useHistory()
 
   // Verify reset code sent to email if valid!
   useEffect(() => {
@@ -28,6 +28,9 @@ const UserLogin = (props) => {
       password: values.password
     }
     await Reset(creds)
+    if(!isLoading){
+      history.push('/login')
+    }
   }
 
 
@@ -149,7 +152,8 @@ const UserLogin = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    code: state.auth.resetcode  
+    code: state.auth.resetcode,
+    isLoading: state.auth.isLoading
   };
 };
 
