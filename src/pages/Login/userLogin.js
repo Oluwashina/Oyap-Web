@@ -40,8 +40,7 @@ const UserLogin = (props) => {
 
   // submit login button
   const handleSubmit = async (values) => {
-    const credentials = {...values, role}
-   console.log(credentials)
+    // const credentials = {...values, role}
      await login(values);
   }
 

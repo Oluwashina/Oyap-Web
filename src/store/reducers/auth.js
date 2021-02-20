@@ -2,7 +2,8 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initState = {
   authError: null,
-  resetcode: false
+  resetcode: false,
+  isLoading: false
 };
 
 const authReducer = (state = initState, action) => {
@@ -33,6 +34,22 @@ const authReducer = (state = initState, action) => {
       return{
         ...state,
         resetcode: true
+      }
+    case actionTypes.PASSWORD_CHANGED_START:
+      return {
+        ...state,
+        isLoading: true
+      }
+
+    case actionTypes.PASSWORD_CHANGED_SUCCESS:
+      return {
+        ...state,
+        isLoading: false
+      }
+    case actionTypes.PASSWORD_CHANGED_FAIL:
+      return{
+        ...state,
+        isLoading: false
       }
     default:
       return state;
