@@ -92,13 +92,15 @@ export const verifyResetCode = (code) => {
 export const ResetPassword = (values) => {
   return async (dispatch, _, { getFirebase }) => {
     const firebase = getFirebase();
+    dispatch({type: actionTypes.PASSWORD_CHANGED_START})
     try {
       // Reset a user's password
       await firebase.auth().confirmPasswordReset(values.code, values.password)
-      dispatch({ type: actionTypes.PASSWORD_CHANGED });
+      dispatch({ type: actionTypes.PASSWORD_CHANGED_SUCCESS });
       cogoToast.success('Password successfully changed, Login to continue', { position: 'top-center', })
-    } catch (err) {
+    } catch (err) {      
       console.log(err);
+      dispatch({type: actionTypes.PASSWORD_CHANGED_FAIL})
     }
   };
 };
