@@ -13,8 +13,7 @@ const UserLogin = (props) => {
 
   // Forgot password submit button
   const handleSubmit = async (values, setSubmitting) =>{
-    // console.log(values.email)
-    resetPassword(values.email)
+    await resetPassword(values.email)
   }
 
 
@@ -55,7 +54,8 @@ const UserLogin = (props) => {
                              <div className="form-group mt-4">
                               <label htmlFor="password">Email Address</label>
                               <input className="form-control input-style"
-                              type="email"
+                              type="emai
+                              l"
                               id="email"
                               value={values.email}
                               onChange={handleChange}

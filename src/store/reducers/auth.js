@@ -2,6 +2,7 @@ import * as actionTypes from "../actions/actionTypes";
 
 const initState = {
   authError: null,
+  resetcode: false
 };
 
 const authReducer = (state = initState, action) => {
@@ -23,6 +24,16 @@ const authReducer = (state = initState, action) => {
       return {
         authError: action.err.message,
       };
+    case actionTypes.VALID_RESETCODE:
+      return{
+        ...state,
+        resetcode: false
+      }
+    case actionTypes.INVALID_RESETCODE:
+      return{
+        ...state,
+        resetcode: true
+      }
     default:
       return state;
   }

@@ -56,17 +56,49 @@ export const signOut = () => {
 };
 
 export const passwordReset = (emailAddress) => {
-  return (dispatch, _, { getFirebase }) => {
+  return async (dispatch, _, { getFirebase }) => {
     const firebase = getFirebase();
 
+    try {
+      await firebase.auth().sendPasswordResetEmail(emailAddress)
+      console.log('Reseting password');
+      dispatch({ type: actionTypes.RESET_PASSWORD });
+      cogoToast.success('Check your email for password reset instructions!', { position: 'top-center', })
+    } catch (err) {
+      console.log(err);
+      cogoToast.error('Kindly check that the credentials entered is valid!')
+    }
+  };
+};
+
+
+export const verifyResetCode = (code) => {
+  return (dispatch, _, { getFirebase }) => {
+    const firebase = getFirebase();
     firebase
       .auth()
-      .sendPasswordResetEmail(emailAddress)
+      .verifyPasswordResetCode(code)
       .then(() => {
-        console.log('Reseting password');
-        dispatch({ type: actionTypes.RESET_PASSWORD });
-      }).catch(error => {
-        console.log(error);
+        dispatch({ type: actionTypes.VALID_RESETCODE });
       })
+      .catch(() =>{
+        // Invalid code
+        dispatch({ type: actionTypes.INVALID_RESETCODE });
+      })
+      
+  };
+};
+
+export const ResetPassword = (values) => {
+  return async (dispatch, _, { getFirebase }) => {
+    const firebase = getFirebase();
+    try {
+      // Reset a user's password
+      await firebase.auth().confirmPasswordReset(values.code, values.password)
+      dispatch({ type: actionTypes.PASSWORD_CHANGED });
+      cogoToast.success('Password successfully changed, Login to continue', { position: 'top-center', })
+    } catch (err) {
+      console.log(err);
+    }
   };
 };
