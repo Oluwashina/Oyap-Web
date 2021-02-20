@@ -1,5 +1,6 @@
 export {
     signUp,
     signIn,
-    signOut
+    signOut,
+    passwordReset
 } from './auth'

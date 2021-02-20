@@ -3,17 +3,18 @@ import Logo from "../../assets/images/logo.png";
 import WelcomeImg from "../../assets/images/welcome-img.png";
 import {Form, Formik} from 'formik'
 import {forgotPasswordValidator} from '../../validationSchema/validator'
-import {signUp} from '../../store/actions/auth'
+import* as actions from '../../store/actions/auth'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const UserLogin = (props) => {
 
-//   const {Forgot} = props
+  const { resetPassword } = props
 
   // Forgot password submit button
   const handleSubmit = async (values, setSubmitting) =>{
-    console.log(values)
+    // console.log(values.email)
+    resetPassword(values.email)
   }
 
 
@@ -102,7 +103,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      Forgot: (creds) => dispatch(signUp(creds)),
+      resetPassword: (emailAddress) => dispatch(actions.passwordReset(emailAddress)),
   };
 };
 
