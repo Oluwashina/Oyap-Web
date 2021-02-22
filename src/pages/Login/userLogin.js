@@ -13,7 +13,7 @@ const UserLogin = (props) => {
   const {login} = props
 
   const [initialTab, setTab] = useState(1);
-  const [role, setRole ] = useState("Buyer");
+  // const [role, setRole ] = useState("Buyer");
 
   const [tabData] = useState([
     { id: 1, name: "tab-1", text: "Buyer"},
@@ -24,7 +24,7 @@ const UserLogin = (props) => {
 
   const handleTabToggleAndSetRole = (id, role) => {
     setTab(id);
-    setRole(role);
+    // setRole(role);
   } 
 
   // tab Layout
