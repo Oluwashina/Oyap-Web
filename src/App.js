@@ -5,6 +5,7 @@ import SignUpStart from './pages/Signup/signUpStart'
 import UserLogin from "./pages/Login/userLogin";
 import ForgotPassword from "./pages/ForgotPassword/forgotPassword"
 import ResetPassword from "./pages/ResetPassword/resetPassword"
+import AddProduct from "./pages/Addproduct/Addproduct"
 // import Home from "./pages/Home/Home"
 // import PrivateRoute from "./components/PrivateRoute"
 
@@ -27,6 +28,7 @@ function App() {
             <Route path="/login" component={UserLogin} />
             <Route path="/forgotpassword" component={ForgotPassword} />
             <Route path="/resetpassword" component={ResetPassword} />
+            <Route path="/addproduct" component={AddProduct} />
           </Switch>
         </Router>
       </div>
