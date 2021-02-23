@@ -1,0 +1,123 @@
+.home{
+    background: url(../../assets/images/farm.png);
+    background-size: cover;
+    height: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.home h1:nth-child(1){
+    font-size: 70px;
+    font-weight: bold;
+    color: white;
+}
+.home h1:nth-child(2){
+    font-size: 70px;
+    font-weight: bold;
+    color: white;
+}
+.home p{
+    font-weight: bold;
+    font-size: 35px;
+    color: white;
+}
+
+/* services */
+.services-1{
+    display: flex;
+    border-right: '2px solid rgba(50, 51, 53, 0.5)';
+}
+.services-2{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: '2px solid rgba(50, 51, 53, 0.5)';
+}
+.services-3{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sell_circle{
+    position: absolute;
+    right: 250px;
+    top: -30px;
+    border-radius: 50%;
+    width: 380px;
+    height: 380px;
+    background: white;
+    border: 2px solid #7BC30A;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.sell_circle h3{
+    color: #ED881C;
+    font-weight: bold;
+}
+
+.btn-sell{
+    background: #ED881C;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 40px;
+    transition: all ease-in 0.5s;
+}
+.btn-sell:hover{
+    color: #ED881C;
+    background: white;
+    border: 1px solid #ED881C
+}
+
+
+
+
+/* Media query for smaller phones */
+
+@media (max-width:767px) {
+    .home{
+        background: url(../../assets/images/farm.png);
+        background-size: cover;
+        height: auto;
+        display: flex;
+        align-items: center;
+        padding: 80px 0px;
+    }
+    .home h1:nth-child(1){
+        font-size: 45px;
+        font-weight: bold;
+        color: white;
+    }
+    .home h1:nth-child(2){
+        font-size: 45px;
+        font-weight: bold;
+        color: white;
+    }
+    .home p{
+        font-weight: bold;
+        font-size: 25px;
+        color: white;
+    }
+    .services-1{
+        display: flex;
+        border-right: none;
+    }
+    .services-2{
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        border-right: none;
+    }
+    .services-3{
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+    .sell_circle{
+        display: none;
+    }
+    
+     
+}

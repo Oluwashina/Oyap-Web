@@ -1,0 +1,20 @@
+.productImage{
+    width: 140px;
+    height: 150px;
+    border-radius: 5px;
+    margin: 0 auto;
+}
+.price{
+    color: #5B9223;
+    font-weight: bold;
+}
+
+.productCard{
+    scroll-snap-align: start;
+    padding: 10px;
+}
+.productCard:hover{
+    background: white;
+    transform: scale(1.01);
+    box-shadow: 0 10px 60px rgb(0 0 0 / 5%);
+}

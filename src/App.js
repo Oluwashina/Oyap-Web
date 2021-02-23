@@ -5,10 +5,11 @@ import SignUpStart from './pages/Signup/signUpStart'
 import UserLogin from "./pages/Login/userLogin";
 import ForgotPassword from "./pages/ForgotPassword/forgotPassword"
 import ResetPassword from "./pages/ResetPassword/resetPassword"
-import Home from "./pages/Home/Home"
-import PrivateRoute from "./components/PrivateRoute"
+// import Home from "./pages/Home/Home"
+// import PrivateRoute from "./components/PrivateRoute"
 
 import { useSelector } from 'react-redux'
+import BuyerHome from "./pages/Home/BuyerHome";
 
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
       <div className="">
         <Router>
           <Switch>
-            <PrivateRoute exact path="/" component={Home} />
+            {/* <PrivateRoute exact path="/" component={Home} /> */}
+            <Route exact path="/" component={BuyerHome} />
             <Route path="/signup/:id" component={UserSignup} />
             <Route path="/signup" component={SignUpStart} />
             <Route path="/login" component={UserLogin} />
