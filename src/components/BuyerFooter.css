@@ -1,0 +1,26 @@
+.footer-links{
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+}
+.footer-links li a{
+    color: #fff;
+    text-decoration: none;
+    transition: all ease-in 0.5s;
+}
+.footer-links li a:hover{
+    color: #ED881C
+}
+
+
+
+/* Media query for smaller phones */
+
+@media (max-width:767px) {
+    .footer-links{
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding-left: 0;
+    }
+}
