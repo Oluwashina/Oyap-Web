@@ -6,3 +6,7 @@ export {
     verifyResetCode,
     ResetPassword
 } from './auth'
+
+export {
+    addProduct
+} from './products'
