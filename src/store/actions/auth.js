@@ -43,15 +43,15 @@ export const signIn = (credentials) => {
 };
 
 export const signOut = () => {
-  return (dispatch, _, { getFirebase }) => {
+  return async (dispatch, _, { getFirebase }) => {
     const firebase = getFirebase();
 
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        dispatch({ type: actionTypes.SIGNOUT_SUCCESS });
-      });
+    try {
+      await firebase.auth().signOut();
+      dispatch({ type: actionTypes.SIGNOUT_SUCCESS });
+    } catch (error) {
+      console.log(error);
+    }
   };
 };
 
@@ -60,47 +60,46 @@ export const passwordReset = (emailAddress) => {
     const firebase = getFirebase();
 
     try {
-      await firebase.auth().sendPasswordResetEmail(emailAddress)
-      console.log('Reseting password');
+      await firebase.auth().sendPasswordResetEmail(emailAddress);
+      console.log("Reseting password");
       dispatch({ type: actionTypes.RESET_PASSWORD });
-      cogoToast.success('Check your email for password reset instructions!', { position: 'top-center', })
+      cogoToast.success("Check your email for password reset instructions!", {
+        position: "top-center",
+      });
     } catch (err) {
       console.log(err);
-      cogoToast.error('Kindly check that the credentials entered is valid!')
+      cogoToast.error("Kindly check that the credentials entered is valid!");
     }
   };
 };
 
-
 export const verifyResetCode = (code) => {
-  return (dispatch, _, { getFirebase }) => {
+  return async (dispatch, _, { getFirebase }) => {
     const firebase = getFirebase();
-    firebase
-      .auth()
-      .verifyPasswordResetCode(code)
-      .then(() => {
-        dispatch({ type: actionTypes.VALID_RESETCODE });
-      })
-      .catch(() =>{
-        // Invalid code
-        dispatch({ type: actionTypes.INVALID_RESETCODE });
-      })
-      
+    try {
+      firebase.auth().verifyPasswordResetCode(code);
+      dispatch({ type: actionTypes.VALID_RESETCODE });
+    } catch {
+      // Invalid code
+      dispatch({ type: actionTypes.INVALID_RESETCODE });
+    }
   };
 };
 
 export const ResetPassword = (values) => {
   return async (dispatch, _, { getFirebase }) => {
     const firebase = getFirebase();
-    dispatch({type: actionTypes.PASSWORD_CHANGED_START})
+    dispatch({ type: actionTypes.PASSWORD_CHANGED_START });
     try {
       // Reset a user's password
-      await firebase.auth().confirmPasswordReset(values.code, values.password)
+      await firebase.auth().confirmPasswordReset(values.code, values.password);
       dispatch({ type: actionTypes.PASSWORD_CHANGED_SUCCESS });
-      cogoToast.success('Password successfully changed, Login to continue', { position: 'top-center', })
-    } catch (err) {      
+      cogoToast.success("Password successfully changed, Login to continue", {
+        position: "top-center",
+      });
+    } catch (err) {
       console.log(err);
-      dispatch({type: actionTypes.PASSWORD_CHANGED_FAIL})
+      dispatch({ type: actionTypes.PASSWORD_CHANGED_FAIL });
     }
   };
 };
