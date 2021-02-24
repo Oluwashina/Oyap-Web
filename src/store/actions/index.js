@@ -1,12 +1,10 @@
 export {
-    signUp,
-    signIn,
-    signOut,
-    passwordReset,
-    verifyResetCode,
-    ResetPassword
-} from './auth'
+  signUp,
+  signIn,
+  signOut,
+  passwordReset,
+  verifyResetCode,
+  ResetPassword,
+} from "./auth";
 
-export {
-    addProduct
-} from './products'
+export { createProduct } from "./products";
