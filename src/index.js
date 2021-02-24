@@ -34,15 +34,6 @@ function AuthIsLoaded({ children }) {
   if (!isLoaded(auth)) return <div className="center">loading...</div>;
   return children;
 }
-
-
-// const store = createStore(
-//   rootReducer,    
-//   compose(
-//     applyMiddleware(thunk.withExtraArgument({ getFirestore, getFirebase })),
-//     reduxFirestore(firebase, fbConfig)
-//   )
-// );
 const composeEnhancers =
   typeof window === 'object' &&
   window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ?   
