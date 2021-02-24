@@ -13,6 +13,7 @@ const Home = ({logout}) => {
         </div>
     )
 }
+
 const mapDispatchToProps = dispatch => {
     return{
         logout: () => dispatch(actions.signOut())
