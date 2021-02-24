@@ -1,8 +1,12 @@
 import * as actionTypes from "./actionTypes";
 
-export const addProduct = (product) => {
+export const getProducts = () => {
+
+}
+
+export const createProduct = (product) => {
   return async (dispatch, getState, { getFirestore }) => {
-    dispatch({type: actionTypes.ADD_PRODUCT_START})
+    dispatch({ type: actionTypes.CREATE_PRODUCT_START });
 
     const firestore = getFirestore();
     const { firstName, lastName } = getState().firebase.profile;
@@ -16,12 +20,11 @@ export const addProduct = (product) => {
         sellerId: sellerId,
         createdAt: new Date(),
       });
-      dispatch({type: actionTypes.ADD_PRODUCT_SUCCESS})
+      dispatch({ type: actionTypes.CREATE_PRODUCT_SUCCESS });
+      console.log("success....");
     } catch (e) {
-        console.log(e)
-        dispatch({type: actionTypes.ADD_PRODUCT_FAIL})
+      console.log(e);
+      dispatch({ type: actionTypes.CREATE_PRODUCT_FAIL });
     }
   };
 };
-
-
