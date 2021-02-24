@@ -14,6 +14,7 @@ export const signUp = (newUser) => {
         firstName: newUser.firstname,
         lastName: newUser.lastname,
         role: newUser.role,
+        createdAt: new Date()
       });
       dispatch({ type: actionTypes.SIGNUP_SUCCESS });
       cogoToast.success("Registration Successful!, Login to continue");
