@@ -61,7 +61,7 @@ const BuyerNav = () => {
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item px-lg-2">
-                                <NavLink className="nav-link text-color"  to="/" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">
+                                <NavLink className="nav-link text-color"  to="/cart" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">
                                 <img src={Cart}  alt="logo" width="30" height="30" />   
                                 </NavLink> 
                             </li>

@@ -7,7 +7,15 @@ import Item3 from "../assets/images/item3.png";
 import Item4 from "../assets/images/item4.png";
 import Item5 from "../assets/images/item5.png";
 
-const BuyerProducts = () => {
+const BuyerProducts = (props) => {
+
+    const {itemRoute} = props
+
+    const handleRoute = (val) =>{
+        console.log(val)
+        itemRoute(val)
+    }
+
     return ( 
         <>
         {/* Products heading */}
@@ -33,7 +41,7 @@ const BuyerProducts = () => {
 
                 {/* first row */}
                 <div className="row">
-                    <div className="col-lg-2 col-6 mb-4 productCard">
+                    <div className="col-lg-2 col-6 mb-4 productCard" onClick={() => handleRoute(1)}>
                         {/* image */}
                         <div className="text-center">
                           <img src={Item1} alt="oyap" className="productImage" />
@@ -47,7 +55,7 @@ const BuyerProducts = () => {
                             <p className="mb-0 price text-center">NGN 20,000</p>
                         </div>
                     </div>
-                    <div className="col-lg-2 col-6 mb-4 productCard">
+                    <div className="col-lg-2 col-6 mb-4 productCard"  onClick={() => handleRoute(2)}>
                         <div className="text-center">
                           <img src={Item2} alt="oyap" className="productImage" />
                         </div>
@@ -57,10 +65,10 @@ const BuyerProducts = () => {
                         </div>
                         {/* price */}
                         <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
+                            <p className="mb-0 price text-center">NGN 8,000</p>
                         </div>
                     </div>
-                    <div className="col-lg-2 col-6 mb-4 productCard">
+                    <div className="col-lg-2 col-6 mb-4 productCard"  onClick={() => handleRoute(3)}>
                         <div className="text-center">
                           <img src={Item3} alt="oyap" className="productImage" />
                         </div>
@@ -70,10 +78,10 @@ const BuyerProducts = () => {
                         </div>
                         {/* price */}
                         <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
+                            <p className="mb-0 price text-center">NGN 40,000</p>
                         </div>
                     </div>
-                    <div className="col-lg-2 col-6 mb-4 productCard">
+                    <div className="col-lg-2 col-6 mb-4 productCard"  onClick={() => handleRoute(4)}>
                         <div className="text-center">
                           <img src={Item4} alt="oyap" className="productImage" />
                         </div>
@@ -83,10 +91,10 @@ const BuyerProducts = () => {
                         </div>
                         {/* price */}
                         <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
+                            <p className="mb-0 price text-center">NGN 40,000</p>
                         </div>
                     </div>
-                    <div className="col-lg-2 col-6 mb-4 productCard">
+                    <div className="col-lg-2 col-6 mb-4 productCard"  onClick={() => handleRoute(5)}>
                         <div className="text-center">
                           <img src={Item5} alt="oyap" className="productImage" />
                         </div>
@@ -96,10 +104,10 @@ const BuyerProducts = () => {
                         </div>
                         {/* price */}
                         <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
+                            <p className="mb-0 price text-center">NGN 10,000</p>
                         </div>
                     </div>
-                    <div className="col-lg-2 col-6 mb-4 productCard">
+                    <div className="col-lg-2 col-6 mb-4 productCard"  onClick={() => handleRoute(6)}>
                         <div className="text-center">
                           <img src={Item1} alt="oyap" className="productImage" />
                         </div>

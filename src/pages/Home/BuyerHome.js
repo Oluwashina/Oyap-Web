@@ -1,18 +1,23 @@
 import React from 'react';
 import BuyerNav from '../../components/BuyerNavbar';
-import StartUp from "../../assets/images/startup.png"
-import Secure from "../../assets/images/secure.png"
-import Support from "../../assets/images/support.png"
+import StartUp from "../../assets/images/startup.svg"
+import Secure from "../../assets/images/secure.svg"
+import Support from "../../assets/images/support.svg"
 import Farm from "../../assets/images/farm_1.png"
 import './BuyerHome.css'
 import BuyerFooter from '../../components/BuyerFooter';
 import BuyerProducts from '../../components/BuyerProducts';
+import { Link } from 'react-router-dom';
 
-import { connect } from "react-redux";
-import { firestoreConnect } from "react-redux-firebase"
-import { compose } from 'redux'
+const BuyerHome = (props) => {
 
-const BuyerHome = () => {
+    const {history} = props
+
+    const itemProduct = (value) =>{
+        history.push("/item/"+value)
+        window.scrollTo(0,0)
+    }
+
     return ( 
         <div>
 
@@ -69,7 +74,7 @@ const BuyerHome = () => {
                 </div>
             </div>
 
-            <BuyerProducts />
+            <BuyerProducts itemRoute={itemProduct} />
 
             {/* farm image */}
             <div className="mt-5 mb-5" style={{position: 'relative'}}>
@@ -79,7 +84,7 @@ const BuyerHome = () => {
                         agropreneur and you <br />
                         want to sell on OYAP</h3>
 
-                        <button className="btn btn-sell text-uppercase mt-4">SELL NOW</button>
+                        <Link to="/signup" className="btn btn-sell text-uppercase mt-4">SELL NOW</Link>
                 </div>
             </div>
 

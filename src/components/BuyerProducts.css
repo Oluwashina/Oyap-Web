@@ -12,6 +12,8 @@
 .productCard{
     scroll-snap-align: start;
     padding: 10px;
+    cursor: pointer;
+    text-decoration: none;
 }
 .productCard:hover{
     background: white;

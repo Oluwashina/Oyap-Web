@@ -19,11 +19,10 @@ const UserLogin = (props) => {
       ...values,
       role
     }
-   console.log(result)
    await Register(result)
   }
 
-
+  
 
   return (
     <div className="">

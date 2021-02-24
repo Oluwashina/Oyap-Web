@@ -1,0 +1,77 @@
+.itemImage{
+    border-radius: 5px;
+}
+
+.btn-add{
+    background: #ED881C;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 40px;
+    transition: all ease-in 0.5s;
+}
+.btn-add:hover{
+    color: #ED881C;
+    background: white;
+    border: 1px solid #ED881C
+}
+
+.btn-buy{
+    background: #7BC30A;;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 40px;
+    transition: all ease-in 0.5s;
+}
+.btn-buy:hover{
+    color: #7BC30A;;
+    background: white;
+    border: 1px solid #7BC30A;
+}
+
+.btn-contact{
+    background: #7BC30A;;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 40px;
+    transition: all ease-in 0.5s;
+}
+.btn-contact:hover{
+    color: white
+}
+
+.sellersDiv{
+    background: rgba(196, 196, 196, 0.2);
+    border-radius: 5px;
+    padding: 40px 20px;
+}
+
+.seller-image{
+    border-radius: 50%;
+    width: 140px;
+    height: 140px;
+}
+
+.smallImages{
+    width: 80px;
+    height: 80px;
+    border: 5px;
+
+}
+
+.quantity-div{
+    border: 1px solid #C4C4C4;
+    width: 140px;
+    padding: 8px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.quantity-div i.mdi-minus{
+    font-size: 20px;
+    cursor: pointer;
+}
+i.mdi-minus.disabled{
+    pointer-events: none;
+    opacity: 0.65;
+}
+

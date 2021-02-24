@@ -11,6 +11,9 @@ import CreateProduct from "./components/CreateProduct/CreateProduct";
 
 import { useSelector } from "react-redux";
 import BuyerHome from "./pages/Home/BuyerHome";
+import BuyerItemPage from "./pages/Home/BuyerItemPage"
+import CheckoutPage from "./pages/Home/BuyerCheckout"
+import Cart from "./pages/Home/BuyerCart"
 
 function App() {
   const state = useSelector((state) => state.firebase);
@@ -22,6 +25,9 @@ function App() {
           <Switch>
             {/* <PrivateRoute exact path="/" component={Home} /> */}
             <Route exact path="/" component={BuyerHome} />
+            <Route path="/item/:id" component={BuyerItemPage} />
+            <Route path="/checkout" component={CheckoutPage} />
+            <Route path="/cart" component={Cart} />
             <Route path="/signup/:id" component={UserSignup} />
             <Route path="/signup" component={SignUpStart} />
             <Route path="/login" component={UserLogin} />
