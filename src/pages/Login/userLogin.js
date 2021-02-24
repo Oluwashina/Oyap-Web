@@ -5,12 +5,14 @@ import {Form, Formik} from 'formik'
 import {loginValidator} from '../../validationSchema/validator'
 import {signIn} from '../../store/actions/auth'
 import "./Login.css";
-import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
+import { Link, useHistory } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 const UserLogin = (props) => {
-
+  
   const {login} = props
+
+  const history = useHistory()
 
   const [initialTab, setTab] = useState(1);
   // const [role, setRole ] = useState("Buyer");
@@ -42,6 +44,7 @@ const UserLogin = (props) => {
   const handleSubmit = async (values) => {
     // const credentials = {...values, role}
      await login(values);
+     history.push('/')
   }
 
 
