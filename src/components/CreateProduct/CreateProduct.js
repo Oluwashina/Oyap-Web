@@ -68,7 +68,6 @@ const CreateProduct = ({ createProduct }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(product);
     await createProduct(product);
   };
   return (
