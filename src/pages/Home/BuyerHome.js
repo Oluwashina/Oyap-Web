@@ -8,6 +8,10 @@ import './BuyerHome.css'
 import BuyerFooter from '../../components/BuyerFooter';
 import BuyerProducts from '../../components/BuyerProducts';
 
+import { connect } from "react-redux";
+import { firestoreConnect } from "react-redux-firebase"
+import { compose } from 'redux'
+
 const BuyerHome = () => {
     return ( 
         <div>
@@ -84,5 +88,15 @@ const BuyerHome = () => {
          </div>
      );
 }
- 
-export default BuyerHome;
+
+const mapStateToProps = state => {
+    return{
+        products: state.firestore.ordered.products
+    }
+}
+export default compose(
+    connect (mapStateToProps),
+    firestoreConnect([
+        { collection: 'products', orderBy: ['createdAt', 'desc']},        
+    ])
+)(BuyerHome);
