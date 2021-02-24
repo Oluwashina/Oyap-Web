@@ -8,10 +8,15 @@ import './BuyerHome.css'
 import BuyerFooter from '../../components/BuyerFooter';
 import BuyerProducts from '../../components/BuyerProducts';
 import { Link } from 'react-router-dom';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 
 const BuyerHome = (props) => {
 
     const {history} = props
+
+    console.log(props)
 
     const itemProduct = (value) =>{
         history.push("/item/"+value)
