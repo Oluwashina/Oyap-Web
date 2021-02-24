@@ -1,22 +1,23 @@
-import React from 'react'
-import { connect, useSelector } from 'react-redux'
-import * as actions from '../../store/actions'
+import React from "react";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions";
 
-const Home = ({logout}) => {
+const Home = ({ logout }) => {
+  alert("Page under construction");
 
-    const role = useSelector(state => state.firebase.profile.role)
-    
-    return (
-        <div>
-            <div>Hello, {role}</div>
-            <button type="sumbit" className="btn btn-primary" onClick={logout}> Log out</button>
-        </div>
-    )
-}
+  return (
+    <div>
+      <button type="sumbit" className="btn btn-primary" onClick={logout}>
+        {" "}
+        Log out
+      </button>
+    </div>
+  );
+};
 
-const mapDispatchToProps = dispatch => {
-    return{
-        logout: () => dispatch(actions.signOut())
-    }
-}
-export default connect(null, mapDispatchToProps)(Home)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(actions.signOut()),
+  };
+};
+export default connect(null, mapDispatchToProps)(Home);
