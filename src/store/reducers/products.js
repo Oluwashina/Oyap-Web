@@ -6,17 +6,17 @@ const initState = {
 
 const productsReducer = (state=initState, action) => {
     switch(action.type){
-        case actionTypes.ADD_PRODUCT_START:
+        case actionTypes.CREATE_PRODUCT_START:
             return {
                 ...state,
                 isLoading: true
             }
-        case actionTypes.ADD_PRODUCT_SUCCESS:
+        case actionTypes.CREATE_PRODUCT_SUCCESS:
             return{
                 ...state,
                 isLoading: false
             }
-        case actionTypes.ADD_PRODUCT_FAIL:
+        case actionTypes.CREATE_PRODUCT_FAIL:
             return {
                 ...state,
                 isLoading: false
