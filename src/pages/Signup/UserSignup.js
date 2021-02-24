@@ -5,12 +5,13 @@ import {Form, Formik} from 'formik'
 import {registerValidator} from '../../validationSchema/validator'
 import {signUp} from '../../store/actions/auth'
 import "./signup.css";
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const UserLogin = (props) => {
 
   const {Register} = props
+  const history = useHistory()
 
   // Sign Up login button
   const handleSubmit = async (values, setSubmitting) =>{
@@ -20,6 +21,7 @@ const UserLogin = (props) => {
       role
     }
    await Register(result)
+    history.push('/')
   }
 
   
