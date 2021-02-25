@@ -12,8 +12,14 @@ import Seller from "../../assets/images/seller1.png";
 import './BuyerItemPage.css'
 import BuyerFooter from '../../components/BuyerFooter';
 import {Link} from 'react-router-dom'
+import { connect } from "react-redux";
+import { useFirestoreConnect } from "react-redux-firebase";
 
 const ItemPage = () => {
+
+    useFirestoreConnect([
+        { collection: "products", orderBy: ["createdAt", "desc"] },
+      ]);
 
     const [count, setCount] = useState(1);
 
@@ -271,5 +277,17 @@ const ItemPage = () => {
         </>
      );
 }
+
+
+const mapStateToProps = (state, ownProps) => {
+    const id = ownProps.match.params.id
+    const products = state.firestore.data.products
+    const product = products ? products[id] : null
+    console.log(product)
+    return {
+        product: product,
+        relatedProduct: state.firestore.ordered.products
+    };
+};
  
-export default ItemPage;
+export default connect(mapStateToProps)(ItemPage);
