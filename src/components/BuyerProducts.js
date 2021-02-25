@@ -9,12 +9,37 @@ import Item5 from "../assets/images/item5.png";
 
 const BuyerProducts = (props) => {
 
-    const {itemRoute} = props
+    const {itemRoute, products} = props
 
     const handleRoute = (val) =>{
         console.log(val)
         itemRoute(val)
     }
+
+    const AllProducts = !products ?
+    (
+        <div>
+            <p>Loading</p>
+        </div>
+    )
+     : products.map(product =>{
+            return(
+                <div key={product.id} className="col-lg-2 col-6 mb-4 productCard" onClick={() => handleRoute(product.id)}>
+                {/* image */}
+                <div className="text-center">
+                  <img src={product.images[0]} alt="oyap" className="productImage" />
+                </div>
+                {/* name */}
+                <div className="mt-3">
+                    <p className="mb-0 text-center">{product.name}</p>
+                </div>
+                {/* price */}
+                <div className="mt-2">
+                    <p className="mb-0 price text-center">NGN 20,000</p>
+                </div>
+            </div> 
+            )
+        }) 
 
     return ( 
         <>
@@ -288,6 +313,10 @@ const BuyerProducts = (props) => {
                     </div>
                 </div>
 
+                {/* mapping products */}
+                <div className="row">
+                     {AllProducts}
+                </div>
 
             </div>
         </>
