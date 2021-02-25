@@ -18,10 +18,6 @@ const BuyerHome = (props) => {
   
   const { history, products } = props;
 
-  if(products) {
-      console.log(products);
-  }
-
   const itemProduct = (value) => {
     history.push("/item/" + value);
     window.scrollTo(0, 0);
@@ -82,7 +78,7 @@ const BuyerHome = (props) => {
         </div>
       </div>
 
-      <BuyerProducts itemRoute={itemProduct} />
+      <BuyerProducts itemRoute={itemProduct} products={products} />
 
       {/* farm image */}
       <div className="mt-5 mb-5" style={{ position: "relative" }}>
