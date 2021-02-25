@@ -14,7 +14,8 @@ import { firestoreConnect } from 'react-redux-firebase';
 
 const BuyerHome = (props) => {
 
-    const {history} = props
+    const {history, products} = props
+
 
     console.log(props)
 
@@ -79,7 +80,7 @@ const BuyerHome = (props) => {
                 </div>
             </div>
 
-            <BuyerProducts itemRoute={itemProduct} />
+            <BuyerProducts itemRoute={itemProduct} products={products} />
 
             {/* farm image */}
             <div className="mt-5 mb-5" style={{position: 'relative'}}>
@@ -105,8 +106,8 @@ const mapStateToProps = state => {
     }
 }
 export default compose(
-    connect (mapStateToProps),
     firestoreConnect([
         { collection: 'products', orderBy: ['createdAt', 'desc']},        
-    ])
+    ]),
+    connect(mapStateToProps),
 )(BuyerHome);

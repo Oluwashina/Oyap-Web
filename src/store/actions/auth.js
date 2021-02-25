@@ -35,6 +35,7 @@ export const signIn = (credentials) => {
         .auth()
         .signInWithEmailAndPassword(credentials.email, credentials.password);
       dispatch({ type: actionTypes.LOGIN_SUCCESS });
+      cogoToast.success('Login Successful!', { position: 'bottom-right', })
     } catch (err) {
       console.log(err);
       dispatch({ type: actionTypes.LOGIN_FAIL, err });
