@@ -52,6 +52,57 @@
  margin-bottom: 0px;
 }
 
+.orderDetails{
+    background: rgba(196, 196, 196, 0.2);
+    border-radius: 5px;
+    padding: 20px 30px;
+    display: flex;
+    width: 90%;
+}
+
+.timelineCircle{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: 7px solid #5B9223;
+    background: #fff;
+}
+
+.timelineWhiteCircle{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: 7px solid #C4C4C4;
+    background: #fff;
+}
+
+.orderTimeline{
+    width: 90%;
+    display: flex;
+    align-items: center;
+    /* flex-direction: row-reverse; */
+}
+.orderTimeline:nth-child(odd){
+    flex-direction: row-reverse;
+}
+.orderTimeline:nth-child(even){
+    flex-direction: row;
+}
+
+.orderTimeline:nth-child(even) .orderTimelineDiv{
+    margin-left: 30px;
+}
+.orderTimeline:nth-child(odd) .orderTimelineDiv{
+    margin-right: 30px;
+}
+
+.orderTimelineDiv{
+    background: rgba(196, 196, 196, 0.2);
+    border-radius: 5px;
+    padding: 20px 40px;
+    width: 100%;
+}
+
 
 /* Media query for smaller phones */
 
@@ -64,6 +115,10 @@
     .orderDetailsBtn{
         margin-top: 15px;
         margin-bottom: 15px;
+    }
+    .orderDetails{
+        width: 100%;
+        padding: 20px 20px;
     }
     .orderDiv{
         display: flex;
@@ -79,5 +134,8 @@
     }
     .orderDiv div:nth-child(3){
       flex: 1;
+    }
+    .orderTimeline{
+        width: 100%;
     }
 }

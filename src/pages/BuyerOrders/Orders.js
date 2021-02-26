@@ -4,6 +4,7 @@ import './Orders.css'
 import Item5 from "../../assets/images/item5.png";
 import Beans from "../../assets/images/greenbeans.png";
 import BuyerFooter from '../../components/BuyerFooter';
+import { Link } from 'react-router-dom';
 
 
 const Orders = () => {
@@ -75,8 +76,8 @@ const Orders = () => {
                 </div>
 
                 <div>
-                    <div>
-                     <p className="orderDetailsBtn">View Details</p>
+                    <div className="orderDetailsBtn">
+                     <Link to="/order/1"  style={{textDecoration: 'none', color: '#ED881C'}}>View Details</Link>
                     </div>         
                 </div>
             </div>
@@ -100,8 +101,8 @@ const Orders = () => {
                 </div>
 
                 <div>
-                    <div>
-                     <p className="orderDetailsBtn">View Details</p>
+                    <div className="orderDetailsBtn">
+                     <Link to="/order/2" style={{textDecoration: 'none',  color: '#ED881C'}}>View Details</Link>
                     </div>         
                 </div>
             </div>

@@ -148,10 +148,10 @@ const Checkout = () => {
                             </div>
 
                             <div>
-                                <hr className="mt-4" style={{borderTop: '1px solid rgba(196, 196, 196, 0.5)'}} />
+                                <hr className="mt-4 mb-0" style={{borderTop: '1px solid rgba(196, 196, 196, 0.5)'}} />
                             </div>
 
-                            <div className="mt-2" style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <div className="mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
                                 <div>
                                     <p className="mb-0" style={{fontSize: 14, width: '70%', lineHeight: '21px'}}>1 truck load of nigerian grade alligator pepper</p>
                                 </div>
@@ -161,10 +161,10 @@ const Checkout = () => {
                             </div>
 
                             <div>
-                                <hr className="mt-4" style={{borderTop: '1px solid rgba(196, 196, 196, 0.5)'}} />
+                                <hr className="mt-4 mb-0" style={{borderTop: '1px solid rgba(196, 196, 196, 0.5)'}} />
                             </div>
 
-                            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <div className="mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
                                 <div>
                                     <p className="mb-0" style={{fontSize: 14, width: '50%', lineHeight: '21px'}}>Shipping Paid</p>
                                 </div>
@@ -174,10 +174,10 @@ const Checkout = () => {
                             </div>
 
                             <div>
-                                <hr className="mt-4" style={{borderTop: '1px solid rgba(196, 196, 196, 0.5)'}} />
+                                <hr className="mt-4 mb-0" style={{borderTop: '1px solid rgba(196, 196, 196, 0.5)'}} />
                             </div>
 
-                            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                            <div className="mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
                                 <div>
                                     <p className="mb-0" style={{fontWeight: 700}}>TOTAL</p>
                                 </div>

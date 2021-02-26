@@ -13,6 +13,7 @@ import BuyerItemPage from "./pages/Home/BuyerItemPage"
 import CheckoutPage from "./pages/Home/BuyerCheckout"
 import Cart from "./pages/Home/BuyerCart"
 import Orders from "./pages/BuyerOrders/Orders"
+import OrderDetails from "./pages/BuyerOrders/OrderDetails"
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
             <Route path="/checkout" component={CheckoutPage} />
             <Route path="/cart" component={Cart} />
             <Route path="/orders" component={Orders} />
+            <Route path="/order/:id" component={OrderDetails} />
             <Route path="/signup/:id" component={UserSignup} />
             <Route path="/signup" component={SignUpStart} />
             <Route path="/login" component={UserLogin} />
