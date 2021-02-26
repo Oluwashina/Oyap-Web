@@ -8,12 +8,12 @@ import Item4 from "../assets/images/item4.png";
 import Item5 from "../assets/images/item5.png";
 
 const BuyerProducts = (props) => {
+    
 
     const {itemRoute, products} = props
     
 
     const handleRoute = (val) =>{
-        console.log(val)
         itemRoute(val)
     }
 

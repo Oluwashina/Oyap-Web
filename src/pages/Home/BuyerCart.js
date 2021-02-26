@@ -75,7 +75,7 @@ const Cart = () => {
                     </div>
 
                     <div style={{flex: 1}}>
-                        <div className="quantity-div mt-3 mt-lg-0">
+                        <div className="quantitycart-div mt-3 mt-lg-0">
                                 <div>
                                     <i 
                                     className={count === 1 ? "mdi mdi-minus disabled" : "mdi mdi-minus"}
@@ -118,7 +118,7 @@ const Cart = () => {
                     </div>
 
                     <div style={{flex: 1}}>
-                        <div className="quantity-div mt-3 mt-lg-0">
+                        <div className="quantitycart-div mt-3 mt-lg-0">
                                 <div>
                                     <i 
                                     className={count === 1 ? "mdi mdi-minus disabled" : "mdi mdi-minus"}
@@ -153,10 +153,10 @@ const Cart = () => {
                        
                     </div>
                     <div>
-                        <h6 style={{fontWeight: 700}}>TOTAL</h6>
+                        <h5 style={{fontWeight: 700}}>TOTAL</h5>
                     </div>
                     <div>
-                        <h6 style={{fontWeight: 700, color: '#5B9223'}}>NGN 100,000</h6>
+                        <h5 style={{fontWeight: 700, color: '#5B9223'}}>NGN 100,000</h5>
                         <p className="mb-0" style={{fontSize: 14, color: '#C4C4C4'}}>Not including shipping fees</p>
                     </div>
                 </div>

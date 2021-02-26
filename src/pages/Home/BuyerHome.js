@@ -18,6 +18,8 @@ const BuyerHome = (props) => {
   
   const { history, products } = props;
 
+
+
   const itemProduct = (value) => {
     history.push("/item/" + value);
     window.scrollTo(0, 0);
