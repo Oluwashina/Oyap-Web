@@ -13,6 +13,7 @@ export const signUp = (newUser) => {
       await firestore.collection("users").doc(res.user.uid).set({
         firstName: newUser.firstname,
         lastName: newUser.lastname,
+        username: newUser.email,
         role: newUser.role,
         createdAt: new Date()
       });
