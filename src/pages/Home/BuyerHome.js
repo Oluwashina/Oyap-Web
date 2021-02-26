@@ -13,7 +13,7 @@ import { useFirestoreConnect } from "react-redux-firebase";
 
 const BuyerHome = (props) => {
   useFirestoreConnect([
-    { collection: "products", orderBy: ["createdAt", "desc"] },
+    { collection: "products", orderBy: ["createdAt", "asc"] },
   ]);
   
   const { history, products } = props;
