@@ -10,7 +10,7 @@ const CreateProduct = ({ createProduct }) => {
   const [product, setProduct] = useState({
     name: "",
     category: "",
-    price: null,
+    price: 10000,
     quantity: 1,
     description: "",
     images: [],
