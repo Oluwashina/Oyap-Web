@@ -14,6 +14,7 @@ export const signUp = (newUser) => {
         firstName: newUser.firstname,
         lastName: newUser.lastname,
         username: newUser.email,
+        phoneNumber: newUser.phone,
         role: newUser.role,
         createdAt: new Date()
       });
