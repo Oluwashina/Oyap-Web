@@ -1,25 +1,83 @@
-import React, {useState} from 'react';
+import React from 'react';
 import BuyerNav from '../../components/BuyerNavbar';
-import Item5 from "../../assets/images/item5.png";
-import Item1 from "../../assets/images/item1.png";
+// import Item5 from "../../assets/images/item5.png";
 import './BuyerCart.css'
 import BuyerFooter from '../../components/BuyerFooter';
 import { Link } from 'react-router-dom';
+import {connect} from 'react-redux'
+import { removeCart } from '../../store/actions/carts';
 
+const Cart = (props) => {
 
-const Cart = () => {
+    const {cartItems, removeCart, total} = props
 
-    const [count, setCount] = useState(1);
+    const itemsCart = cartItems.length ? (
+        cartItems.map(items=>{
+        return (
+            <div key={items.id} className="mt-lg-3 mt-4 cart-div">
+            <div style={{flex: 3}}>
+                <div style={{display: 'flex'}}>
+                    <div>
+                        <img src={items.images[0]} alt="cart" className="cartImage" />
+                    </div>
+                    <div className="ml-4">
+                        <p className="mb-0 mt-3" style={{width: '80%', lineHeight: '25px'}}>{items.name}</p>
+                        <p className="mb-0 mt-2" style={{color: '#C4C4C4', fontSize: 14}}>Sold by: {items.sellerFirstName} {items.sellerLastName}</p>
+                        <div className="mt-3">
+                            <p className="mb-0" 
+                            onClick={()=>{removeCart(items.id)}}
+                            style={{color: '#ED881C', cursor: 'pointer'}}>REMOVE</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    // Create handleIncrement event handler
- const handleIncrement = () => {
-   setCount(prevCount => prevCount + 1);
- };
+            <div style={{flex: 1}}>
+                <div className="quantitycart-div mt-3 mt-lg-0">
+                        <div>
+                            <i 
+                            className={items.cartQty === 1 ? "mdi mdi-minus disabled" : "mdi mdi-minus"}
+                        
+                            ></i>
+                        </div>
+                        <div style={{fontSize: 20}}>
+                             {items.cartQty}
+                        </div>
+                        <div>
+                         <i className="mdi mdi-plus"
+                            
+                            style={{fontSize: 20, cursor: 'pointer'}}></i>
+                            </div>
+                        </div>
+                </div>
+                <div style={{flex: 1,}}>
+                    <h6 className="mt-4 mt-lg-0 mb-4 mb-lg-0" style={{fontWeight: 700}}>NGN {items.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h6>
+                </div>
+                <div style={{flex: 1}}>
+                    <h6 className="d-none d-md-block" style={{fontWeight: 700}}>NGN {items.subTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h6>
+                </div>
+            </div>   
+            )
+            })
+            ) : (
+                
+            <div className="center">
+                {/* icon */}
+                <div className="text-center mt-5">
+                    <i className="mdi mdi-cart cartIcon" style={{color: '#5FA30E', fontSize: 50}}></i>
+                </div>
 
-  //Create handleDecrement event handler
-  const handleDecrement = () => {
-   setCount(prevCount => prevCount - 1);
- };
+                <div className="text-center mt-3">
+                    <h5 className="mb-0">Your cart is empty!</h5>
+                    <p className="mb-0 mt-3">Browse our items and discover our best deals</p>
+                </div>
+
+                <div className="text-center">
+                <Link to="/" className="btn btn-sell mt-4">Start Shipping</Link>
+                </div>
+        
+             </div>                       
+            )
 
     return ( 
         <>
@@ -28,7 +86,7 @@ const Cart = () => {
                {/* breadcrumbs */}
                <div style={{background: ' rgba(196, 196, 196, 0.2)', padding: '10px'}}> 
                 <div className="container">
-                     <p className="mb-0"><span style={{color: '#7BC30A'}}>Home /</span> Cart</p>
+                     <p className="mb-0"><span style={{color: '#7BC30A', fontSize: 14}}>Home/</span>Cart</p>
                 </div>
              </div>
 
@@ -40,7 +98,9 @@ const Cart = () => {
                 </div>
 
             {/* cart title */}
-                <div className="mt-5 cart-title">   
+                <div 
+                className={cartItems.length ? "mt-5 cart-title" : "no-title"}
+                >   
                     <div style={{flex: 3}}>
                         <h6 style={{fontWeight: 700}}>Item</h6>
                     </div>
@@ -57,95 +117,12 @@ const Cart = () => {
 
                 {/* cart history */}
 
-                {/* 1st item */}
-                <div className="mt-lg-3 mt-4 cart-div">
-                    <div style={{flex: 3}}>
-                        <div style={{display: 'flex'}}>
-                            <div>
-                                <img src={Item5} alt="cart" className="cartImage" />
-                            </div>
-                            <div className="ml-4">
-                                <p className="mb-0 mt-3" style={{width: '80%', lineHeight: '25px'}}>1 truck load of nigerian grade fresh maize</p>
-                                <p className="mb-0 mt-2" style={{color: '#C4C4C4', fontSize: 14}}>Sold by: Layake Farms</p>
-                                <div className="mt-3">
-                                    <p className="mb-0" style={{color: '#ED881C', cursor: 'pointer'}}>REMOVE</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style={{flex: 1}}>
-                        <div className="quantitycart-div mt-3 mt-lg-0">
-                                <div>
-                                    <i 
-                                    className={count === 1 ? "mdi mdi-minus disabled" : "mdi mdi-minus"}
-                                    onClick={handleDecrement}
-                                    ></i>
-                                </div>
-                                <div style={{fontSize: 20}}>
-                                     {count}
-                                </div>
-                                <div>
-                                 <i className="mdi mdi-plus"
-                                 onClick={handleIncrement}
-                                  style={{fontSize: 20, cursor: 'pointer'}}></i>
-                                </div>
-                            </div>
-                    </div>
-                    <div style={{flex: 1,}}>
-                        <h6 className="mt-4 mt-lg-0 mb-4 mb-lg-0" style={{fontWeight: 700}}>NGN 40,000</h6>
-                    </div>
-                    <div style={{flex: 1}}>
-                        <h6 className="d-none d-md-block" style={{fontWeight: 700}}>NGN 80,000</h6>
-                    </div>
-                </div>
-
-                {/* 2nd item */}
-                <div className="mt-3 cart-div">
-                    <div style={{flex: 3}}>
-                        <div style={{display: 'flex'}}>
-                            <div>
-                                <img src={Item1} alt="cart" className="cartImage" />
-                            </div>
-                            <div className="ml-4">
-                                <p className="mb-0 mt-3" style={{width: '80%', lineHeight: '25px'}}>Green Beans clean and processed 50 kg</p>
-                                <p className="mb-0 mt-2" style={{color: '#C4C4C4', fontSize: 14}}>Sold by: Layake Farms</p>
-                                <div className="mt-3">
-                                    <p className="mb-0" style={{color: '#ED881C', cursor: 'pointer'}}>REMOVE</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div style={{flex: 1}}>
-                        <div className="quantitycart-div mt-3 mt-lg-0">
-                                <div>
-                                    <i 
-                                    className={count === 1 ? "mdi mdi-minus disabled" : "mdi mdi-minus"}
-                                    onClick={handleDecrement}
-                                    ></i>
-                                </div>
-                                <div style={{fontSize: 20}}>
-                                     {count}
-                                </div>
-                                <div>
-                                 <i className="mdi mdi-plus"
-                                 onClick={handleIncrement}
-                                  style={{fontSize: 20, cursor: 'pointer'}}></i>
-                                </div>
-                            </div>
-                    </div>
-                    <div style={{flex: 1,}}>
-                        <h6 className="mt-4 mt-lg-0 mb-4 mb-lg-0" style={{fontWeight: 700}}>NGN 20,000</h6>
-                    </div>
-                    <div style={{flex: 1}}>
-                        <h6 className="d-none d-md-block" style={{fontWeight: 700}}>NGN 20,000</h6>
-                    </div>
-                </div>
-
+                {itemsCart}
 
             {/* total layout */}
-                <div className="mt-5 total-div">   
+                <div 
+                 className={cartItems.length ? "mt-5 total-div" : "no-title" }
+                >   
                     <div>
                         
                     </div>
@@ -156,13 +133,15 @@ const Cart = () => {
                         <h5 style={{fontWeight: 700}}>TOTAL</h5>
                     </div>
                     <div>
-                        <h5 style={{fontWeight: 700, color: '#5B9223'}}>NGN 100,000</h5>
+                        <h5 style={{fontWeight: 700, color: '#5B9223'}}>NGN {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
                         <p className="mb-0" style={{fontSize: 14, color: '#C4C4C4'}}>Not including shipping fees</p>
                     </div>
                 </div>
 
 
-                <div className="mt-4 text-center text-lg-right">
+                <div
+                className={cartItems.length ? "mt-4 text-center text-lg-right" : "no-title" }
+                 >
                 <Link to="/checkout" className="btn btn-checkout mt-4">Proceed to Checkout</Link>
                 </div>
 
@@ -175,5 +154,18 @@ const Cart = () => {
         </>
      );
 }
+
+const mapStateToProps = (state) =>{
+    return{
+        cartItems: state.cart.cartItems,
+        total: state.cart.total
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        removeCart: (id) => dispatch(removeCart(id)),
+    }
+}
  
-export default Cart;
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

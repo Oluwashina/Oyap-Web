@@ -8,3 +8,5 @@ export {
 } from "./auth";
 
 export { createProduct } from "./products";
+
+export {Increment, Decrement} from "./carts"

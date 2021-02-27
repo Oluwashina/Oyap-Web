@@ -3,8 +3,13 @@ import SellIcon from "../assets/images/sell_nav.png";
 import Logo from "../assets/images/logo.png";
 import Cart from "../assets/images/cart_icon.svg";
 import {Link, NavLink} from 'react-router-dom'
+import {connect} from 'react-redux'
+import './BuyerNavbar.css'
 
-const BuyerNav = () => {
+const BuyerNav = (props) => {
+
+    const {cartCount} = props
+
     return ( 
         <>
 
@@ -61,8 +66,12 @@ const BuyerNav = () => {
                         </ul>
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item px-lg-2">
-                                <NavLink className="nav-link text-color"  to="/cart" id="navbarDropdown"  aria-haspopup="true" aria-expanded="false">
-                                <img src={Cart}  alt="logo" width="30" height="30" />   
+                                <NavLink className="nav-link"  to="/cart" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
+                                     <img src={Cart}  alt="logo" width="30" height="30" />   
+                                     <div
+                                      className={cartCount === 0 ? "emptyCartDiv" : "cartDiv"}>
+                                        <span style={{color: '#ED881C', fontWeight: 'bold'}}>{cartCount}</span>
+                                     </div>
                                 </NavLink> 
                             </li>
                         </ul>
@@ -74,5 +83,11 @@ const BuyerNav = () => {
         </>
      );
 }
+
+const mapStateToProps = (state) =>{
+    return{
+        cartCount: state.cart.cartItems.length
+    }
+}
  
-export default BuyerNav;
+export default connect(mapStateToProps)(BuyerNav);

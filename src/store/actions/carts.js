@@ -1,0 +1,30 @@
+import * as actionTypes from "./actionTypes";
+import cogoToast from "cogo-toast";
+
+export const Increment = () =>{
+    return(dispatch, getState) =>{
+        dispatch({ type: actionTypes.INCREMENT });
+    }
+}
+
+
+export const Decrement = () =>{
+    return(dispatch, getState) =>{
+        dispatch({type: actionTypes.DECREMENT})
+    }
+}
+
+export const addToCart = (product, id, name) =>{
+    return (dispatch, getState) =>{
+        dispatch({type: actionTypes.ADD_TO_CART,product, id})
+        cogoToast.success(`${name} added to cart`);
+    }
+}
+
+
+export const removeCart = (id) =>{
+    return (dispatch, getState) =>{
+        dispatch({type: actionTypes.REMOVE_FROM_CART, id})
+        cogoToast.success(`Item removed from cart`);
+    }
+}

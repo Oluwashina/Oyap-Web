@@ -52,7 +52,7 @@ const UserLogin = (props) => {
                     handleSubmit(values, setSubmitting)
                     }
                 validationSchema={registerValidator}
-                initialValues={{firstname: "", lastname: "",  email: "", password: "", confirm_password: ""}}
+                initialValues={{firstname: "", lastname: "", phone: "",  email: "", password: "", confirm_password: ""}}
               >
                   {({
                       handleChange,
@@ -97,6 +97,21 @@ const UserLogin = (props) => {
                               </small>
                             </div>
 
+                            {/* Phone Number */}
+                            <div className="form-group">
+                              <label htmlFor="password">Phone Number</label>
+                              <input className="form-control input-style"
+                              type="text"
+                              id="phone"
+                              value={values.phone}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              placeholder="+234 800 000 0000" />
+                               <small style={{ color: "#dc3545" }}>
+                                  {touched.phone && errors.phone}
+                              </small>
+                            </div>
+
                              {/* Email */}
                              <div className="form-group">
                               <label htmlFor="password">Email</label>
@@ -111,6 +126,7 @@ const UserLogin = (props) => {
                                   {touched.email && errors.email}
                               </small>
                             </div>
+
 
                              {/* password */}
                              <div className="form-group">

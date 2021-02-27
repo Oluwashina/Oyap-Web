@@ -1,0 +1,16 @@
+
+.cartDiv{
+    position: absolute;
+    top: -5px;
+    left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(237, 136, 28, 0.1);
+}
+.emptyCartDiv{
+    display: none;
+}

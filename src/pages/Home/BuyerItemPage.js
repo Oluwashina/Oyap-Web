@@ -1,12 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import BuyerNav from '../../components/BuyerNavbar';
-import Item from "../../assets/images/item4_big.png";
 import Item1 from "../../assets/images/item1.png";
 import Item2 from "../../assets/images/item2.png";
 import Item3 from "../../assets/images/item3.png";
 import Item4 from "../../assets/images/item4.png";
 import Item5 from "../../assets/images/item5.png";
-import Item6 from "../../assets/images/item6.png";
 import Default from "../../assets/images/default.png";
 import Seller from "../../assets/images/seller1.png";
 import './BuyerItemPage.css'
@@ -14,25 +12,29 @@ import BuyerFooter from '../../components/BuyerFooter';
 import {Link} from 'react-router-dom'
 import { connect } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
+import { addToCart, Decrement, Increment } from '../../store/actions/carts';
 
-const ItemPage = () => {
+const ItemPage = (props) => {
+
+    const {product, count, Increment, Decrement, addCartClick, products, id} = props
+
 
     useFirestoreConnect([
         { collection: "products", orderBy: ["createdAt", "desc"] },
       ]);
 
-    const [count, setCount] = useState(1);
+    //   const check = () =>{
+    //       if(cartItems.some(item => item.id === id)){
+    //           console.log('rell')
+    //       }
+    //       else{
+    //          console.log('dd')
+    //       }
+    //   }
 
-     // Create handleIncrement event handler
-  const handleIncrement = () => {
-    setCount(prevCount => prevCount + 1);
-  };
+      
 
-   //Create handleDecrement event handler
-   const handleDecrement = () => {
-    setCount(prevCount => prevCount - 1);
-  };
-
+    if(product){
     return ( 
         <>
             <BuyerNav />
@@ -40,16 +42,17 @@ const ItemPage = () => {
             {/* breadcrumbs */}
             <div style={{background: ' rgba(196, 196, 196, 0.2)', padding: '10px'}}> 
                 <div className="container">
-                     <p className="mb-0"><span style={{color: '#7BC30A'}}>Home/Vegetables</span>/Alligator Pepper</p>
+                     <p className="mb-0" style={{fontSize: 14}}><span style={{color: '#7BC30A'}}>Home/{product.category}</span>/{product.name}</p>
                 </div>
             </div>
 
             {/* details page */}
 
             <div className="container">
+                
 
                 <div className="mt-4">
-                 <h5>1 truck load of nigerian grade alligator pepper</h5>
+                 <h5>{product.name}</h5>
                 </div>
 
                 <div className="mt-4">
@@ -61,26 +64,26 @@ const ItemPage = () => {
 
                         {/* product image */}
                         <div className="mt-4">
-                         <img src={Item} alt="oyap" className="img-fluid itemImage" />
+                         <img src={product.images[0]} alt="oyap" className="img-fluid itemImage" />
                         </div>
 
                         {/* smaller images */}
                         <div className="mt-4" style={{display:  'flex', justifyContent: 'space-between'}}>
 
                             <div>
-                                <img src={Item4} alt="oyap" className="smallImages" />
+                                <img src={!product.images[0] ? Default : product.images[0] } alt="oyap" className="smallImages" />
                             </div>
 
                             <div>
-                            <img src={Item6} alt="oyap" className="smallImages" />
+                            <img src={!product.images[1] ? Default : product.images[0]} alt="oyap" className="smallImages" />
                             </div>
 
                             <div>
-                            <img src={Item4} alt="oyap" className="smallImages" />
+                            <img src={!product.images[2] ? Default : product.images[0]} alt="oyap" className="smallImages" />
                             </div>
 
                             <div>
-                            <img src={Default} alt="oyap" className="smallImages" />
+                            <img src={!product.images[3] ? Default : product.images[0]} alt="oyap" className="smallImages" />
                             </div>
                         </div>
 
@@ -90,12 +93,14 @@ const ItemPage = () => {
                     <div className="col-lg-5">
                         {/* amount */}
                         <div className="mt-4">
-                            <h5 style={{color: '#5B9223', fontWeight: 'bold'}}>NGN 40,000</h5>
+                            <h5 style={{color: '#5B9223', fontWeight: 'bold'}}>NGN {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
                         </div>
 
                         {/* status */}
                         <div>
-                            <h6>Status: <span style={{color: '#5B9223', fontWeight: 'bold'}}>In Stock</span></h6>
+                            <h6>Status: <span style={{color: '#5B9223', fontWeight: 'bold'}}>
+                                {product.price < 1 ? "Out of Stock" : "In Stock"}
+                                </span></h6>
                         </div>
 
                         <div>
@@ -105,7 +110,7 @@ const ItemPage = () => {
                         {/* description */}
                         <div className="mt-4">   
                             <h6 style={{fontWeight: 600}}>Description</h6>
-                            <p className="mt-2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                            <p className="mt-2">{product.description}</p>
                         </div>
 
                     {/* quantity add */}
@@ -115,7 +120,7 @@ const ItemPage = () => {
                                 <div>
                                     <i 
                                     className={count === 1 ? "mdi mdi-minus disabled" : "mdi mdi-minus"}
-                                    onClick={handleDecrement}
+                                    onClick={Decrement}
                                     ></i>
                                 </div>
                                 <div style={{fontSize: 20}}>
@@ -123,19 +128,28 @@ const ItemPage = () => {
                                 </div>
                                 <div>
                                  <i className="mdi mdi-plus"
-                                 onClick={handleIncrement}
+                                 onClick={Increment}
                                   style={{fontSize: 20, cursor: 'pointer'}}></i>
                                 </div>
                             </div>
                         </div>
 
+                        {/* items display when added to cart */}
+                        {/* <div className="mt-3">
+                            <p className="mb-0">( {count} item(s) added)</p>
+                        </div> */}
+
                         {/* add to cart and buy buttons */}
                         <div className="mt-2" style={{display: 'flex',}}>
                             <div style={{flex: 1}}>
-                            <button className="btn btn-add btn-block mt-4">Add to Cart</button>
+                            <button className="btn btn-add btn-block mt-4"
+                              onClick={()=>{addCartClick(products, id, product.name)}}
+                            >Add to Cart</button>
                             </div>
                             <div className="ml-4" style={{flex: 1}}>
-                        <Link to="/checkout" className="btn btn-buy btn-block mt-4">Buy Now</Link>
+                        <Link
+                        to="/checkout"
+                         className="btn btn-buy btn-block mt-4">Buy Now</Link>
                             </div>
                         </div>
 
@@ -154,7 +168,7 @@ const ItemPage = () => {
                                 </div>
 
                                 <div className="text-center mt-3">
-                                    <p className="mb-0" style={{fontWeight: 600}}>Ajagbe Mathew Lemon</p>
+                                    <p className="mb-0" style={{fontWeight: 600}}>{product.sellerFirstName} {product.sellerLastName}</p>
                                 </div>
 
                                 <div className="text-center mt-2">
@@ -275,7 +289,15 @@ const ItemPage = () => {
              {/* footer */}
              <BuyerFooter />
         </>
-     );
+     )
+    }
+    else{
+        return (
+            <div className="container">
+              <p>Loading</p>
+            </div>
+          );
+    }
 }
 
 
@@ -283,11 +305,21 @@ const mapStateToProps = (state, ownProps) => {
     const id = ownProps.match.params.id
     const products = state.firestore.data.products
     const product = products ? products[id] : null
-    console.log(product)
     return {
         product: product,
-        relatedProduct: state.firestore.ordered.products
+        products: state.firestore.ordered.products,
+        count: state.cart.count,
+        id: id,
+        cartItems: state.cart.cartItems
     };
 };
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        Increment : () => dispatch(Increment()),
+        Decrement : () => dispatch(Decrement()),
+        addCartClick: (product, id, name) => dispatch(addToCart(product, id,name)),
+    }
+}
  
-export default connect(mapStateToProps)(ItemPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ItemPage);

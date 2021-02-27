@@ -23,6 +23,10 @@ export const resetPasswordValidator = Yup.object({
 export const registerValidator = Yup.object({
     firstname: Yup.string().required("Firstname is required"),
     lastname: Yup.string().required("Lastname is required"),
+    phone: Yup.string()
+    .required("Phonenumber is required").matches(
+      /(^[+]?[234]\d{12}$)/,
+      "Enter a valid phone number"),
     email: Yup.string().email("Enter a valid email")
     .required("Email is required"),
     password: Yup.string()
