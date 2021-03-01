@@ -28,6 +28,7 @@ import fbConfig from "./config/firebase";
 const rrfConfig = {
   userProfile: "users",
   useFirestoreForProfile: true,
+  sessions: 'sessions'
 };
 function AuthIsLoaded({ children }) {
   const auth = useSelector((state) => state.firebase.auth);
