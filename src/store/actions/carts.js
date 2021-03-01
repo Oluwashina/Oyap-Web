@@ -30,7 +30,7 @@ export const removeCart = (id) =>{
 }
 
 export const adjustQty = (id, qty) =>{
-    return (dispatch, getState) =>{
+    return dispatch =>{
         dispatch({type: actionTypes.ADJUST_QTY, id, qty})
     }
 }
