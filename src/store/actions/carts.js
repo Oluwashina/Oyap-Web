@@ -28,3 +28,9 @@ export const removeCart = (id) =>{
         cogoToast.success(`Item removed from cart`);
     }
 }
+
+export const adjustQty = (id, qty) =>{
+    return (dispatch, getState) =>{
+        dispatch({type: actionTypes.ADJUST_QTY, id, qty})
+    }
+}
