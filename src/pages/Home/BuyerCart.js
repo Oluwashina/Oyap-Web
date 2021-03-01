@@ -1,15 +1,27 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import BuyerNav from '../../components/BuyerNavbar';
 // import Item5 from "../../assets/images/item5.png";
 import './BuyerCart.css'
 import BuyerFooter from '../../components/BuyerFooter';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
-import { removeCart } from '../../store/actions/carts';
+import { adjustQty, removeCart } from '../../store/actions/carts';
 
 const Cart = (props) => {
 
-    const {cartItems, removeCart, total} = props
+    const {cartItems, removeCart, Increment, Decrement} = props
+
+    const [totalPrice, setTotalPrice] = useState(0)
+
+    useEffect(() =>{
+        let price = 0;
+
+        cartItems.forEach(item =>{
+            price += item.cartQty * item.price
+        })
+
+        setTotalPrice(price)
+    }, [cartItems, totalPrice, setTotalPrice])
 
     const itemsCart = cartItems.length ? (
         cartItems.map(items=>{
@@ -37,7 +49,7 @@ const Cart = (props) => {
                         <div>
                             <i 
                             className={items.cartQty === 1 ? "mdi mdi-minus disabled" : "mdi mdi-minus"}
-                        
+                            onClick={()=>{Decrement(items.id, items.cartQty - 1)}} 
                             ></i>
                         </div>
                         <div style={{fontSize: 20}}>
@@ -45,7 +57,7 @@ const Cart = (props) => {
                         </div>
                         <div>
                          <i className="mdi mdi-plus"
-                            
+                              onClick={()=>{Increment( items.id, items.cartQty + 1)}} 
                             style={{fontSize: 20, cursor: 'pointer'}}></i>
                             </div>
                         </div>
@@ -133,7 +145,7 @@ const Cart = (props) => {
                         <h5 style={{fontWeight: 700}}>TOTAL</h5>
                     </div>
                     <div>
-                        <h5 style={{fontWeight: 700, color: '#5B9223'}}>NGN {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
+                        <h5 style={{fontWeight: 700, color: '#5B9223'}}>NGN {totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
                         <p className="mb-0" style={{fontSize: 14, color: '#C4C4C4'}}>Not including shipping fees</p>
                     </div>
                 </div>
@@ -158,13 +170,14 @@ const Cart = (props) => {
 const mapStateToProps = (state) =>{
     return{
         cartItems: state.cart.cartItems,
-        total: state.cart.total
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
         removeCart: (id) => dispatch(removeCart(id)),
+        Increment : (id, qty) => dispatch(adjustQty(id, qty)),
+        Decrement : (id, qty) => dispatch(adjustQty(id, qty)),
     }
 }
  

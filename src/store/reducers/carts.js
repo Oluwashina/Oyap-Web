@@ -3,7 +3,6 @@ import * as actionTypes from '../actions/actionTypes'
 const initState = {
     count: 1,
     cartItems: [],
-    total: 0
 }
 
 const cartReducer = (state=initState, action) => {
@@ -19,27 +18,36 @@ const cartReducer = (state=initState, action) => {
                 count: state.count - 1    
             }
         case actionTypes.ADD_TO_CART:
+            
+            // check if product exist in cart, if true adjust quantity
+            const inCart = state.cartItems.find((item) =>
+            item.id === action.id ? true : false)
+            
+            // adding a new product to cart
             let addedItem = action.product.find(pro=> pro.id === action.id)
             var result = {
                 ...addedItem,
                 cartQty: state.count,
                 subTotal: state.count * addedItem.price
             }
-            let newTotal = state.total + (state.count * addedItem.price)
                 
             return{
                 ...state,
-                cartItems: [...state.cartItems, result],
-                total: newTotal
+                cartItems: inCart ? state.cartItems.map((item)=>
+                item.id === action.id ? {...item, cartQty: item.cartQty + state.count, subTotal: (item.cartQty + state.count) * item.price } : item) : [...state.cartItems, result],
             }
         case actionTypes.REMOVE_FROM_CART:
             let removedItem = state.cartItems.filter(item=> item.id !== action.id)
-            let item = state.cartItems.find(item=> item.id === action.id)
-            let removedTotal = state.total - (item.cartQty * item.price)
+        
             return{
                 ...state,
                 cartItems: removedItem,
-                total: removedTotal
+    
+            }
+        case actionTypes.ADJUST_QTY:
+            return{
+                ...state,
+                cartItems: state.cartItems.map((item => item.id === action.id ? {...item, cartQty: action.qty, subTotal: action.qty * item.price} : item)),
             }
         default:
             return state
