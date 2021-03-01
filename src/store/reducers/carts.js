@@ -25,16 +25,17 @@ const cartReducer = (state=initState, action) => {
             
             // adding a new product to cart
             let addedItem = action.product.find(pro=> pro.id === action.id)
-            var result = {
+            let result = {
                 ...addedItem,
                 cartQty: state.count,
                 subTotal: state.count * addedItem.price
             }
+
+            let newCartItems =  inCart ? state.cartItems.map((item)=> item.id === action.id ? {...item, cartQty: item.cartQty + state.count, subTotal: (item.cartQty + state.count) * item.price } : item) : [...state.cartItems, result]
                 
             return{
                 ...state,
-                cartItems: inCart ? state.cartItems.map((item)=>
-                item.id === action.id ? {...item, cartQty: item.cartQty + state.count, subTotal: (item.cartQty + state.count) * item.price } : item) : [...state.cartItems, result],
+                cartItems: newCartItems
             }
         case actionTypes.REMOVE_FROM_CART:
             let removedItem = state.cartItems.filter(item=> item.id !== action.id)
@@ -45,9 +46,10 @@ const cartReducer = (state=initState, action) => {
     
             }
         case actionTypes.ADJUST_QTY:
+            let cartItems = state.cartItems.map((item => item.id === action.id ? {...item, cartQty: action.qty, subTotal: action.qty * item.price} : item))
             return{
                 ...state,
-                cartItems: state.cartItems.map((item => item.id === action.id ? {...item, cartQty: action.qty, subTotal: action.qty * item.price} : item)),
+                cartItems: cartItems
             }
         default:
             return state
