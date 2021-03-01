@@ -32,7 +32,7 @@ function App() {
             <Route path="/login" component={UserLogin} />
             <Route path="/forgotpassword" component={ForgotPassword} />
             <Route path="/resetpassword" component={ResetPassword} />
-            <Route path="/createProduct" component={CreateProduct} />
+            <Route path="/createProduct" component={CreateProduct} />            
           </Switch>
         </Router>
       </div>
