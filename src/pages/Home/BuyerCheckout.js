@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import BuyerFooter from "../../components/BuyerFooter";
 import BuyerNav from "../../components/BuyerNavbar";
+import OrderBillingDetails from "../../components/Order/OrderBillingDetails"
+import OrderSummary from "../../components/Order/OrderSummary"
+import Order from "../../components/Order/Order"
 
 const Checkout = () => {
+  
   const [ orderData, setOrderData ] = useState({
     firstName: "",
     lastName: "",
@@ -14,7 +18,7 @@ const Checkout = () => {
     phone2: "",
     orderNotes: "",
   });
-  const [ products, setProducts ] = useState([])
+  // const [ products, setProducts ] = useState([])
   const handleOrderDataChange = (e) => {
     const { id, value } = e.target;
 
@@ -26,8 +30,7 @@ const Checkout = () => {
     });
   };
 
-  const handleOrderDataSubmit = (e) => {
-    e.preventDefault();
+  const handleOrderDataSubmit = () => {    
     console.log(orderData);
   };
   return (
@@ -57,226 +60,17 @@ const Checkout = () => {
             </div>
 
             {/* billing form details */}
-
-            
-              {/* first name */}
-              <div className="form-group mt-4 mt-lg-4">
-                <label htmlFor="email">First name</label>
-                <input
-                  className="form-control input-style"
-                  onChange={handleOrderDataChange}
-                  placeholder="First name"
-                  type="text"
-                  id="firstName"
-                />
-              </div>
-
-              {/* last name */}
-              <div className="form-group mt-4">
-                <label htmlFor="lastName">Last name</label>
-                <input
-                  className="form-control input-style"
-                  onChange={handleOrderDataChange}
-                  placeholder="Last name"
-                  type="text"
-                  id="lastName"
-                />
-              </div>
-
-              {/* store name */}
-              <div className="form-group mt-4">
-                <label htmlFor="email">Store Name (Optional)</label>
-                <input
-                  className="form-control input-style"
-                  onChange={handleOrderDataChange}
-                  placeholder=""
-                  type="text"
-                  id="store"
-                />
-              </div>
-
-              {/* state */}
-              <div className="form-group mt-4">
-                <label htmlFor="state">State</label>
-                <input
-                  className="form-control input-style"
-                  onChange={handleOrderDataChange}
-                  placeholder=""
-                  type="text"
-                  id="state"
-                />
-              </div>
-
-              {/* city */}
-              <div className="form-group mt-4">
-                <label htmlFor="city">City</label>
-                <input
-                  className="form-control input-style"
-                  onChange={handleOrderDataChange}
-                  placeholder=""
-                  type="text"
-                  id="city"
-                />
-              </div>
-
-              {/* Street Address */}
-              <div className="form-group mt-4">
-                <label htmlFor="street">Street Address</label>
-                <input
-                  className="form-control input-style"
-                  onChange={handleOrderDataChange}
-                  placeholder=""
-                  type="text"
-                  id="street"
-                />
-              </div>
-
-              {/* phone number */}
-              <div className="form-group mt-4">
-                <label htmlFor="phone1">Phone Number</label>
-                <input
-                  className="form-control input-style"
-                  onChange={handleOrderDataChange}
-                  placeholder=""
-                  type="text"
-                  id="phone1"
-                />
-              </div>
-
-              {/* Additional phone number */}
-              <div className="form-group mt-4">
-                <label htmlFor="phone2">Additional phone number</label>
-                <input
-                  className="form-control input-style"
-                  onChange={handleOrderDataChange}
-                  placeholder=""
-                  type="text"
-                  id="phone2"
-                />
-              </div>
-
-              {/* order notes */}
-              <div className="form-group mt-4">
-                <label htmlFor="orderNotes">Order notes (Optional)</label>
-                <input
-                  className="form-control input-style"
-                  onChange={handleOrderDataChange}
-                  placeholder=""
-                  type="text"
-                  id="orderNotes"
-                />
-              </div>
-            
+            <OrderBillingDetails handleOrderDataChange={handleOrderDataChange} />                         
           </div>
           <div className="col-lg-5 mb-5">
             <h6 style={{ fontWeight: "bold" }}>Your Order</h6>
 
             {/* order summary */}
-            <div
-              className="mt-lg-5 mt-4"
-              style={{
-                background: " rgba(196, 196, 196, 0.2)",
-                borderRadius: "5px",
-                padding: "30px 15px",
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <div>
-                  <p className="mb-0" style={{ fontWeight: 600 }}>
-                    Product
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-0" style={{ fontWeight: 600 }}>
-                    Sub Total
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <hr
-                  className="mt-4 mb-0"
-                  style={{ borderTop: "1px solid rgba(196, 196, 196, 0.5)" }}
-                />
-              </div>
-
-              <div
-                className="mt-4"
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <div>
-                  <p
-                    className="mb-0"
-                    style={{ fontSize: 14, width: "70%", lineHeight: "21px" }}
-                  >
-                    1 truck load of nigerian grade alligator pepper
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-0" style={{ fontWeight: 600 }}>
-                    NGN 40,000
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <hr
-                  className="mt-4 mb-0"
-                  style={{ borderTop: "1px solid rgba(196, 196, 196, 0.5)" }}
-                />
-              </div>
-
-              <div
-                className="mt-4"
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <div>
-                  <p
-                    className="mb-0"
-                    style={{ fontSize: 14, width: "50%", lineHeight: "21px" }}
-                  >
-                    Shipping Paid
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-0" style={{ fontWeight: 600 }}>
-                    NGN 2,000
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <hr
-                  className="mt-4 mb-0"
-                  style={{ borderTop: "1px solid rgba(196, 196, 196, 0.5)" }}
-                />
-              </div>
-
-              <div
-                className="mt-4"
-                style={{ display: "flex", justifyContent: "space-between" }}
-              >
-                <div>
-                  <p className="mb-0" style={{ fontWeight: 700 }}>
-                    TOTAL
-                  </p>
-                </div>
-                <div>
-                  <h6
-                    className="mb-0"
-                    style={{ fontWeight: 600, color: "#5B9223" }}
-                  >
-                    NGN 42,000
-                  </h6>
-                </div>
-              </div>
-            </div>
+           <OrderSummary />
 
             {/* place order button */}
-            <div className="mt-4">
-              <button type="submit" className="btn btn-buy btn-block mt-4" onClick={handleOrderDataSubmit}>
-                Place Order
-              </button>
+            <div className="mt-4">              
+              <Order handleOrder={handleOrderDataSubmit}/>
             </div>
           </div>
         </div>
