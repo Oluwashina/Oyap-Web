@@ -9,29 +9,23 @@ import Default from "../../assets/images/default.png";
 import Seller from "../../assets/images/seller1.png";
 import './BuyerItemPage.css'
 import BuyerFooter from '../../components/BuyerFooter';
-import {Link} from 'react-router-dom'
 import { connect } from "react-redux";
 import { useFirestoreConnect } from "react-redux-firebase";
 import { addToCart, Decrement, Increment } from '../../store/actions/carts';
 
 const ItemPage = (props) => {
 
-    const {product, count, Increment, Decrement, addCartClick, products, id} = props
+    const {product, count, Increment, Decrement, addCartClick, products, id, history} = props
 
 
     useFirestoreConnect([
         { collection: "products", orderBy: ["createdAt", "desc"] },
       ]);
 
-    //   const check = () =>{
-    //       if(cartItems.some(item => item.id === id)){
-    //           console.log('rell')
-    //       }
-    //       else{
-    //          console.log('dd')
-    //       }
-    //   }
-
+      const BuyNow = (products, id, name) =>{
+        addCartClick(products, id, name)
+        history.push('/checkout')
+      }
       
 
     if(product){
@@ -147,9 +141,9 @@ const ItemPage = (props) => {
                             >Add to Cart</button>
                             </div>
                             <div className="ml-4" style={{flex: 1}}>
-                        <Link
-                        to="/checkout"
-                         className="btn btn-buy btn-block mt-4">Buy Now</Link>
+                        <button
+                        onClick={()=>{BuyNow(products, id, product.name)}}
+                         className="btn btn-buy btn-block mt-4">Buy Now</button>
                             </div>
                         </div>
 
@@ -294,7 +288,7 @@ const ItemPage = (props) => {
     else{
         return (
             <div className="container">
-              <p>Loading</p>
+              <p></p>
             </div>
           );
     }
