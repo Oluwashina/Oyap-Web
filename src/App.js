@@ -14,6 +14,7 @@ import CheckoutPage from "./pages/Home/BuyerCheckout"
 import Cart from "./pages/Home/BuyerCart"
 import Orders from "./pages/BuyerOrders/Orders"
 import OrderDetails from "./pages/BuyerOrders/OrderDetails"
+import FAQ from "./pages/FAQ/faq"
 
 function App() {
   return (
@@ -32,7 +33,8 @@ function App() {
             <Route path="/login" component={UserLogin} />
             <Route path="/forgotpassword" component={ForgotPassword} />
             <Route path="/resetpassword" component={ResetPassword} />
-            <Route path="/createProduct" component={CreateProduct} />            
+            <Route path="/createProduct" component={CreateProduct} />   
+            <Route path="/faq" component={FAQ} />         
           </Switch>
         </Router>
       </div>

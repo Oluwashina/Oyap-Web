@@ -1,0 +1,39 @@
+
+.faq-section{
+    padding: 6.25rem 0;
+}
+
+.faq-section .card .card-header .btn-header-link:after {
+    content: "\f106";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    float: right;
+    color: #555;
+    transition: all 0.2s;
+}
+.faq-section .card .card-header .btn-header-link.collapsed:after {
+    content: "\f107";
+    color: #555;
+    transition: all 0.2s;
+}
+
+.card:first-child button {
+    padding-top: 0;
+}
+.card{
+    background-color: transparent;
+    border: none;
+    padding: 1.5rem 0;
+}
+.card-header{
+    background-color: transparent;
+    padding: 0;
+    border-bottom: none;
+}
+
+.accordion .card:first-of-type{
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+.accordion .card:not(:first-of-type):not(:last-of-type) {
+    border-bottom: 1px solid  rgba(0,0,0,.125);
+}

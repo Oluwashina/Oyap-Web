@@ -20,7 +20,7 @@ const BuyerFooter = () => {
                                         <li className="mt-lg-0 mt-3"><Link to="/">About us</Link></li>
                                         <li className="mt-lg-0 mt-3"><Link to="/" >Terms and Conditions</Link></li>
                                         <li className="mt-lg-0 mt-3"><Link to="/" >Safety Tips</Link></li>
-                                        <li className="mt-lg-0 mt-3"><Link to="/">FAQ</Link></li>
+                                        <li className="mt-lg-0 mt-3"><Link to="/faq">FAQ</Link></li>
                                     </ul>
                                 </div>
                         </div>
