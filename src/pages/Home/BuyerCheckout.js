@@ -1,11 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import BuyerFooter from "../../components/BuyerFooter";
 import BuyerNav from "../../components/BuyerNavbar";
 import OrderBillingDetails from "../../components/Order/OrderBillingDetails"
 import OrderSummary from "../../components/Order/OrderSummary"
-import Order from "../../components/Order/Order"
+import {connect} from 'react-redux'
 
-const Checkout = () => {
+const Checkout = (props) => {
+
+  const {cartItems} = props
+
+  const [totalPrice, setTotalPrice] = useState(0)
+
+  useEffect(() =>{
+      let price = 0;
+
+      cartItems.forEach(item =>{
+          price += item.cartQty * item.price
+      })
+
+      setTotalPrice(price)
+  }, [cartItems, totalPrice, setTotalPrice])
+
   
   const [ orderData, setOrderData ] = useState({
     firstName: "",
@@ -40,8 +55,8 @@ const Checkout = () => {
       {/* breadcrumbs */}
       <div style={{ background: " rgba(196, 196, 196, 0.2)", padding: "10px" }}>
         <div className="container">
-          <p className="mb-0">
-            <span style={{ color: "#7BC30A" }}>Home/View All/Vegetables</span>
+          <p className="mb-0" style={{fontSize: 14}}>
+            <span style={{ color: "#7BC30A", fontSize: 14 }}>Home</span>
             /Checkout
           </p>
         </div>
@@ -66,12 +81,11 @@ const Checkout = () => {
             <h6 style={{ fontWeight: "bold" }}>Your Order</h6>
 
             {/* order summary */}
-           <OrderSummary />
+           <OrderSummary 
+            handleOrder={handleOrderDataSubmit}
+           />
 
-            {/* place order button */}
-            <div className="mt-4">              
-              <Order handleOrder={handleOrderDataSubmit}/>
-            </div>
+        
           </div>
         </div>
       </div>
@@ -81,4 +95,10 @@ const Checkout = () => {
   );
 };
 
-export default Checkout;
+const mapStateToProps = (state) =>{
+  return{
+      cartItems: state.cart.cartItems,
+  }
+}
+
+export default connect(mapStateToProps)(Checkout);

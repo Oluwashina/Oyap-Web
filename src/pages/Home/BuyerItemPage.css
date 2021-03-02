@@ -30,6 +30,17 @@
     border: 1px solid #7BC30A;
 }
 
+.btn-place{
+    background: #7BC30A;;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 40px;
+    transition: all ease-in 0.5s;  
+}
+.btn-place:hover{
+    color: white;
+}
+
 .btn-contact{
     background: #7BC30A;;
     border-radius: 5px;

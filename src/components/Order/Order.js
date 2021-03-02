@@ -1,11 +1,11 @@
 import React from "react";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
-const Payment = ({handleOrder}) => {
+const Payment = ({handleOrder, handleDisabled, amount}) => {
   const config = {
     public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: Date.now(),
-    amount: 100,
+    amount: amount,
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd",
     customer: {
@@ -14,7 +14,7 @@ const Payment = ({handleOrder}) => {
       name: "joel ugwumadu",
     },
     customizations: {
-      title: "my Payment Title",
+      title: "OYAP Payment",
       description: "Payment for items in cart",
       logo:
         "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
@@ -26,7 +26,8 @@ const Payment = ({handleOrder}) => {
   return (
     <>
       <button
-        className="btn btn-buy btn-block mt-4"
+        className="btn btn-place btn-block mt-4"
+        disabled={handleDisabled.length === 0}
         onClick={() => {
           handleOrder()
           handleFlutterPayment({
