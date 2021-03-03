@@ -1,16 +1,168 @@
 
 .cartDiv{
     position: absolute;
-    top: -5px;
+    top: -2px;
     left: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     background: rgba(237, 136, 28, 0.1);
 }
 .emptyCartDiv{
     display: none;
+}
+
+.mynav nav{
+    display: none;
+}
+
+.mynav .contain{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+.mobile-menu{
+    cursor: pointer;
+}
+
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+
+nav {
+    position: fixed;
+    z-index: 90;
+    width: 66%;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgb(50, 51, 53);
+    height: 100vh;
+    padding: 1em;
+}
+
+.mynav nav.menu-btn {
+    display: block;
+}
+nav ul.primary-nav{
+    margin-top: 5em;
+}
+
+nav ul a{
+    color: white;
+    text-decoration: none;
+    display: block;
+    padding: .5em;
+    font-size: 1em;
+    text-align: right;
+}
+
+.mobile-menu-exit{
+    float: right;
+    margin: .5em;
+    cursor: pointer;
+    display: flex;
+}
+
+.mobile-div{
+    display: flex;
+}
+.cart-display{
+    display: none;
+}
+.btn-search{
+    background: #7BC30A;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 40px;
+    transition: all ease-in 0.5s;
+}
+.btn-search:hover{
+    color: white;
+}
+
+@media only screen and (min-width: 768px) {
+    .cart-display{
+        display: block;
+    }
+    .cartDiv{
+        position: absolute;
+        top: -8px;
+        left: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: rgba(237, 136, 28, 0.1);
+    }
+    .mobile-menu, .mobile-menu-exit, .mobile-div {
+        display: none;
+    }
+    .mynav .contain {
+        display: grid;
+        grid-template-columns: 180px auto;
+        justify-content: unset;
+        padding: 5px;
+    }
+    .mynav nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: none;
+        position: unset;
+        height: auto;
+        width: 100%;
+        padding: .5rem 1rem;
+    }
+    .mynav nav a{
+        color: black;
+        padding: .1em 1em;
+    }
+    .mynav nav ul{
+        display: flex;
+    }
+    .mynav nav ul.primary-nav{
+        margin: 0;
+    }
+    ul.primary-nav {
+        margin: 0;
+    }
+    
+    .search-style{
+        background-color: #fff;
+        border-radius: 5px;
+        border: 1px solid #c4c4c4;
+        padding: 22px 60px;
+        color: #fff;
+    }
+    .search-style:focus{
+        background: #fff;
+        border: 1px solid #c4c4c4;
+        box-shadow: none;
+        outline: 0 none;
+    }
+    .search-style::placeholder{
+        color: #C4C4C4;
+    }
+    .input-container{
+        position: relative;
+    }
+    .iconn{
+        position: absolute;
+        top: 7px;
+        left: 5px;
+        text-align: center;
+        padding: 6px 0px 0px 12px;
+        color: #C4C4C4;
+        font-size: 19px;
+    }
+    
 }

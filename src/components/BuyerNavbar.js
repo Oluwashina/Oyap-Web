@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SellIcon from "../assets/images/sell_nav.png";
 import Logo from "../assets/images/logo.png";
 import Cart from "../assets/images/cart_icon.svg";
+import Menu from "../assets/images/menu.svg";
+import Close from "../assets/images/exit.svg";
 import {Link, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 import './BuyerNavbar.css'
@@ -9,6 +11,12 @@ import './BuyerNavbar.css'
 const BuyerNav = (props) => {
 
     const {cartCount} = props
+
+    const [navShow, setNavShow] = useState(false);
+
+    const ToggleMenu = () =>{
+        setNavShow(navShow ? false : true);
+    }
 
     return ( 
         <>
@@ -45,7 +53,7 @@ const BuyerNav = (props) => {
             </div>
 
             {/* navbar */}
-            <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: 'white',}}>
+            {/* <nav className="navbar navbar-expand-lg navbar-light" style={{backgroundColor: 'white',}}>
             <div className="container">
                   <Link className="navbar-brand" to="/">
                   <img src={Logo}  alt="logo" width="50" height="50"/>
@@ -56,7 +64,7 @@ const BuyerNav = (props) => {
                     </button>
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                         {/* First Ul list */}
+                        
                         <ul className="navbar-nav mr-auto py-4 py-md-0">
                             <li className="nav-item px-lg-2">
                                 <NavLink className="nav-link text-color"  to="/"   aria-haspopup="true" aria-expanded="false">
@@ -78,7 +86,62 @@ const BuyerNav = (props) => {
                      </div>
 
                 </div>
+            </nav> */}
+
+            {/* new navbar */}
+            <div class="container mynav">
+                <div class="contain">
+             <Link className="mt-lg-1" to="/">
+                  <img src={Logo}  alt="logo" width="50" height="50"/>
+                    </Link>
+
+            <div className="mobile-div">
+                <NavLink className="nav-link mobile-menu"  to="/cart" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
+                    <img src={Cart}  alt="logo" width="30" height="30" />   
+                    <div
+                    className={cartCount === 0 ? "emptyCartDiv" : "cartDiv"}>
+                    <span style={{color: '#ED881C', fontWeight: 'bold'}}>{cartCount}</span>
+                    </div>
+                </NavLink> 
+
+                <img src={Menu} alt="Open Nav" className="img-fluid mobile-menu" id="mobile-cta" onClick={ToggleMenu} />
+            </div>
+           
+
+            <nav className={ navShow ? "menu-btn" : "" }>
+            <img src={Close} alt="Close Nav" className="img-fluid mobile-menu-exit" id="mobile-cta" onClick={ToggleMenu} />
+                <ul class="primary-nav">
+                {/* <Link to="/orders" style={{textDecoration: 'none'}}>My Orders</Link> */}
+                <li>
+                    <div className="form-group input-container mb-0">
+                        <i className="mdi mdi-magnify iconn"></i>
+                        <input type="text" placeholder="Search farm produce" 
+                        className="form-control search-style"  />
+                    </div>
+                </li>
+                <li>
+                    <button className="btn btn-search ml-lg-3 mt-lg-0 mt-2">SEARCH</button>
+                </li>
+                    
+
+                </ul>
+
+                <ul class="secondary-nav">
+                    <Link to="/orders" className="mt-lg-1" style={{textDecoration: 'none'}}>My Orders</Link>
+                    <li className="nav-item px-lg-2">
+                        <NavLink className="nav-link cart-display"  to="/cart" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
+                                <img src={Cart}  alt="logo" width="25" height="25" />   
+                                <div
+                                className={cartCount === 0 ? "emptyCartDiv" : "cartDiv"}>
+                                <span style={{color: '#ED881C', fontWeight: 'bold'}}>{cartCount}</span>
+                                </div>
+                        </NavLink> 
+                     </li>
+                </ul>
             </nav>
+
+        </div>
+    </div>
 
         </>
      );
