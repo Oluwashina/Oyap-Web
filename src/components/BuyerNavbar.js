@@ -89,8 +89,8 @@ const BuyerNav = (props) => {
             </nav> */}
 
             {/* new navbar */}
-            <div class="container mynav">
-                <div class="contain">
+            <div className="container mynav">
+                <div className="contain">
              <Link className="mt-lg-1" to="/">
                   <img src={Logo}  alt="logo" width="50" height="50"/>
                     </Link>
@@ -110,7 +110,7 @@ const BuyerNav = (props) => {
 
             <nav className={ navShow ? "menu-btn" : "" }>
             <img src={Close} alt="Close Nav" className="img-fluid mobile-menu-exit" id="mobile-cta" onClick={ToggleMenu} />
-                <ul class="primary-nav">
+                <ul className="primary-nav">
                 {/* <Link to="/orders" style={{textDecoration: 'none'}}>My Orders</Link> */}
                 <li>
                     <div className="form-group input-container mb-0">
@@ -126,7 +126,7 @@ const BuyerNav = (props) => {
 
                 </ul>
 
-                <ul class="secondary-nav">
+                <ul className="secondary-nav">
                     <Link to="/orders" className="mt-lg-1" style={{textDecoration: 'none'}}>My Orders</Link>
                     <li className="nav-item px-lg-2">
                         <NavLink className="nav-link cart-display"  to="/cart" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
