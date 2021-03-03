@@ -12,21 +12,15 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
     <Route
       {...rest}
-      render={(props) => {
-        if (!auth.uid) {
-          return (
-            <Redirect
-              to={{ pathname: "/login", state: { from: props.location } }}
-            />
-          );
-        }
-        
-        if (!role === "Farmer") {
-          // role not authorised so redirect to home page
-          return <Redirect to={{ pathname: `/${role}` }} />;
-        }
-        return <Component {...props} />;
-      }}
+      render={(props) =>
+        !auth.uid ? (
+          <Redirect
+            to={{ pathname: "/login", state: { from: props.location } }}
+          />
+        ) : (
+          <Component {...props} />
+        )
+      }
     />
   );
 };
