@@ -83,7 +83,7 @@ const BuyerHome = (props) => {
       <BuyerProducts itemRoute={itemProduct} products={products} />
 
       {/* farm image */}
-      <div className="mt-5 mb-5" style={{ position: "relative" }}>
+      <div className="mt-5 mb-lg-5 mb-4" style={{ position: "relative" }}>
         <img src={Farm} alt="farm" className="img-fluid" />
         <div className="sell_circle">
           <h3>
@@ -92,7 +92,7 @@ const BuyerHome = (props) => {
             want to sell on OYAP
           </h3>
 
-          <Link to="/signup" className="btn btn-sell text-uppercase mt-4">
+          <Link to="/signup" className="btn btn-sell text-uppercase mt-lg-4 mt-2">
             SELL NOW
           </Link>
         </div>

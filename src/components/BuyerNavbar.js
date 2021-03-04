@@ -275,10 +275,10 @@ const BuyerNav = (props) => {
                                 <Link to="/login" className="btn btn-search" style={{padding: '10px 40px', textDecoration: 'none', color: 'white'}}>LOGIN</Link>
                             </div>
                             <div>
-                                <p className="mb-0 mt-3" style={{color: '#C4C4C4'}}>OR</p>
+                                <p className=" mt-3" style={{color: '#C4C4C4'}}>OR</p>
                             </div>
                             <div>
-                                <Link to="/signup" className="mt-3" style={{textDecoration: 'none', color: '#ED881C', fontWeight: 500, textAlign: 'center', padding: '0px'}}>CREATE AN ACCOUNT</Link>
+                                <Link to="/signup" className="mt-1" style={{textDecoration: 'none', color: '#ED881C', fontWeight: 500, textAlign: 'center', padding: '0px'}}>CREATE AN ACCOUNT</Link>
                             </div>
                         </div>
                     </div>
