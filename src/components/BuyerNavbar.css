@@ -38,34 +38,24 @@ ul{
 nav {
     position: fixed;
     z-index: 90;
-    width: 66%;
+    width: 80%;
     right: 0;
     top: 0;
     bottom: 0;
     background: rgb(50, 51, 53);
     height: 100vh;
-    padding: 1em;
+    /* padding: 1em; */
 }
 
 .mynav nav.menu-btn {
     display: block;
 }
-nav ul.primary-nav{
-    margin-top: 5em;
-}
 
-nav ul a{
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: .5em;
-    font-size: 1em;
-    text-align: right;
-}
 
 .mobile-menu-exit{
     float: right;
     margin: .5em;
+     padding: 10px 20px;
     cursor: pointer;
     display: flex;
 }
@@ -85,6 +75,15 @@ nav ul a{
 }
 .btn-search:hover{
     color: white;
+}
+
+.btn-logout{
+    background-color: transparent;
+    color: #ED881C;
+    padding: 10px;
+}
+.btn-logout:hover{
+    color: #ED881C;
 }
 
 @media only screen and (min-width: 768px) {
@@ -108,7 +107,7 @@ nav ul a{
     }
     .mynav .contain {
         display: grid;
-        grid-template-columns: 180px auto;
+        grid-template-columns: 150px auto;
         justify-content: unset;
         padding: 5px;
     }
@@ -141,7 +140,6 @@ nav ul a{
         border-radius: 5px;
         border: 1px solid #c4c4c4;
         padding: 22px 60px;
-        color: #fff;
     }
     .search-style:focus{
         background: #fff;
@@ -164,5 +162,66 @@ nav ul a{
         color: #C4C4C4;
         font-size: 19px;
     }
+
+    /* dropdown styles */      
+      .dropdown {
+        position: relative;
+        border: 1px solid #7BC30A;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 6px 20px;
+      }
+      
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border-radius: 5px;
+        min-width: 190px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        top: 55px;
+        left: 0px;
+        padding: 25px 10px 25px 10px;
+        text-align: center;
+        transition: all 0.5s;
+      }
+
+      .dropdown-login-content{
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border-radius: 5px;
+        min-width: 240px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        top: 55px;
+        left: 0px;
+        text-align: center;
+        transition: all 0.5s;
+      }
+      
+      .dropdown-content.block{
+        display: block;
+      }
+
+      .dropdown-login-content.block{
+          display: block;
+      }
+
+      .drop-signin{
+          display: flex;
+          align-items: center;
+          padding: 10px;
+
+      }
+
+     .dropdown-login-content.block .drop-signin:hover{
+            background-color: #e5e5e5;
+     }
+     .dropdown-login-content.block .drop-signin:hover p{
+         font-weight: 600;
+     }
     
 }
