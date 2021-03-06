@@ -1,6 +1,12 @@
 import React from "react";
 
-const OrderBillingDetails = ({handleOrderDataChange}) => {
+const OrderBillingDetails = ({
+  handleOrderDataChange,
+  handleBlur,
+  errors,
+  values,
+  touched,
+}) => {
   return (
     <>
       {/* first name */}
@@ -9,10 +15,16 @@ const OrderBillingDetails = ({handleOrderDataChange}) => {
         <input
           className="form-control input-style"
           onChange={handleOrderDataChange}
+          onBlur={handleBlur}
           placeholder="First name"
           type="text"
           id="firstName"
+          name="firstName"
+          value={values.firstName}
         />
+        <small style={{ color: "#dc3545" }}>
+          {touched.firstName && errors.firstName}
+        </small>
       </div>
 
       {/* last name */}
@@ -21,10 +33,16 @@ const OrderBillingDetails = ({handleOrderDataChange}) => {
         <input
           className="form-control input-style"
           onChange={handleOrderDataChange}
+          onBlur={handleBlur}
           placeholder="Last name"
           type="text"
           id="lastName"
+          name="lastName"
+          value={values.lastName}
         />
+        <small style={{ color: "#dc3545" }}>
+          {touched.lastName && errors.lastName}
+        </small>
       </div>
 
       {/* store name */}
@@ -33,9 +51,12 @@ const OrderBillingDetails = ({handleOrderDataChange}) => {
         <input
           className="form-control input-style"
           onChange={handleOrderDataChange}
-          placeholder=""
+          onBlur={handleBlur}
+          placeholder="Store name"
           type="text"
           id="store"
+          name="store"
+          value={values.store}
         />
       </div>
 
@@ -45,10 +66,16 @@ const OrderBillingDetails = ({handleOrderDataChange}) => {
         <input
           className="form-control input-style"
           onChange={handleOrderDataChange}
-          placeholder=""
+          onBlur={handleBlur}
+          placeholder="State"
           type="text"
           id="state"
+          name="state"
+          value={values.state}
         />
+        <small style={{ color: "#dc3545" }}>
+          {touched.state && errors.state}
+        </small>
       </div>
 
       {/* city */}
@@ -57,10 +84,17 @@ const OrderBillingDetails = ({handleOrderDataChange}) => {
         <input
           className="form-control input-style"
           onChange={handleOrderDataChange}
-          placeholder=""
+          onBlur={handleBlur}
+          placeholder="City"
           type="text"
           id="city"
+          name="city"
+          value={values.city}
+          
         />
+        <small style={{ color: "#dc3545" }}>
+          {touched.city && errors.city}
+        </small>
       </div>
 
       {/* Street Address */}
@@ -69,10 +103,16 @@ const OrderBillingDetails = ({handleOrderDataChange}) => {
         <input
           className="form-control input-style"
           onChange={handleOrderDataChange}
-          placeholder=""
+          onBlur={handleBlur}
+          placeholder="Street Address"
           type="text"
           id="street"
+          name="street"
+          value={values.street}
         />
+        <small style={{ color: "#dc3545" }}>
+          {touched.street && errors.street}
+        </small>
       </div>
 
       {/* phone number */}
@@ -81,10 +121,16 @@ const OrderBillingDetails = ({handleOrderDataChange}) => {
         <input
           className="form-control input-style"
           onChange={handleOrderDataChange}
-          placeholder=""
+          onBlur={handleBlur}
+          placeholder="Phone number"
           type="text"
           id="phone1"
+          name="phone1"
+          value={values.phone1}
         />
+        <small style={{ color: "#dc3545" }}>
+          {touched.phone1 && errors.phone1}
+        </small>
       </div>
 
       {/* Additional phone number */}
@@ -93,10 +139,16 @@ const OrderBillingDetails = ({handleOrderDataChange}) => {
         <input
           className="form-control input-style"
           onChange={handleOrderDataChange}
-          placeholder=""
+          onBlur={handleBlur}
+          placeholder="Additional phone number"
           type="text"
           id="phone2"
+          name="phone2"
+          value={values.phone2}
         />
+        <small style={{ color: "#dc3545" }}>
+          {touched.phone2 && errors.phone2}
+        </small>
       </div>
 
       {/* order notes */}
@@ -105,9 +157,12 @@ const OrderBillingDetails = ({handleOrderDataChange}) => {
         <input
           className="form-control input-style"
           onChange={handleOrderDataChange}
-          placeholder=""
+          onBlur={handleBlur}
+          placeholder="Order notes"
           type="text"
           id="orderNotes"
+          name="orderNotes"
+          value={values.orderNotes}
         />
       </div>
     </>
