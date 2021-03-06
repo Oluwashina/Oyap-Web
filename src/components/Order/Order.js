@@ -1,7 +1,7 @@
 import React from "react";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
-const Payment = ({handleOrder, handleDisabled, amount}) => {
+const Payment = ({handleOrder, handleDisabled, amount, values, errors}) => {
   const config = {
     public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: Date.now(),
@@ -26,10 +26,11 @@ const Payment = ({handleOrder, handleDisabled, amount}) => {
   return (
     <>
       <button
+       type="submit"
         className="btn btn-place btn-block mt-4"
         disabled={handleDisabled.length === 0}
         onClick={() => {
-          handleOrder()
+          handleOrder(values)
           handleFlutterPayment({
             callback: (response) => {
               console.log(response);
