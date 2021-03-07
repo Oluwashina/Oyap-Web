@@ -1,7 +1,11 @@
 import React from "react";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import { useSelector } from 'react-redux'
 
-const Payment = ({handleOrder, handleDisabled, amount, values, errors}) => {
+const Payment = ({ handleOrder, handleDisabled, amount, customer }) => {
+
+  const {auth: {email: customerEamil}} = useSelector(state => state.firebase)
+
   const config = {
     public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: Date.now(),
@@ -9,9 +13,9 @@ const Payment = ({handleOrder, handleDisabled, amount, values, errors}) => {
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd",
     customer: {
-      email: "user@gmail.com",
-      phonenumber: "07064586146",
-      name: "joel ugwumadu",
+      email: customerEamil,
+      phone_number: customer.phone1,
+      name: `${customer.firstName} ${customer.lastName}`,
     },
     customizations: {
       title: "OYAP Payment",
@@ -28,11 +32,11 @@ const Payment = ({handleOrder, handleDisabled, amount, values, errors}) => {
       <button
         className="btn btn-place btn-block mt-4"
         disabled={handleDisabled.length === 0}
-        onClick={() => {          
+        onClick={() => {
           handleFlutterPayment({
             callback: (response) => {
               console.log(response);
-              // handleOrder(values)
+              handleOrder()
               closePaymentModal(); // this will close the modal programmatically
             },
             onClose: () => {},
