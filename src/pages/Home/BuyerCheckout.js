@@ -4,8 +4,6 @@ import BuyerNav from "../../components/BuyerNavbar";
 import OrderBillingDetails from "../../components/Order/OrderBillingDetails";
 import OrderSummary from "../../components/Order/OrderSummary";
 import { connect } from "react-redux";
-import { useFormik } from "formik";
-import { checkoutValidator } from "../../validationSchema/validator";
 
 const Checkout = (props) => {
   const { cartItems } = props;
@@ -22,29 +20,31 @@ const Checkout = (props) => {
     setTotalPrice(price);
   }, [cartItems, totalPrice, setTotalPrice]);
 
-  const { handleSubmit, handleChange, handleBlur, values, touched, errors } = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      store: "",
-      state: "",
-      city: "",
-      street: "",
-      phone1: "",
-      phone2: "",
-      orderNotes: "",
-    },
-    validationSchema: checkoutValidator,
-    onSubmit(values){
-      // console.log(values);
-      console.log("Hello");
-    }
+  const [orderData, setOrderData] = useState({
+    firstName: "",
+    lastName: "",
+    store: "",
+    state: "",
+    city: "",
+    street: "",
+    phone1: "",
+    phone2: "",
+    orderNotes: "",
   });
 
-  // const handleOrderDataSubmit = (values) => {
-  //   console.log("0");
-  //   console.log(values);
-  // };
+
+  const handleChange = e => {
+    const { name, value } =  e.target
+
+    setOrderData(prevState => ({
+      ...prevState,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = () => {
+    console.log(orderData);
+  };
   return (
     <>
       <BuyerNav />
@@ -75,17 +75,17 @@ const Checkout = (props) => {
 
             <OrderBillingDetails
               handleOrderDataChange={handleChange}
-              handleBlur={handleBlur}
-              touched={touched}
-              errors={errors}
-              values={values}
+              values={orderData}           
             />
           </div>
           <div className="col-lg-5 mb-5">
             <h6 style={{ fontWeight: "bold" }}>Your Order</h6>
 
             {/* order summary */}
-            <OrderSummary handleOrder={handleSubmit} values={values} errors={errors} />
+            <OrderSummary
+              handleOrder={handleSubmit}
+              orderData={orderData}                    
+            />
           </div>
         </div>
       </div>
