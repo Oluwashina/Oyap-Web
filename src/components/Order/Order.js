@@ -26,15 +26,13 @@ const Payment = ({handleOrder, handleDisabled, amount, values, errors}) => {
   return (
     <>
       <button
-       type="submit"
         className="btn btn-place btn-block mt-4"
         disabled={handleDisabled.length === 0}
-        onClick={() => {
-          handleOrder(values)
+        onClick={() => {          
           handleFlutterPayment({
             callback: (response) => {
               console.log(response);
-              
+              // handleOrder(values)
               closePaymentModal(); // this will close the modal programmatically
             },
             onClose: () => {},
