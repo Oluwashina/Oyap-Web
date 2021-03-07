@@ -10,3 +10,5 @@ export {
 export { createProduct } from "./products";
 
 export {Increment, Decrement} from "./carts"
+
+export { purchaseProduct } from "./order"
