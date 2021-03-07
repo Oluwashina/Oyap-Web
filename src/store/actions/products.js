@@ -1,11 +1,6 @@
 import * as actionTypes from "./actionTypes";
 
 
-
-export const getProducts = () => {
-
-}
-
 export const createProduct = (product) => {
   return async (dispatch, getState, { getFirestore }) => {
     dispatch({ type: actionTypes.CREATE_PRODUCT_START });
