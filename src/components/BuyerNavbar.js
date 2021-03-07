@@ -168,7 +168,7 @@ const BuyerNav = (props) => {
                  <div className="">
                     <h6 style={{ color: '#ED881C'}}>Our Categories</h6>
                     </div>
-                    <ul class="">
+                    <ul className="">
                         <li style={{marginTop: '20px'}}>Fruits</li>
                         <li  style={{marginTop: '20px'}}>Vegetables</li>
                         <li  style={{marginTop: '20px', marginBottom: '20px'}}>Meat</li>
@@ -194,7 +194,7 @@ const BuyerNav = (props) => {
                  
             </div>
            
-                <ul class="primary-nav">
+                <ul className="primary-nav">
                 {/* <Link to="/orders" style={{textDecoration: 'none'}}>My Orders</Link> */}
                 <li className="cart-display">
                     <div className="form-group input-container mb-0">
@@ -210,7 +210,7 @@ const BuyerNav = (props) => {
             { auth.uid ? 
 
             <li className="nav-item px-lg-4 cart-display">
-            <div class="dropdown">
+            <div className="dropdown">
                
                 <div>
                     <img src={User}  alt="logo" width="25" height="25" />  
@@ -252,7 +252,7 @@ const BuyerNav = (props) => {
             </li>
 
              :  <li className="nav-item px-lg-4 cart-display">
-                <div class="dropdown">
+                <div className="dropdown">
                    
                     <div>
                         <img src={User}  alt="logo" width="25" height="25" />  
@@ -288,7 +288,7 @@ const BuyerNav = (props) => {
 
                 </ul>
 
-                <ul class="secondary-nav">
+                <ul className="secondary-nav">
                     <li className="nav-item px-lg-2">
                         <NavLink className="nav-link cart-display"  to="/cart" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
                                 <img src={Cart}  alt="logo" width="30" height="30" />   
