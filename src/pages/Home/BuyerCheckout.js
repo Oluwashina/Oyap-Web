@@ -3,10 +3,15 @@ import BuyerFooter from "../../components/BuyerFooter";
 import BuyerNav from "../../components/BuyerNavbar";
 import OrderBillingDetails from "../../components/Order/OrderBillingDetails";
 import OrderSummary from "../../components/Order/OrderSummary";
-import { connect } from "react-redux";
+import { connect, useSelector } from "react-redux";
+import * as actions from "../../store/actions"
 
 const Checkout = (props) => {
-  const { cartItems } = props;
+  const { cartItems, purchaseProduct } = props;
+
+  const {
+    auth: { uid: buyerId },
+  } = useSelector((state) => state.firebase);
 
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -32,18 +37,26 @@ const Checkout = (props) => {
     orderNotes: "",
   });
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
 
-  const handleChange = e => {
-    const { name, value } =  e.target
-
-    setOrderData(prevState => ({
+    setOrderData((prevState) => ({
       ...prevState,
-      [name]: value
-    }))
-  }
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = () => {
     console.log(orderData);
+    const order = {
+      products: cartItems,
+      orderData: orderData,
+      Amount: totalPrice,
+      buyerId: buyerId,
+      status: "Pending",
+      orderAt: new Date(),
+    };
+    purchaseProduct(order)
   };
   return (
     <>
@@ -75,17 +88,14 @@ const Checkout = (props) => {
 
             <OrderBillingDetails
               handleOrderDataChange={handleChange}
-              values={orderData}           
+              values={orderData}
             />
           </div>
           <div className="col-lg-5 mb-5">
             <h6 style={{ fontWeight: "bold" }}>Your Order</h6>
 
             {/* order summary */}
-            <OrderSummary
-              handleOrder={handleSubmit}
-              orderData={orderData}                    
-            />
+            <OrderSummary handleOrder={handleSubmit} orderData={orderData} />
           </div>
         </div>
       </div>
@@ -101,4 +111,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Checkout);
+const mapDispatchToProps = dispatch => {
+  return {
+    purchaseProduct: (order) => dispatch(actions.purchaseProduct(order))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
