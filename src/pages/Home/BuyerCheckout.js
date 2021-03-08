@@ -4,14 +4,12 @@ import BuyerNav from "../../components/BuyerNavbar";
 import OrderBillingDetails from "../../components/Order/OrderBillingDetails";
 import OrderSummary from "../../components/Order/OrderSummary";
 import { connect, useSelector } from "react-redux";
-import * as actions from "../../store/actions"
+import * as actions from "../../store/actions";
 
 const Checkout = (props) => {
   const { cartItems, purchaseProduct } = props;
 
-  const {
-    auth: { uid: buyerId },
-  } = useSelector((state) => state.firebase);
+  const { auth: { uid: buyerId } } = useSelector((state) => state.firebase);
 
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -55,7 +53,7 @@ const Checkout = (props) => {
       status: "Pending",
       orderAt: new Date(),
     };
-    purchaseProduct(order)
+    purchaseProduct(order);
   };
   return (
     <>
@@ -110,10 +108,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    purchaseProduct: (order) => dispatch(actions.purchaseProduct(order))
-  }
-}
+    purchaseProduct: (order) => dispatch(actions.purchaseProduct(order)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout);
