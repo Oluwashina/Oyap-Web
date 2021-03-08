@@ -47,7 +47,6 @@ const Checkout = (props) => {
   };
 
   const handleSubmit = () => {
-    console.log(orderData);
     const order = {
       products: cartItems,
       orderData: orderData,
