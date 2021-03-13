@@ -1,7 +1,7 @@
 import React from "react";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
-const Payment = ({handleOrder, handleDisabled, amount, values, errors}) => {
+const Payment = ({handleOrder, handleDisabled, amount, customerDetails, errors}) => {
   const config = {
     public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
     tx_ref: Date.now(),
@@ -32,7 +32,7 @@ const Payment = ({handleOrder, handleDisabled, amount, values, errors}) => {
           handleFlutterPayment({
             callback: (response) => {
               console.log(response);
-              // handleOrder(values)
+              handleOrder(customerDetails)
               closePaymentModal(); // this will close the modal programmatically
             },
             onClose: () => {},
