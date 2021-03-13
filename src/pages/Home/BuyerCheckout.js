@@ -22,7 +22,7 @@ const Checkout = (props) => {
     setTotalPrice(price);
   }, [cartItems, totalPrice, setTotalPrice]);
 
-  const { handleSubmit, handleChange, handleBlur, values, touched, errors } = useFormik({
+  const { handleChange, handleBlur, values, touched, errors } = useFormik({
     initialValues: {
       firstName: "",
       lastName: "",
@@ -35,16 +35,11 @@ const Checkout = (props) => {
       orderNotes: "",
     },
     validationSchema: checkoutValidator,
-    onSubmit(values){
-      // console.log(values);
-      console.log("Hello");
-    }
   });
 
-  // const handleOrderDataSubmit = (values) => {
-  //   console.log("0");
-  //   console.log(values);
-  // };
+  const handleOrderDataSubmit = (values) => {    
+    console.log(values);
+  };
   return (
     <>
       <BuyerNav />
@@ -85,7 +80,7 @@ const Checkout = (props) => {
             <h6 style={{ fontWeight: "bold" }}>Your Order</h6>
 
             {/* order summary */}
-            <OrderSummary handleOrder={handleSubmit} values={values} errors={errors} />
+            <OrderSummary handleOrder={handleOrderDataSubmit} values={values} errors={errors} />
           </div>
         </div>
       </div>
