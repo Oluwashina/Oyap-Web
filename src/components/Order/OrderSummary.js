@@ -6,7 +6,7 @@ import Order from "../../components/Order/Order"
 const OrderSummary = (props) => {
 
 
-  const {cartItems, handleOrder} = props
+  const {cartItems, handleOrder, values} = props
 
   
   const [totalPrice, setTotalPrice] = useState(0)
@@ -159,6 +159,7 @@ const OrderSummary = (props) => {
               handleOrder={handleOrder}
               amount={totalPrice}
                 handleDisabled={cartItems}
+                customerDetails={values}
                  />
         </div>
       
