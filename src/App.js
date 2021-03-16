@@ -16,13 +16,16 @@ import Orders from "./pages/BuyerOrders/Orders"
 import OrderDetails from "./pages/BuyerOrders/OrderDetails"
 import FAQ from "./pages/FAQ/faq"
 
+import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
+
 function App() {
   return (
     <>
       <div className="">
         <Router>
           <Switch>        
-          <Route exact path="/" component={BuyerHome} />
+          {/* <Route exact path="/" component={BuyerHome} /> */}
+            <BuyerRoute exact path="/" component={BuyerHome} />
             <Route path="/item/:id" component={BuyerItemPage} />
             <Route path="/checkout" component={CheckoutPage} />
             <Route path="/cart" component={Cart} />
