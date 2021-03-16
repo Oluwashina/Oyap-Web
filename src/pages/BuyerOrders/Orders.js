@@ -5,10 +5,22 @@ import Item5 from "../../assets/images/item5.png";
 import Beans from "../../assets/images/greenbeans.png";
 import BuyerFooter from '../../components/BuyerFooter';
 import { Link } from 'react-router-dom';
+import { useSelector } from "react-redux"
+import { useFirestoreConnect } from "react-redux-firebase"
 
 
 const Orders = () => {
 
+  const {
+    auth: { uid: buyerId },
+  } = useSelector((state) => state.firebase);
+
+  const myOrders = useSelector((state) => state.firestore.ordered.orders);
+  console.log(myOrders);
+
+  useFirestoreConnect([
+    { collection: "orders", where: [["buyerId", "==", buyerId]] },
+  ]);
     const [initialTab, setTab] = useState(1);
 
     const [tabData] = useState([
