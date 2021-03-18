@@ -52,6 +52,7 @@ const Checkout = (props) => {
       buyerId: buyerId,
       status: "Pending",
       orderAt: new Date(),
+      timeLine: [{awaitingConfirmation: new Date(), paymentRecieved: null, shipped: null}]
     };
     purchaseProduct(order);
   };
