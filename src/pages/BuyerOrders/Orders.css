@@ -52,6 +52,10 @@
  margin-bottom: 0px;
 }
 
+.orderDetailsBtn:hover{
+    color: #ED881C;
+}
+
 .orderDetails{
     background: rgba(196, 196, 196, 0.2);
     border-radius: 5px;
@@ -115,6 +119,7 @@
     .orderDetailsBtn{
         margin-top: 15px;
         margin-bottom: 15px;
+        padding: 0px;
     }
     .orderDetails{
         width: 100%;

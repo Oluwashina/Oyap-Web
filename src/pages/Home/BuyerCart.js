@@ -9,7 +9,7 @@ import { adjustQty, removeCart } from '../../store/actions/carts';
 
 const Cart = (props) => {
 
-    const {cartItems, removeCart, Increment, Decrement} = props
+    const {cartItems, removeCart, Increment, Decrement, auth} = props
 
     const [totalPrice, setTotalPrice] = useState(0)
 
@@ -81,11 +81,14 @@ const Cart = (props) => {
 
                 <div className="text-center mt-3">
                     <h5 className="mb-0">Your cart is empty!</h5>
-                    <p className="mb-0 mt-3">Browse our items and discover our best deals</p>
+                    <p className="mb-0 mt-3">{auth.uid ? "Browse our items and discover our best deals" :
+                        <p className="mb-0 mt-3">
+                            Already have an account ? <Link to="/login" style={{color: '#ED881C', textDecoration: 'underline'}}>Login</Link> to see the items in your cart.
+                        </p> }</p>
                 </div>
 
                 <div className="text-center">
-                <Link to="/" className="btn btn-sell mt-4">Start Shipping</Link>
+                <Link to="/" className="btn btn-sell mt-4">Start Shopping</Link>
                 </div>
         
              </div>                       
@@ -170,6 +173,7 @@ const Cart = (props) => {
 const mapStateToProps = (state) =>{
     return{
         cartItems: state.cart.cartItems,
+        auth: state.firebase.auth,
     }
 }
 
