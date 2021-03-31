@@ -13,7 +13,7 @@ const UserLogin = (props) => {
   const {Register} = props
   const history = useHistory()
 
-  // Sign Up login button
+  // Sign Up button
   const handleSubmit = async (values, setSubmitting) =>{
     let role = props.match.params.id
     let result = {
@@ -21,7 +21,7 @@ const UserLogin = (props) => {
       role
     }
    await Register(result)
-    history.push('/')
+    history.push('/login')
   }
 
   
@@ -52,7 +52,7 @@ const UserLogin = (props) => {
                     handleSubmit(values, setSubmitting)
                     }
                 validationSchema={registerValidator}
-                initialValues={{firstname: "", lastname: "", phone: "",  email: "", password: "", confirm_password: ""}}
+                initialValues={{firstName: "", lastName: "", phoneNumber: "",  email: "", password: "", confirm_password: ""}}
               >
                   {({
                       handleChange,
@@ -73,11 +73,11 @@ const UserLogin = (props) => {
                               type="text"
                               onBlur={handleBlur}
                               onChange={handleChange}
-                              id="firstname"
-                              value={values.firstname}
+                              id="firstName"
+                              value={values.firstName}
                             />
                             <small style={{ color: "#dc3545" }}>
-                                        {touched.firstname && errors.firstname}
+                                        {touched.firstName && errors.firstName}
                                </small>
                           </div>
                              
@@ -87,13 +87,13 @@ const UserLogin = (props) => {
                               <label htmlFor="password">Last name</label>
                               <input className="form-control input-style"
                               type="text"
-                              id="lastname"
-                              value={values.lastname}
+                              id="lastName"
+                              value={values.lastName}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               placeholder="Last name" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.lastname && errors.lastname}
+                                  {touched.lastName && errors.lastName}
                               </small>
                             </div>
 
@@ -102,13 +102,13 @@ const UserLogin = (props) => {
                               <label htmlFor="password">Phone Number</label>
                               <input className="form-control input-style"
                               type="text"
-                              id="phone"
-                              value={values.phone}
+                              id="phoneNumber"
+                              value={values.phoneNumber}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               placeholder="+234 800 000 0000" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.phone && errors.phone}
+                                  {touched.phoneNumber && errors.phoneNumber}
                               </small>
                             </div>
 

@@ -2,18 +2,18 @@ import React from "react";
 import Logo from "../../assets/images/logo.png";
 import WelcomeImg from "../../assets/images/welcome-img.png";
 import {Form, Formik} from 'formik'
-import {forgotPasswordValidator} from '../../validationSchema/validator'
+import {verifyCodeValidator} from '../../validationSchema/validator'
 import* as actions from '../../store/actions/auth'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-const UserForgot = (props) => {
+const VerifyUser = (props) => {
 
-  const { forgot } = props
+  const { verify } = props
 
-  // Forgot password submit button
+  // Verify code button functionality
   const handleSubmit = async (values, setSubmitting) =>{
-    await forgot(values)
+    await verify(values)
   }
 
 
@@ -30,14 +30,14 @@ const UserForgot = (props) => {
 
             {/* Form submission */}
           <div className="login-container mb-4">
-            <h3 className="mt-5 login-head">Forgot Password?</h3>
+            <h3 className="mt-5 login-head">Verification Code</h3>
               
               <Formik
                 onSubmit={(values, {setSubmitting}) =>
                     handleSubmit(values, setSubmitting)
                     }
-                validationSchema={forgotPasswordValidator}
-                initialValues={{ email: "",}}
+                validationSchema={verifyCodeValidator}
+                initialValues={{ code: "",}}
               >
                   {({
                       handleChange,
@@ -52,24 +52,23 @@ const UserForgot = (props) => {
                           
                              {/* Email */}
                              <div className="form-group mt-4">
-                              <label htmlFor="password">Email Address</label>
+                              <label htmlFor="password">Code</label>
                               <input className="form-control input-style"
-                              type="emai
-                              l"
-                              id="email"
-                              value={values.email}
+                              type="text"
+                              id="code"
+                              value={values.code}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              placeholder="Please type in your email-address" />
+                              placeholder="Please enter verification code" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.email && errors.email}
+                                  {touched.code && errors.code}
                               </small>
                             </div>
                         
                             <button
                             type="submit"
                             disabled={isSubmitting}
-                             className="btn btn-oyap btn-block text-uppercase mt-4">Submit</button>
+                             className="btn btn-oyap btn-block text-uppercase mt-4">Verify</button>
                       </Form>
                   )}
 
@@ -103,8 +102,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      forgot: (val) => dispatch(actions.forgotPassword(val)),
+      verify: (val) => dispatch(actions.verifyUser(val)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserForgot);
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyUser);

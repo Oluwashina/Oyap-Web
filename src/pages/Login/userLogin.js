@@ -1,21 +1,22 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Logo from "../../assets/images/logo.png";
 import WelcomeImg from "../../assets/images/welcome-img.png";
 import {Form, Formik} from 'formik'
 import {loginValidator} from '../../validationSchema/validator'
-import {signIn} from '../../store/actions/auth'
+import {loginUser} from '../../store/actions/auth'
 import "./Login.css";
 import { Link, useHistory } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 const UserLogin = (props) => {
-  
-  const {login} = props
+
+  const {login, isAuthenticated, userRole} = props
 
   const history = useHistory()
 
   const [initialTab, setTab] = useState(1);
-  // const [role, setRole ] = useState("Buyer");
+
+  const [role, setRole ] = useState("Buyer");
 
   const [tabData] = useState([
     { id: 1, name: "tab-1", text: "Buyer"},
@@ -26,7 +27,7 @@ const UserLogin = (props) => {
 
   const handleTabToggleAndSetRole = (id, role) => {
     setTab(id);
-    // setRole(role);
+    setRole(role);
   } 
 
   // tab Layout
@@ -42,10 +43,33 @@ const UserLogin = (props) => {
 
   // submit login button
   const handleSubmit = async (values) => {
-    // const credentials = {...values, role}
-     await login(values);
-     history.push('/')
+    const credentials = 
+    {
+      ...values,
+       role
+     }
+     await login(credentials);
   }
+
+  useEffect(() =>{
+    if(isAuthenticated){
+      // check for role sent from api to determine where to route to
+          switch(userRole){
+            case 'Buyer':
+              history.push('/')
+              break;
+            case 'Seller':
+                history.push('/signup')
+                break;
+            case 'Logistics':
+              history.push('/signup')
+              break;
+            default:
+              history.push('/')
+              break;
+          }
+      }
+  },[isAuthenticated, history, userRole])
 
 
 
@@ -155,13 +179,14 @@ const UserLogin = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-      
+    isAuthenticated: state.auth.isAuthenticated,
+    userRole: state.auth.role
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      login: (creds) => dispatch(signIn(creds)),
+      login: (creds) => dispatch(loginUser(creds)),
   };
 };
 

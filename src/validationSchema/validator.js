@@ -15,6 +15,12 @@ export const forgotPasswordValidator = Yup.object({
     .required("Email is required"),
 });
 
+export const verifyCodeValidator = Yup.object({
+  code:  Yup.string()
+    .min(6, "Code cannot be less than 6 characters")
+    .required("Code is required"),
+});
+
 export const resetPasswordValidator = Yup.object({
   password: Yup.string()
     .min(6, "Password cannot be less than 6 characters")
@@ -25,9 +31,9 @@ export const resetPasswordValidator = Yup.object({
 });
 
 export const registerValidator = Yup.object({
-  firstname: Yup.string().required("Firstname is required"),
-  lastname: Yup.string().required("Lastname is required"),
-  phone: Yup.string()
+  firstName: Yup.string().required("Firstname is required"),
+  lastName: Yup.string().required("Lastname is required"),
+  phoneNumber: Yup.string()
     .required("Phonenumber is required")
     .matches(/(^[+]?[234]\d{12}$)/, "Enter a valid phone number"),
   email: Yup.string()

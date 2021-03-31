@@ -9,16 +9,13 @@ import BuyerFooter from "../../components/BuyerFooter";
 import BuyerProducts from "../../components/BuyerProducts";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import { useFirestoreConnect } from "react-redux-firebase";
 
 const BuyerHome = (props) => {
-  useFirestoreConnect([
-    { collection: "products", orderBy: ["createdAt", "asc"] },
-  ]);
   
   const { history, products } = props;
 
 
+  // make call to fetch products on load of page
 
   const itemProduct = (value) => {
     history.push("/item/" + value);
@@ -105,7 +102,7 @@ const BuyerHome = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    products: state.firestore.ordered.products,
+    // products: state.firestore.ordered.products,
   };
 };
 export default connect(mapStateToProps)(BuyerHome);

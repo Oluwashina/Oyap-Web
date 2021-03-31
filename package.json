@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.6.3",
+    "axios": "^0.21.1",
     "cogo-toast": "^4.2.3",
     "firebase": "^8.2.6",
     "flutterwave-react-v3": "^1.0.9",

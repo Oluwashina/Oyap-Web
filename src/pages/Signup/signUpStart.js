@@ -4,7 +4,6 @@ import BuyImage from "../../assets/images/buy.svg";
 import SellImage from "../../assets/images/sell.svg";
 import DeliveryImage from "../../assets/images/delivery.svg";
 import WelcomeImg from "../../assets/images/welcome-img.png";
-import {signIn} from '../../store/actions/auth'
 import "./signup.css";
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
@@ -106,7 +105,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      login: (creds) => dispatch(signIn(creds)),
+     
   };
 };
 

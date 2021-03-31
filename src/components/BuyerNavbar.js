@@ -124,7 +124,7 @@ const BuyerNav = (props) => {
                 <hr style={{borderTop: '1px solid #7BC30A', marginTop: 60}} />
                 {/* */}
                 <div style={{textAlign: 'right', padding: "10px 15px 15px 0px", fontSize: '1em'}}>
-                 {!auth.uid ? <div className="">
+                 {!auth ? <div className="">
                     <h6 style={{ color: '#ED881C'}}>My OYAP account</h6>
                     </div>
                     :  <div className="">
@@ -132,7 +132,7 @@ const BuyerNav = (props) => {
                     </div>
                     }
                         
-                        {!auth.uid ? <div className="mt-4">
+                        {!auth ? <div className="mt-4">
                         <Link to="/login" style={{textDecoration: 'none', color: '#fff'}}>LOGIN</Link>
                         </div>
                         :
@@ -141,7 +141,7 @@ const BuyerNav = (props) => {
                         </div>
                     }
 
-                   {!auth.uid ? <div className="mt-4">
+                   {!auth ? <div className="mt-4">
                     <Link to="/signup" style={{textDecoration: 'none', color: '#fff'}}>CREATE AN ACCOUNT</Link>
                     </div>
                     :
@@ -151,7 +151,7 @@ const BuyerNav = (props) => {
                   }       
 
 
-                       {auth.uid ? <div className="mt-4">
+                       {auth ? <div className="mt-4">
                             <button className="btn btn-logout"
                             onClick={logout}
                             style={{padding: 0}}
@@ -207,7 +207,7 @@ const BuyerNav = (props) => {
                     <button className="btn btn-search ml-lg-3 mt-lg-0 mt-2">SEARCH</button>
                 </li>
 
-            { auth.uid ? 
+            { auth ? 
 
             <li className="nav-item px-lg-4 cart-display">
             <div className="dropdown">
@@ -298,7 +298,7 @@ const BuyerNav = (props) => {
                                 </div>
                         </NavLink> 
                      </li>
-                    {auth.uid ? <li className="cart-display px-lg-2 mt-lg-1">    
+                    {auth ? <li className="cart-display px-lg-2 mt-lg-1">    
                         <img src={Account}  alt="logo" width="25" height="25" />   
                     </li>
                     : "" }
@@ -315,14 +315,15 @@ const BuyerNav = (props) => {
 const mapStateToProps = (state) =>{
     return{
         cartCount: state.cart.cartItems.length,
-        auth: state.firebase.auth,
-        firstname: state.firebase.profile.firstName
+        auth: state.auth.isAuthenticated,
+        firstname: state.auth.firstname,
+        lastname: state.auth.lastname
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        logout: () => dispatch(actions.signOut()),
+        logout: () => dispatch(actions.logOut()),
     }
 }
  

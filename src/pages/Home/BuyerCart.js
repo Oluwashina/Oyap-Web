@@ -81,7 +81,7 @@ const Cart = (props) => {
 
                 <div className="text-center mt-3">
                     <h5 className="mb-0">Your cart is empty!</h5>
-                    <p className="mb-0 mt-3">{auth.uid ? "Browse our items and discover our best deals" :
+                    <p className="mb-0 mt-3">{!auth ? "Browse our items and discover our best deals" :
                         <p className="mb-0 mt-3">
                             Already have an account ? <Link to="/login" style={{color: '#ED881C', textDecoration: 'underline'}}>Login</Link> to see the items in your cart.
                         </p> }</p>
@@ -173,7 +173,7 @@ const Cart = (props) => {
 const mapStateToProps = (state) =>{
     return{
         cartItems: state.cart.cartItems,
-        auth: state.firebase.auth,
+        auth: state.auth.isAuthenticate,
     }
 }
 

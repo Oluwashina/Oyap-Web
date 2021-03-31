@@ -1,9 +1,10 @@
 export {
   signUp,
-  signIn,
-  signOut,
-  passwordReset,
+  loginUser,
+  logOut,
+  forgotPassword,
   verifyResetCode,
+  verifyUser,
   ResetPassword,
 } from "./auth";
 

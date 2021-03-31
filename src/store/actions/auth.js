@@ -1,109 +1,147 @@
 import * as actionTypes from "./actionTypes";
+// import {apiUrl} from '../config'
+import {PostApi} from '../helpers'
 import cogoToast from "cogo-toast";
 
-export const signUp = (newUser) => {
-  return async (dispatch, _, { getFirebase, getFirestore }) => {
-    dispatch({ type: actionTypes.SIGNUP_START });
-    const firebase = getFirebase();
-    const firestore = getFirestore();
+
+// const getToken = () => {
+// 	const token = localStorage.getItem("token");
+// 	return token
+// }
+
+// login user actions functionality
+export const loginUser = (user) => {
+  return async (dispatch, getState) => {
     try {
-      const res = await firebase
-        .auth()
-        .createUserWithEmailAndPassword(newUser.email, newUser.password);
-      await firestore.collection("users").doc(res.user.uid).set({
-        firstName: newUser.firstname,
-        lastName: newUser.lastname,
-        username: newUser.email,
-        phoneNumber: newUser.phone,
-        role: newUser.role,
-        createdAt: new Date()
-      });
-      dispatch({ type: actionTypes.SIGNUP_SUCCESS });
-      cogoToast.success("Registration Successful!, Login to continue");
+      const res = await PostApi("authenticate", {...user}, "", "application/json")
+      if (res.status === 200) {
+        dispatch({ type: "LOGIN_SUCCESS", data: res.data });
+        cogoToast.success('Login Successful!', { position: 'bottom-right', })
+      }
+      if(res.status === 400){
+        dispatch({ type: "LOGIN_FAIL", err: res.data});
+        cogoToast.error('Invalid Credentials!')
+      }
     } catch (err) {
-      console.log(err);
-      dispatch({ type: actionTypes.SIGNUP_FAIL, err });
-      console.log(err);
+      console.log(err)
     }
   };
 };
 
-export const signIn = (credentials) => {
-  return async (dispatch, _, { getFirebase }) => {
-    //make async call to firebase
-    const firebase = getFirebase();
+// logout a user
+export const logOut = () => {
+  return (dispatch, getState) => {
+    localStorage.setItem("token", "")
+    dispatch({ type: "logout", err: "User Out" });
+  };
+};
+
+
+// sign up user functionality
+export const signUp = (user) => {
+  return async (dispatch, getState) => {
     try {
-      await firebase
-        .auth()
-        .signInWithEmailAndPassword(credentials.email, credentials.password);
-      dispatch({ type: actionTypes.LOGIN_SUCCESS });
-      cogoToast.success('Login Successful!', { position: 'bottom-right', })
+      const res = await PostApi("user", {
+                   firstName: user.firstName,
+                   lastName: user.lastName,
+                   phoneNumber: user.phoneNumber,
+                   email: user.email,
+                   password: user.password,
+                   role: user.role
+                  }, "", "application/json")
+      if (res.status === 201) {
+        dispatch({ type: "SIGNUP_SUCCESS", data: res.data });
+        cogoToast.success("Registration Successful!, Login to continue");
+      }
+      if(res.status === 400){
+        dispatch({ type: "SIGNUP_FAIL", err: res.data});
+        cogoToast.error('Email already exists!!!')
+      }
     } catch (err) {
-      console.log(err);
-      dispatch({ type: actionTypes.LOGIN_FAIL, err });
-      cogoToast.error("Invalid Credentials!");
+      console.log(err)
     }
   };
 };
 
-export const signOut = () => {
-  return async (dispatch, _, { getFirebase }) => {
-    const firebase = getFirebase();
 
+// verify user sign up functionality
+export const verifyUser = (val) => {
+  return async (dispatch, getState) => {
     try {
-      await firebase.auth().signOut();
-      dispatch({ type: actionTypes.SIGNOUT_SUCCESS });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-};
-
-export const passwordReset = (emailAddress) => {
-  return async (dispatch, _, { getFirebase }) => {
-    const firebase = getFirebase();
-
-    try {
-      await firebase.auth().sendPasswordResetEmail(emailAddress);
-      console.log("Reseting password");
-      dispatch({ type: actionTypes.RESET_PASSWORD });
-      cogoToast.success("Check your email for password reset instructions!", {
-        position: "top-center",
-      });
+      const res = await PostApi("verifyuser", {
+        verificationCode: val.code
+      }, "", "application/json")
+      if (res.status === 200) {
+        cogoToast.success("User Verified Successfuly.");
+        // dispatch({ type: actionTypes.VALID_RESETCODE });
+      }
+      if(res.status === 400){
+        // Invalid code
+        cogoToast.error('Verification code not valid!')
+        // dispatch({ type: actionTypes.INVALID_RESETCODE });
+      }
     } catch (err) {
-      console.log(err);
-      cogoToast.error("Kindly check that the credentials entered is valid!");
+      console.log(err)
     }
   };
 };
 
+// forgot password
+export const forgotPassword = (user) => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await PostApi("forgotpassword", {...user}, "", "application/json")
+      if (res.status === 201) {
+        cogoToast.success("Check your email for password reset instructions!", {
+          position: "top-center",
+        });
+      }
+      if(res.status === 400){
+        cogoToast.error("Kindly check that the credentials entered is valid!");
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  };
+};
+
+// verify forgot password code
 export const verifyResetCode = (code) => {
-  return async (dispatch, _, { getFirebase }) => {
-    const firebase = getFirebase();
+  return async (dispatch, getState) => {
     try {
-      firebase.auth().verifyPasswordResetCode(code);
-      dispatch({ type: actionTypes.VALID_RESETCODE });
-    } catch {
-      // Invalid code
-      dispatch({ type: actionTypes.INVALID_RESETCODE });
+      const res = await PostApi("verifyCode", {code}, "", "application/json")
+      if (res.status === 200) {
+        dispatch({ type: actionTypes.VALID_RESETCODE });
+      }
+      if(res.status === 400){
+        // Invalid code
+        dispatch({ type: actionTypes.INVALID_RESETCODE });
+      }
+    } catch (err) {
+      console.log(err)
     }
   };
 };
 
-export const ResetPassword = (values) => {
-  return async (dispatch, _, { getFirebase }) => {
-    const firebase = getFirebase();
+// reset password functionality
+export const ResetPassword = (val) => {
+  return async (dispatch, getState) => {
     dispatch({ type: actionTypes.PASSWORD_CHANGED_START });
     try {
-      // Reset a user's password
-      await firebase.auth().confirmPasswordReset(values.code, values.password);
-      dispatch({ type: actionTypes.PASSWORD_CHANGED_SUCCESS });
-      cogoToast.success("Password successfully changed, Login to continue", {
-        position: "top-center",
-      });
+      const res = await PostApi("reset", {...val}, "", "application/json")
+      if (res.status === 200) {
+        // reset a user's password
+        dispatch({ type: actionTypes.PASSWORD_CHANGED_SUCCESS });
+        cogoToast.success("Password successfully changed, Login to continue", {
+          position: "top-center",
+        });
+      }
+      if(res.status === 400){
+        // error while reset password
+        dispatch({ type: actionTypes.PASSWORD_CHANGED_FAIL });
+      }
     } catch (err) {
-      console.log(err);
-      dispatch({ type: actionTypes.PASSWORD_CHANGED_FAIL });
+      console.log(err)
     }
   };
 };

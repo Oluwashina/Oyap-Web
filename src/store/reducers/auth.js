@@ -1,30 +1,63 @@
 import * as actionTypes from "../actions/actionTypes";
 
 const initState = {
-  authError: null,
+  isAuthenticated: false,
+  token: '',
+  firstname: "",
+  lastname: "",
+  email: "",
+  phoneNumber: "",
+  isVerified: false,
+  isEnabled: false,
+  walletBalance: "",
+  role: "",
   resetcode: false,
-  isLoading: false
+  isLoading: false,
 };
 
 const authReducer = (state = initState, action) => {
   switch (action.type) {
-    case actionTypes.SIGNUP_START:
-        console.log("signup start");
-      return {
-        ...state,
-        error: null,
-      };
-    case actionTypes.SIGNUP_SUCCESS:
-      console.log("signup success");
-      return {
-        ...state,
-        authError: null,
-      };
-    case actionTypes.SIGNUP_FAIL:
-      console.log("signup failed");
-      return {
-        authError: action.err.message,
-      };
+    case 'LOGIN_SUCCESS':
+          localStorage.setItem("token", action.data.token)
+          return {
+              ...state,
+              isAuthenticated: true,
+              token: action.data.token,
+              firstname: action.data.profile.firstName,
+              lastname: action.data.profile.lastName,
+              email: action.data.profile.email,
+              role: action.data.profile.role,
+              phoneNumber: action.data.profile.phoneNumber,
+              isVerified: action.data.profile.isVerified,
+              isEnabled: action.data.profile.isEnabled,
+              walletBalance: action.data.profile.walletBalance,
+          }
+      case 'LOGIN_FAIL':
+        return {
+            ...state,
+            isAuthenticated: false,
+        }
+    case 'logout':
+          return {
+              ...state,
+              isAuthenticated: false,
+              token: '',
+              firstname: "",
+              lastname: "",
+              email: "",
+              phoneNumber: "",
+              isVerified: false,
+              isEnabled: false,
+              walletBalance: "",
+          }
+      case 'SIGNUP_SUCCESS':
+        return{
+          ...state,
+        }
+    case 'SIGNUP_FAIL':
+      return{
+        ...state
+      }
     case actionTypes.VALID_RESETCODE:
       return{
         ...state,

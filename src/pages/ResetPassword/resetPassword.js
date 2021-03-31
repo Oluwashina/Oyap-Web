@@ -7,20 +7,20 @@ import { connect } from "react-redux";
 import * as actions from "../../store/actions";
 import { useLocation, Link, useHistory } from "react-router-dom";
 
-const UserLogin = ({ Reset, verifyCode, code, isLoading }) => {
+const UserReset = ({ Reset, verifyCode, code, isLoading }) => {
   const search = useLocation().search;
 
   const history = useHistory();
 
   // Verify reset code sent to email if valid!
   useEffect(() => {
-    const code = new URLSearchParams(search).get("oobCode");
+    const code = new URLSearchParams(search).get("code");
     verifyCode(code);
   }, [verifyCode, search]);
 
   // Reset password submit button
   const handleSubmit = async (values, setSubmitting) => {
-    const code = new URLSearchParams(search).get("oobCode");
+    const code = new URLSearchParams(search).get("code");
     var creds = {
       code,
       password: values.password,
@@ -170,4 +170,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(UserReset);

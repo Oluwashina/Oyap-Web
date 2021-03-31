@@ -6,6 +6,7 @@ import SignUpStart from "./pages/Signup/signUpStart";
 import UserLogin from "./pages/Login/userLogin";
 import ForgotPassword from "./pages/ForgotPassword/forgotPassword";
 import ResetPassword from "./pages/ResetPassword/resetPassword";
+import VerifyUser from './pages/VerifyUser/verifyUser';
 import CreateProduct from "./components/CreateProduct/CreateProduct";
 // import PrivateRoute from "./components/PrivateRoute"
 import BuyerHome from "./pages/Home/BuyerHome";
@@ -16,7 +17,7 @@ import Orders from "./pages/BuyerOrders/Orders"
 import OrderDetails from "./pages/BuyerOrders/OrderDetails"
 import FAQ from "./pages/FAQ/faq"
 
-import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
+// import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         <Router>
           <Switch>        
           {/* <Route exact path="/" component={BuyerHome} /> */}
-            <BuyerRoute exact path="/" component={BuyerHome} />
+            <Route exact path="/" component={BuyerHome} />
             <Route path="/item/:id" component={BuyerItemPage} />
             <Route path="/checkout" component={CheckoutPage} />
             <Route path="/cart" component={Cart} />
@@ -33,6 +34,7 @@ function App() {
             <Route path="/order/:id" component={OrderDetails} />
             <Route path="/signup/:id" component={UserSignup} />
             <Route path="/signup" component={SignUpStart} />
+            <Route path="/verify-code" component={VerifyUser} />
             <Route path="/login" component={UserLogin} />
             <Route path="/forgotpassword" component={ForgotPassword} />
             <Route path="/resetpassword" component={ResetPassword} />
