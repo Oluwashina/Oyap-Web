@@ -18,6 +18,10 @@ import OrderDetails from "./pages/BuyerOrders/OrderDetails"
 import BuyerProfile from './pages/Home/BuyerProfile'
 import FAQ from "./pages/FAQ/faq"
 
+// farmers route
+import FarmersDashboard from "./pages/Farmers/FarmersDashboard/FarmersDashboard";
+
+
 // import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
 
 function App() {
@@ -41,7 +45,10 @@ function App() {
             <Route path="/forgotpassword" component={ForgotPassword} />
             <Route path="/resetpassword" component={ResetPassword} />
             <Route path="/createProduct" component={CreateProduct} />   
-            <Route path="/faq" component={FAQ} />         
+            <Route path="/faq" component={FAQ} /> 
+
+            {/* farmers route */}
+            <Route exact path="/farmers" component={FarmersDashboard} />   
           </Switch>
         </Router>
       </div>

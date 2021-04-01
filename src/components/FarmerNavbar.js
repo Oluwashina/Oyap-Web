@@ -1,0 +1,92 @@
+import React from 'react';
+import Logo from "../assets/images/logo.png";
+import Bell from "../assets/images/bell.svg";
+import Account from "../assets/images/account.svg";
+import {Link, NavLink} from 'react-router-dom'
+import {connect} from 'react-redux'
+import * as actions from "../store/actions";
+import './BuyerNavbar.css'
+
+const FarmerNav = (props) => {
+
+    return ( 
+        <>
+
+            {/* new navbar */}
+            <div className="container mynav">
+                <div className="contain">
+             <Link className="mt-lg-1" to="/">
+                  <img src={Logo}  alt="logo" width="50" height="50"/>
+                    </Link>
+
+
+            <div className="mobile-div">
+                <NavLink className="nav-link mobile-menu"  to="/cart" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
+                    <img src={Bell}  alt="logo" width="30" height="30" />   
+                    <div
+                    className="cartDiv">
+                    <span style={{color: '#ED881C', fontWeight: 'bold'}}>6</span>
+                    </div>
+                </NavLink> 
+
+                <img src={Account} alt="Open Nav" className="mobile-menu mt-1 ml-2" style={{width: 30, height: 30}} id="mobile-cta"  />
+            </div>
+           
+
+            <nav>
+           
+                <ul className="primary-nav">
+                    <li className="nav-item px-lg-2 mt-lg-3">
+                       <span>Dashboard</span>
+                    </li>
+                <li className="cart-display mt-lg-1 pl-lg-5">
+                    <div className="form-group input-container mb-0">
+                        <i className="mdi mdi-magnify iconn"></i>
+                        <input type="text" placeholder="Search"
+                        style={{padding: '22px 120px 22px 60px'}} 
+                        className="form-control search-style"   />
+                    </div>
+                </li>
+                <li className="cart-display mt-lg-1">
+                    <button className="btn btn-search ml-lg-2 mt-lg-0 mt-2">SEARCH</button>
+                </li>
+                    
+                </ul>
+
+                <ul className="secondary-nav">
+                    <li className="nav-item px-lg-2">
+                        <NavLink className="nav-link cart-display"  to="/cart" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
+                                <img src={Bell}  alt="logo" width="30" height="30" />   
+                                <div
+                                className="cartDiv">
+                                <span style={{color: '#ED881C', fontWeight: 'bold'}}>6</span>
+                                </div>
+                        </NavLink> 
+                     </li>
+                    <li className="cart-display px-lg-2 mt-lg-1">    
+                        <img src={Account}  alt="logo" width="25" height="25" />   
+                    </li>
+                    
+                </ul>
+            </nav>
+
+        </div>
+    </div>
+
+        </>
+     );
+}
+
+const mapStateToProps = (state) =>{
+    return{
+        
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        logout: () => dispatch(actions.logOut()),
+    }
+}
+ 
+export default connect(mapStateToProps, mapDispatchToProps)(FarmerNav);
