@@ -8,7 +8,7 @@ import "./signup.css";
 import {Link, useHistory} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-const UserLogin = (props) => {
+const UserSignup = (props) => {
 
   const {Register} = props
   const history = useHistory()
@@ -201,4 +201,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserLogin);
+export default connect(mapStateToProps, mapDispatchToProps)(UserSignup);

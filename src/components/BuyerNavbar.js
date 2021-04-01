@@ -137,7 +137,7 @@ const BuyerNav = (props) => {
                         </div>
                         :
                         <div className="mt-4">
-                        <Link to="/" style={{textDecoration: 'none', color: '#fff'}}>Account</Link>
+                        <Link to="/customer/account" style={{textDecoration: 'none', color: '#fff'}}>Account</Link>
                         </div>
                     }
 
@@ -230,7 +230,7 @@ const BuyerNav = (props) => {
                     className={dropShow ? "dropdown-login-content block" : "dropdown-login-content"}
                         >
 
-                        <NavLink to="/" className="drop-signin" style={{padding: 10, textDecoration: 'none'}}>
+                        <NavLink to="/customer/account" className="drop-signin" style={{padding: 10, textDecoration: 'none'}}>
                             <i className="mdi mdi-account" style={{fontSize: 20, marginRight: 10}}></i>
                             <p className="ml-2 mb-0">Account</p>
                         </NavLink>

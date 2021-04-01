@@ -145,3 +145,29 @@ export const ResetPassword = (val) => {
     }
   };
 };
+
+
+// sign up user functionality
+export const updateProfile = (user) => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await PostApi("updateprofile", {
+                   store: user.store,
+                   address: user.street,
+                   state: user.state,
+                   city: user.city,
+                   phone: user.phone,
+                  }, "", "application/json")
+      if (res.status === 201) {
+        dispatch({ type: "PROFILE_UPDATE", data: res.data });
+        cogoToast.success("Profile Update Successful!");
+      }
+      if(res.status === 400){
+        dispatch({ type: "PROFILE_ERROR", err: res.data});
+        cogoToast.error('Error while updating profile!!!')
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  };
+};

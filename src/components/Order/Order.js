@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
 const Payment = ({
@@ -6,7 +6,6 @@ const Payment = ({
   handleDisabled,
   amount,
   customerDetails,
-  errors,
 }) => {
   const config = {
     public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
@@ -27,21 +26,7 @@ const Payment = ({
     },
   };
 
-  const [error, setError] = useState(null);
 
-  // function isNotEmpty(obj) {
-  //   return Object.keys(obj).length === 0;
-  // }
-
-  useEffect(() => {
-    if (Object.keys(errors).length > 0) {
-      setError(errors);
-    }
-  }, [errors]);
-
-  // const isEmpty = Object.values(customerDetails).every(
-  //   (customerInfo) => customerInfo === null || customerInfo === ""
-  // );
 
   const handleFlutterPayment = useFlutterwave(config);
 
@@ -50,7 +35,7 @@ const Payment = ({
       <button
         className="btn btn-place btn-block mt-4"
         disabled={
-          handleDisabled.length === 0 || error ? true : false
+          handleDisabled.length === 0
         }
         onClick={() => {
           handleFlutterPayment({

@@ -58,6 +58,14 @@ const authReducer = (state = initState, action) => {
       return{
         ...state
       }
+    case 'PROFILE_UPDATE':
+      return{
+        ...state
+      }
+    case  'PROFILE_ERROR':
+      return{
+        ...state
+      }
     case actionTypes.VALID_RESETCODE:
       return{
         ...state,

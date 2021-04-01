@@ -47,18 +47,13 @@ export const registerValidator = Yup.object({
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
 
-export const checkoutValidator = Yup.object({
-  firstName: Yup.string().required("Firstname is required"),
-  lastName: Yup.string().required("Lastname is required"),
-
+export const ProfileAddressValidator = Yup.object({
+  store: Yup.string(),
   state: Yup.string()
     .required("State is required"),
   city: Yup.string().required("City is required"),
-  street: Yup.string().required("Firstname is required"),
-  phone1: Yup.string()
+  street: Yup.string().required("Address is required"),
+  phone: Yup.string()
     .required("Phonenumber is required")
-    .matches(/(^[+]?[234]\d{12}$)/, "Enter a valid phone number"),
-  phone2: Yup.string()
-    .required("Additional phone number is required")
     .matches(/(^[+]?[234]\d{12}$)/, "Enter a valid phone number"),
 });

@@ -102,7 +102,7 @@ const BuyerHome = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    // products: state.firestore.ordered.products,
+    products: state.products.products,
   };
 };
 export default connect(mapStateToProps)(BuyerHome);

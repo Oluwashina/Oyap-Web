@@ -1,0 +1,25 @@
+.profileDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgCircle{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+}
+
+.profileDetails{
+    width: 80%;
+    margin: auto;
+}
+
+
+/* Media query for smaller phones */
+
+@media (max-width:767px) {
+    .profileDetails{
+        width: 100%;
+    }
+}

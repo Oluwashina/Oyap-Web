@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import BuyerFooter from "../../components/BuyerFooter";
 import BuyerNav from "../../components/BuyerNavbar";
-import OrderBillingDetails from "../../components/Order/OrderBillingDetails";
+// import OrderBillingDetails from "../../components/Order/OrderBillingDetails";
 import OrderSummary from "../../components/Order/OrderSummary";
 import { connect } from "react-redux";
-import { useFormik } from "formik";
-import { checkoutValidator } from "../../validationSchema/validator";
+
 
 const Checkout = (props) => {
   const { cartItems } = props;
@@ -22,20 +21,6 @@ const Checkout = (props) => {
     setTotalPrice(price);
   }, [cartItems, totalPrice, setTotalPrice]);
 
-  const { handleChange, handleBlur, values, touched, errors } = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      store: "",
-      state: "",
-      city: "",
-      street: "",
-      phone1: "",
-      phone2: "",
-      orderNotes: "",
-    },
-    validationSchema: checkoutValidator,
-  });
 
   const handleOrderDataSubmit = (values) => {    
     console.log(values);
@@ -67,25 +52,82 @@ const Checkout = (props) => {
             </div>
 
             {/* billing form details */}
+            <div
+            className="mt-lg-4 mt-4"
+            style={{
+              background: " rgba(196, 196, 196, 0.2)",
+              borderRadius: "5px",
+              padding: "30px 15px",
+            }}
+          >
 
-            <OrderBillingDetails
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <div>
+                  <p className="mb-0" style={{ fontWeight: 600 }}>
+                    Address Details
+                  </p>
+                </div>
+                <div>
+                  <p className="mb-0" style={{ fontWeight: 600, color:'#ED881C', cursor: 'pointer' }}>
+                    CHANGE
+                  </p>
+                </div>
+          </div>
+
+          
+        <div>
+          <hr
+            className="mt-4 mb-0"
+            style={{ borderTop: "1px solid rgba(196, 196, 196, 0.5)" }}
+          />
+        </div>
+
+        <div className="mt-3">
+          {/* name */}
+          <p
+              className="mb-0"
+              style={{lineHeight: '23px', fontWeight: 600}}
+              >
+                Oluwashina Kure-Ojo
+              </p>
+
+          {/* address */}
+          <p
+            className="mb-0 mt-1"
+            style={{lineHeight: '23px'}}
+            >
+              65, Adebiyi street Joyce-B road ring-road Ibadan Oyo state, IBADAN-RING ROAD, Oyo
+            </p>
+            {/* phone */}
+            <p
+            className="mb-0 mt-1"
+            style={{lineHeight: '23px'}}
+            >
+              +2347060825698
+            </p>
+        </div>
+
+        </div>
+            {/* <OrderBillingDetails
               handleOrderDataChange={handleChange}
               handleBlur={handleBlur}
               touched={touched}
               errors={errors}
               values={values}
-            />
+            /> */}
           </div>
           <div className="col-lg-5 mb-5">
             <h6 style={{ fontWeight: "bold" }}>Your Order</h6>
 
             {/* order summary */}
-            <OrderSummary handleOrder={handleOrderDataSubmit} values={values} errors={errors} />
+            <OrderSummary handleOrder={handleOrderDataSubmit}  />
           </div>
         </div>
       </div>
-
-      <BuyerFooter />
+          
+      <div style={{marginTop: '200px'}}>
+                <BuyerFooter />
+       </div>
     </>
   );
 };

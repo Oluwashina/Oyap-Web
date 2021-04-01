@@ -15,6 +15,7 @@ import CheckoutPage from "./pages/Home/BuyerCheckout"
 import Cart from "./pages/Home/BuyerCart"
 import Orders from "./pages/BuyerOrders/Orders"
 import OrderDetails from "./pages/BuyerOrders/OrderDetails"
+import BuyerProfile from './pages/Home/BuyerProfile'
 import FAQ from "./pages/FAQ/faq"
 
 // import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
@@ -31,6 +32,7 @@ function App() {
             <Route path="/checkout" component={CheckoutPage} />
             <Route path="/cart" component={Cart} />
             <Route path="/orders" component={Orders} />
+            <Route path="/customer/account" component={BuyerProfile} />
             <Route path="/order/:id" component={OrderDetails} />
             <Route path="/signup/:id" component={UserSignup} />
             <Route path="/signup" component={SignUpStart} />

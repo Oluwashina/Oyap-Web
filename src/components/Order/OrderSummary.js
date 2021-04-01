@@ -74,7 +74,7 @@ const OrderSummary = (props) => {
     <>
       
       <div
-        className="mt-lg-5 mt-4"
+        className="mt-lg-4 mt-4"
         style={{
           background: " rgba(196, 196, 196, 0.2)",
           borderRadius: "5px",

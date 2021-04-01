@@ -297,11 +297,11 @@ const ItemPage = (props) => {
 
 const mapStateToProps = (state, ownProps) => {
     const id = ownProps.match.params.id
-    const products = state.firestore.data.products
-    const product = products ? products[id] : null
+    const products = state.products.products
+    const product = products.find(product => product.id === id);
     return {
         product: product,
-        products: state.firestore.ordered.products,
+        products: state.products.products,
         count: state.cart.count,
         id: id,
         cartItems: state.cart.cartItems
