@@ -117,7 +117,7 @@ const BuyerNav = (props) => {
             </div>
            
 
-            <nav className={ navShow ? "menu-btn" : "" }>
+            <nav className={ navShow ? "nav menu-btn" : "" }>
             {/* mobile menu */} 
             <img src={Close} alt="Close Nav" className="img-fluid mobile-menu-exit" id="mobile-cta" onClick={ToggleMenu} />
             <div className="mobile-menu text-white">

@@ -14,7 +14,7 @@ const FarmerNav = (props) => {
 
             {/* new navbar */}
             <div className="container mynav">
-                <div className="contain">
+                <div className="contain" >
              <Link className="mt-lg-1" to="/">
                   <img src={Logo}  alt="logo" width="50" height="50"/>
                     </Link>
@@ -43,7 +43,7 @@ const FarmerNav = (props) => {
                     <div className="form-group input-container mb-0">
                         <i className="mdi mdi-magnify iconn"></i>
                         <input type="text" placeholder="Search"
-                        style={{padding: '22px 120px 22px 60px'}} 
+                        style={{padding: '22px 20px 22px 45px'}} 
                         className="form-control search-style"   />
                     </div>
                 </li>

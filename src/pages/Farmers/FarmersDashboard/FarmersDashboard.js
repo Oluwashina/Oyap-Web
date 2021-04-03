@@ -21,7 +21,7 @@ const FarmersDashboard = () => {
 
                     <div className="col-lg-6 mb-5">
                         
-                        <div className="mt-5">
+                        <div className="mt-1 mt-lg-5">
                             <h4 style={{fontWeight: 700}}>Hello, Jackson</h4>   
                             <p style={{color: 'rgba(44, 58, 80, 0.4', fontSize: 14}}>Welcome to your OYAP dashboard</p> 
                         </div>
@@ -195,20 +195,13 @@ const FarmersDashboard = () => {
                                 
                             </div>
 
-                            {/* pagination layout */}
+                            {/* view more layout */}
                             <div className="mt-4" style={{display: 'flex', justifyContent: 'flex-end'}}>
 
-                                    <div className="active-pagination page-space">
-                                        <span>1</span>
-                                    </div>
-
-                                    <div className="pagination page-space">
-                                        <span>2</span>
-                                    </div>
-
-                                    <div className="next-page page-space">
-                                        <span>Next Page <i className="mdi mdi-chevron-right" style={{color: '#c4c4c4'}}></i></span>
-                                    </div>
+                                <div className="next-page page-space">
+                                    <span>View All <i className="mdi mdi-chevron-right" style={{color: '#c4c4c4'}}></i></span>
+                                </div>
+                                
                             </div>
                         </div>
 

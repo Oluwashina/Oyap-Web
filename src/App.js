@@ -20,6 +20,10 @@ import FAQ from "./pages/FAQ/faq"
 
 // farmers route
 import FarmersDashboard from "./pages/Farmers/FarmersDashboard/FarmersDashboard";
+import FarmersOrder from "./pages/Farmers/FarmersOrder/FarmersOrder";
+import FarmersOrderDetails from "./pages/Farmers/FarmersOrder/FarmersOrderDetails";
+import FarmersProduct from "./pages/Farmers/FarmersProducts/FarmersProduct";
+import FarmersProductDetails from "./pages/Farmers/FarmersProducts/FarmersProductDetails";
 
 
 // import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
@@ -49,6 +53,10 @@ function App() {
 
             {/* farmers route */}
             <Route exact path="/farmers" component={FarmersDashboard} />   
+            <Route path="/farmers/order/new" component={FarmersOrder} />   
+            <Route path="/farmers/order/:id" component={FarmersOrderDetails} />
+            <Route path="/farmers/products" component={FarmersProduct} />
+            <Route path="/farmers/product/:id" component={FarmersProductDetails} />
           </Switch>
         </Router>
       </div>
