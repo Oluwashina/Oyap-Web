@@ -1,0 +1,75 @@
+
+.walletDiv{
+    background: rgba(196, 196, 196, 0.2);
+     border-radius: 5px;
+     padding: 25px 40px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+}
+.walletAmount{
+    color: #5B9223;
+    font-weight: bold;
+}
+
+.creditDiv{
+    background: rgba(196, 196, 196, 0.2);
+     border-radius: 5px;
+     padding: 15px 20px; 
+}
+.debitDiv{
+    background: #fff;
+    border-radius: 5px;
+    padding: 15px 20px;
+}
+.transactionRow{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+    align-items: center;
+}
+
+.transactionColumn{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1
+}
+.nameColumn{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 2;
+}
+.amountColumn{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 2; 
+}
+.doubleColumn{
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 3;
+}
+
+.creditColor{
+    color: #5B9223;
+    font-weight: bold;
+}
+.debitColor{
+    color: #FF0000;
+    font-weight: bold;
+}
+
+/* Media query for smaller phones */
+
+@media (max-width:767px) {
+    .walletDiv{
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+}

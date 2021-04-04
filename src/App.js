@@ -24,6 +24,11 @@ import FarmersOrder from "./pages/Farmers/FarmersOrder/FarmersOrder";
 import FarmersOrderDetails from "./pages/Farmers/FarmersOrder/FarmersOrderDetails";
 import FarmersProduct from "./pages/Farmers/FarmersProducts/FarmersProduct";
 import FarmersProductDetails from "./pages/Farmers/FarmersProducts/FarmersProductDetails";
+import FarmersWallet from "./pages/Farmers/FarmersWallet/FarmersWallet";
+import FarmersCreditTransactions from "./pages/Farmers/FarmersTransactions/FarmersCreditTransactions";
+import FarmersDebitTransactions from "./pages/Farmers/FarmersTransactions/FarmersDebitTransactions";
+import FarmersWithdraw from "./pages/Farmers/FarmersWithdraw/FarmersWithdraw";
+import FarmersProfile from "./pages/Farmers/FarmersProfile/FarmersProfile";
 
 
 // import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
@@ -57,6 +62,11 @@ function App() {
             <Route path="/farmers/order/:id" component={FarmersOrderDetails} />
             <Route path="/farmers/products" component={FarmersProduct} />
             <Route path="/farmers/product/:id" component={FarmersProductDetails} />
+            <Route path="/farmers/wallet" component={FarmersWallet} />
+            <Route path="/farmers/transactions/credit/:id" component={FarmersCreditTransactions} />
+            <Route path="/farmers/transactions/debit/:id" component={FarmersDebitTransactions} />
+            <Route path="/farmers/withdraw" component={FarmersWithdraw} />
+            <Route path="/farmers/profile" component={FarmersProfile} />
           </Switch>
         </Router>
       </div>

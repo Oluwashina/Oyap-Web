@@ -55,7 +55,7 @@ const FarmerNav = (props) => {
 
                 <ul className="secondary-nav">
                     <li className="nav-item px-lg-2">
-                        <NavLink className="nav-link cart-display"  to="/cart" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
+                        <NavLink className="nav-link cart-display"  to="/" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
                                 <img src={Bell}  alt="logo" width="30" height="30" />   
                                 <div
                                 className="cartDiv">
@@ -63,8 +63,11 @@ const FarmerNav = (props) => {
                                 </div>
                         </NavLink> 
                      </li>
-                    <li className="cart-display px-lg-2 mt-lg-1">    
-                        <img src={Account}  alt="logo" width="25" height="25" />   
+                    <li className="cart-display px-lg-2 mt-lg-1"> 
+                      <NavLink to="/farmers/profile">
+                      <img src={Account}  alt="logo" width="25" height="25" />  
+                        </NavLink>   
+                         
                     </li>
                     
                 </ul>
