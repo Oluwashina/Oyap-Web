@@ -72,4 +72,9 @@
         align-items: flex-start;
     }
 
+    .transactionColumn{
+        display: flex;
+        flex-basis: 100%;
+    }
+
 }

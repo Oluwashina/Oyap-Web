@@ -3,9 +3,13 @@ import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 import {Form, Formik} from 'formik'
 import {registerValidator} from '../../../validationSchema/validator'
+import Default from "../../../assets/images/default.png";
+import item4 from "../../../assets/images/item4.png";
+import item6 from "../../../assets/images/item6.png";
 
 
-const FarmersWithdraw = () => {
+const FarmersProductEdit = (props) => {
+
    
     const [toggled, setToggled] = useState(false);
  
@@ -13,10 +17,11 @@ const FarmersWithdraw = () => {
       setToggled(value);
     };
 
-     // Withdraw button
+       // Add proiduct button
   const handleSubmit = async (values, setSubmitting) =>{
         console.log(values)
-  }
+    }
+
 
     return (  
         <div className='app'>
@@ -35,9 +40,10 @@ const FarmersWithdraw = () => {
             <header>
 
                 <div className="mt-lg-1 mt-4">
-                    <h5 style={{fontWeight: 'bold'}}>Withdraw</h5>
-                </div>   
+                    <h5 style={{fontWeight: 'bold'}}>Edit product</h5>
+                </div>
 
+                {/* Edit a products */}
                 <div className="row">
                     <div className="col-lg-8">
 
@@ -47,7 +53,7 @@ const FarmersWithdraw = () => {
                     handleSubmit(values, setSubmitting)
                     }
                 validationSchema={registerValidator}
-                initialValues={{firstName: "", lastName: "", phoneNumber: "",  email: "", password: "", confirm_password: ""}}
+                initialValues={{firstName: "Maize", lastName: "40,000", phoneNumber: "Vegetables",  email: "2000", password: "Amet minim mollit non deserunt ullamco est.", confirm_password: ""}}
               >
                   {({
                       handleChange,
@@ -61,10 +67,10 @@ const FarmersWithdraw = () => {
                       <Form onSubmit={handleSubmit}>
                           {/* First name */}
                           <div className="form-group mt-3">
-                            <label htmlFor="email">Amount</label>
+                            <label htmlFor="email">Product Name</label>
                             <input
                               className="form-control input-style"
-                              placeholder="Amount"
+                              placeholder=""
                               type="text"
                               onBlur={handleBlur}
                               onChange={handleChange}
@@ -79,14 +85,14 @@ const FarmersWithdraw = () => {
                
                             {/* Account Number */}
                             <div className="form-group">
-                              <label htmlFor="password">Account Number</label>
+                              <label htmlFor="password">Price</label>
                               <input className="form-control input-style"
                               type="text"
                               id="lastName"
                               value={values.lastName}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              placeholder="Account Number" />
+                              placeholder="" />
                                <small style={{ color: "#dc3545" }}>
                                   {touched.lastName && errors.lastName}
                               </small>
@@ -94,14 +100,14 @@ const FarmersWithdraw = () => {
 
                             {/* Bank */}
                             <div className="form-group">
-                              <label htmlFor="password">Bank</label>
+                              <label htmlFor="password">Category</label>
                               <input className="form-control input-style"
                               type="text"
                               id="phoneNumber"
                               value={values.phoneNumber}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              placeholder="Bank" />
+                              placeholder="" />
                                <small style={{ color: "#dc3545" }}>
                                   {touched.phoneNumber && errors.phoneNumber}
                               </small>
@@ -109,14 +115,14 @@ const FarmersWithdraw = () => {
 
                              {/* Account name */}
                              <div className="form-group">
-                              <label htmlFor="password">Account Name</label>
+                              <label htmlFor="password">Quantity in stock</label>
                               <input className="form-control input-style"
                               type="email"
                               id="email"
                               value={values.email}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              placeholder="Account Name" />
+                              placeholder="" />
                                <small style={{ color: "#dc3545" }}>
                                   {touched.email && errors.email}
                               </small>
@@ -125,25 +131,50 @@ const FarmersWithdraw = () => {
 
                              {/* Narration */}
                              <div className="form-group">
-                              <label htmlFor="password">Narration</label>
+                              <label htmlFor="password">Description</label>
                               <input className="form-control input-style"
-                              type="password"
+                              type="text"
                               id="password"
                               value={values.password}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              placeholder="Narration" />
+                              placeholder="" />
                                <small style={{ color: "#dc3545" }}>
                                   {touched.password && errors.password}
                               </small>
                             </div>
+
+                        {/* product images */}
+                        <div>
+                            <h6>Product Images</h6>
+                        </div>
+
+                        <div className="mt-2" style={{display: 'flex'}}>
+
+                            <div style={{marginRight: '2%'}}>
+                                <img src={item4} width="70" height="70" alt="Default" />
+                            </div>
+
+                            <div style={{marginRight: '2%'}}>
+                                <img src={item6} width="70" height="70" alt="Default" />
+                            </div>
+
+                            <div style={{marginRight: '2%'}}>
+                                <img src={item4} width="70" height="70" alt="Default" />
+                            </div>
+
+                            <div>
+                                <img src={Default} width="70" height="70" alt="Default" />
+                            </div>
+
+                        </div>
 
                             
                         <div className="text-center">
                             <button
                             type="submit"
                             disabled={isSubmitting}
-                             className="btn btn-oyap text-uppercase mt-3">Withdraw</button>
+                             className="btn btn-oyap mt-4">Update</button>
                          </div>
                       </Form>
                   )}
@@ -151,7 +182,9 @@ const FarmersWithdraw = () => {
               </Formik>
 
                     </div>
-                </div>               
+                </div>              
+
+                  
 
             </header>
         
@@ -162,4 +195,4 @@ const FarmersWithdraw = () => {
      );
 }
  
-export default FarmersWithdraw;
+export default FarmersProductEdit;

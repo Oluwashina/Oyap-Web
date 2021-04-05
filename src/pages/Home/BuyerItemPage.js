@@ -10,17 +10,12 @@ import Seller from "../../assets/images/seller1.png";
 import './BuyerItemPage.css'
 import BuyerFooter from '../../components/BuyerFooter';
 import { connect } from "react-redux";
-import { useFirestoreConnect } from "react-redux-firebase";
 import { addToCart, Decrement, Increment } from '../../store/actions/carts';
 
 const ItemPage = (props) => {
 
     const {product, count, Increment, Decrement, addCartClick, products, id, history} = props
 
-
-    useFirestoreConnect([
-        { collection: "products", orderBy: ["createdAt", "desc"] },
-      ]);
 
       const BuyNow = (products, id, name) =>{
         addCartClick(products, id, name)
@@ -36,7 +31,7 @@ const ItemPage = (props) => {
             {/* breadcrumbs */}
             <div style={{background: ' rgba(196, 196, 196, 0.2)', padding: '10px'}}> 
                 <div className="container">
-                     <p className="mb-0" style={{fontSize: 14}}><span style={{color: '#7BC30A'}}>Home/{product.category}</span>/{product.name}</p>
+                     <p className="mb-0" style={{fontSize: 14}}><span style={{color: '#7BC30A'}}>Home/{product.productCategory}</span>/{product.productName}</p>
                 </div>
             </div>
 
@@ -46,7 +41,7 @@ const ItemPage = (props) => {
                 
 
                 <div className="mt-4">
-                 <h5>{product.name}</h5>
+                 <h5>{product.productName}</h5>
                 </div>
 
                 <div className="mt-4">
@@ -58,26 +53,26 @@ const ItemPage = (props) => {
 
                         {/* product image */}
                         <div className="mt-4">
-                         <img src={product.images[0]} alt="oyap" className="img-fluid itemImage" />
+                         <img src={product.productImages[0]} alt="oyap" className="img-fluid itemImage" />
                         </div>
 
                         {/* smaller images */}
                         <div className="mt-4" style={{display:  'flex', justifyContent: 'space-between'}}>
 
                             <div>
-                                <img src={!product.images[0] ? Default : product.images[0] } alt="oyap" className="smallImages" />
+                                <img src={!product.productImages[0] ? Default : product.productImages[0] } alt="oyap" className="smallImages" />
                             </div>
 
                             <div>
-                            <img src={!product.images[1] ? Default : product.images[0]} alt="oyap" className="smallImages" />
+                            <img src={!product.productImages[1] ? Default : product.productImages[1]} alt="oyap" className="smallImages" />
                             </div>
 
                             <div>
-                            <img src={!product.images[2] ? Default : product.images[0]} alt="oyap" className="smallImages" />
+                            <img src={!product.productImages[2] ? Default : product.productImages[2]} alt="oyap" className="smallImages" />
                             </div>
 
                             <div>
-                            <img src={!product.images[3] ? Default : product.images[0]} alt="oyap" className="smallImages" />
+                            <img src={!product.productImages[3] ? Default : product.productImages[3]} alt="oyap" className="smallImages" />
                             </div>
                         </div>
 
@@ -87,13 +82,13 @@ const ItemPage = (props) => {
                     <div className="col-lg-5">
                         {/* amount */}
                         <div className="mt-4">
-                            <h5 style={{color: '#5B9223', fontWeight: 'bold'}}>NGN {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
+                            <h5 style={{color: '#5B9223', fontWeight: 'bold'}}>NGN {product.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
                         </div>
 
                         {/* status */}
                         <div>
                             <h6>Status: <span style={{color: '#5B9223', fontWeight: 'bold'}}>
-                                {product.price < 1 ? "Out of Stock" : "In Stock"}
+                                {product.productPrice < 1 ? "Out of Stock" : "In Stock"}
                                 </span></h6>
                         </div>
 
@@ -104,7 +99,7 @@ const ItemPage = (props) => {
                         {/* description */}
                         <div className="mt-4">   
                             <h6 style={{fontWeight: 600}}>Description</h6>
-                            <p className="mt-2">{product.description}</p>
+                            <p className="mt-2">{product.productDescription}</p>
                         </div>
 
                     {/* quantity add */}
@@ -137,12 +132,12 @@ const ItemPage = (props) => {
                         <div className="mt-2" style={{display: 'flex',}}>
                             <div style={{flex: 1}}>
                             <button className="btn btn-add btn-block mt-4"
-                              onClick={()=>{addCartClick(products, id, product.name)}}
+                              onClick={()=>{addCartClick(products, id, product.productName)}}
                             >Add to Cart</button>
                             </div>
                             <div className="ml-4" style={{flex: 1}}>
                         <button
-                        onClick={()=>{BuyNow(products, id, product.name)}}
+                        onClick={()=>{BuyNow(products, id, product.productName)}}
                          className="btn btn-buy btn-block mt-4">Buy Now</button>
                             </div>
                         </div>
@@ -162,7 +157,7 @@ const ItemPage = (props) => {
                                 </div>
 
                                 <div className="text-center mt-3">
-                                    <p className="mb-0" style={{fontWeight: 600}}>{product.sellerFirstName} {product.sellerLastName}</p>
+                                    <p className="mb-0" style={{fontWeight: 600}}>{product.sellerFirstName ? product.sellerFirstName : "Name"} {product.sellerLastName ? product.sellerLastName : "Name1"}</p>
                                 </div>
 
                                 <div className="text-center mt-2">
@@ -170,15 +165,15 @@ const ItemPage = (props) => {
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <p className="mb-0"  style={{fontSize: 14, fontWeight: 500}}>08123452345</p>
+                                    <p className="mb-0"  style={{fontSize: 14, fontWeight: 500}}>{product.sellerphoneNumber}</p>
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <p className="mb-0"  style={{fontSize: 14, fontWeight: 500}}>AjagbeFarms@gmail.com</p>
+                                    <p className="mb-0"  style={{fontSize: 14, fontWeight: 500}}>{product.sellerEmail}</p>
                                 </div>
 
                                 <div className="mt-4">
-                                 <a  href="tel:+2348123452345" className="btn btn-contact btn-block mt-4" style={{color: 'white'}}>Contact Me</a> 
+                                 <a  href={`tel:${product.sellerphoneNumber}`} className="btn btn-contact btn-block mt-4" style={{color: 'white'}}>Contact Me</a> 
                                 </div>
 
                             </div>

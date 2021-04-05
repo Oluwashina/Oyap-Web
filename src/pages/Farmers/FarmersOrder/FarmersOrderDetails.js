@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 import Item5 from "../../../assets/images/item5.png";
+import './FarmersOrder.css'
+
 
 const FarmersOrderDetails = () => {
    
@@ -58,7 +60,7 @@ const FarmersOrderDetails = () => {
 
             {/* details */}
             <div className="row mt-lg-0 mt-1">
-                    <div className="col-lg-7 mb-4">
+                    <div className="col-lg-6 mb-4">
 
                         {/* order details */}
                         <div className="mt-lg-4 mt-4 orderDetails" >
@@ -69,10 +71,10 @@ const FarmersOrderDetails = () => {
 
                             <div className="ml-4 ml-lg-5">
                               <div className="">
-                                    <p className="mb-0 mt-0 mt-lg-4" style={{fontWeight: 'bold', lineHeight: '25px'}}>1 truck load of nigerian grade fresh maize</p>
+                                    <p className="mb-0 mt-0 mt-lg-4" style={{fontWeight: 'bold', lineHeight: '25px'}}>Maize</p>
                                     <p className="mb-0 mt-2" style={{fontSize: 14}}>Qty: 1</p>
                                     <div className="mt-2">
-                                        <p className="mb-0" style={{color: '#ED881C', fontSize: 14, fontWeight: '500'}}>Status: <span style={{color: '#ED881C', fontWeight: 700, lineHeight: '20px'}}>Awaiting Confirmation</span></p>
+                                        <p className="mb-0" style={{color: '#ED881C', fontSize: 14, fontWeight: '500'}}>Status: <span style={{color: '#ED881C', fontWeight: 700, lineHeight: '20px'}}>Payment Received</span></p>
                                     </div>
                                  </div>
                             </div>
@@ -105,7 +107,7 @@ const FarmersOrderDetails = () => {
 
                     </div>
 
-                    <div className="col-lg-5">
+                    <div className="col-lg-6">
                         
                         {/* order summary */}
                         <div className="mt-lg-4 mt-4" style={{background: ' rgba(196, 196, 196, 0.2)', borderRadius: '5px', padding: '30px 15px'}}>
@@ -186,6 +188,26 @@ const FarmersOrderDetails = () => {
                                    <h6 className="mb-0" style={{fontWeight: 600, color: '#5B9223'}}>NGN 42,000</h6> 
                                 </div>
                             </div>
+                        </div>
+
+                        {/* cancel and confirm order div for a new order */}
+                        <div className="mt-lg-4 mt-4" style={{background: ' rgba(196, 196, 196, 0.2)', borderRadius: '5px', padding: '30px 15px'}}>
+
+                            <div className="text-center mt-2">
+                                <h6>Click here to confirm when order is ready for 
+                                    pick up by delivery company</h6>
+                            </div>
+
+                            <div className="mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                <button className="btn btn-cancel" >Cancel Order</button>
+                                </div>
+
+                                <div>
+                                <button className="btn btn-confirm" >Confirm Order</button>
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>

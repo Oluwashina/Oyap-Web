@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import BuyerNav from "../../components/BuyerNavbar";
 import StartUp from "../../assets/images/startup.svg";
 import Secure from "../../assets/images/secure.svg";
@@ -9,13 +9,18 @@ import BuyerFooter from "../../components/BuyerFooter";
 import BuyerProducts from "../../components/BuyerProducts";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { getProducts } from "../../store/actions/products";
 
 const BuyerHome = (props) => {
   
-  const { history, products } = props;
+  const { history, products, ProductsFetch } = props;
 
 
   // make call to fetch products on load of page
+  useEffect(() => {
+    ProductsFetch();
+  }, [ProductsFetch]);
+
 
   const itemProduct = (value) => {
     history.push("/item/" + value);
@@ -105,4 +110,11 @@ const mapStateToProps = (state) => {
     products: state.products.products,
   };
 };
-export default connect(mapStateToProps)(BuyerHome);
+
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    ProductsFetch: (value) => dispatch(getProducts(value)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuyerHome);

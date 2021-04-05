@@ -15,7 +15,7 @@ const Checkout = (props) => {
     let price = 0;
 
     cartItems.forEach((item) => {
-      price += item.cartQty * item.price;
+      price += item.cartQty * item.productprice;
     });
 
     setTotalPrice(price);

@@ -1,20 +1,59 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
-import Item1 from "../../../assets/images/item1.png";
-import Item2 from "../../../assets/images/item2.png";
-import Item3 from "../../../assets/images/item3.png";
-import Item4 from "../../../assets/images/item4.png";
-import Item5 from "../../../assets/images/item5.png";
+import {connect} from 'react-redux'
+import { getFarmersProducts } from '../../../store/actions/farmers';
+import Image, { Shimmer } from 'react-shimmer'
+import Skeleton from 'react-loading-skeleton'
 
 
-const FarmersProduct = () => {
+const FarmersProduct = (props) => {
+
+    const {history, ProductsFetch, products} = props
    
     const [toggled, setToggled] = useState(false);
  
     const handleToggleSidebar = (value) => {
       setToggled(value);
     };
+
+// make call to fetch products on load of page
+  useEffect(() => {
+    ProductsFetch();
+  }, [ProductsFetch]);
+
+    const handleRoute = (val) =>{
+        history.push('/farmers/product/'+val)
+    }
+
+  const AllProducts = !products ?
+    (
+        <div className="">
+        </div>
+    )
+     : products.map(product =>{
+            return(
+                <div key={product.id} className="col-lg-3 col-6 mb-4 productCard" onClick={() => handleRoute(product.id)}>
+                {/* image */}
+                <div className="text-center">
+                    <Image
+                     src={product.productImages[0]} alt="oyap"
+                       NativeImgProps={{className: "productImage"}}
+                        fallback={<Shimmer width={140} height={150} />}
+                     />
+                </div>
+                {/* name */}
+                <div className="mt-3">
+                    <p className="mb-0 text-center">{product.productName ||  <Skeleton /> }</p>
+                </div>
+                {/* price */}
+                <div className="mt-2">
+                    <p className="mb-0 price text-center">NGN {product.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ||  <Skeleton /> }</p>
+                </div>
+            </div> 
+            )
+        }) 
+
     return (  
         <div className='app'>
          <SideBar
@@ -39,118 +78,10 @@ const FarmersProduct = () => {
 
                   {/* first row */}
                   <div className="row mt-4">
-                    <div className="col-lg-3 col-6 mb-4 productCard">
-                        {/* image */}
-                        <div className="text-center">
-                          <img src={Item1} alt="oyap" className="productImage" />
-                        </div>
-                        {/* name */}
-                        <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item2} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item3} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item4} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
-                        </div>
-                    </div>
-                </div>
+                        {AllProducts}
+                     </div>
 
-                {/* second row */}
-                 <div className="row mt-4">
-                    <div className="col-lg-3 col-6 mb-4 productCard">
-                        {/* image */}
-                        <div className="text-center">
-                          <img src={Item2} alt="oyap" className="productImage" />
-                        </div>
-                        {/* name */}
-                        <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item5} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item1} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-3 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item3} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
-                        </div>
-                    </div>
-                </div>
-
+               
                 {/* pagination */}
                  <div className="mt-5" style={{display: 'flex', justifyContent: 'flex-end'}}>
 
@@ -176,4 +107,16 @@ const FarmersProduct = () => {
      );
 }
  
-export default FarmersProduct;
+const mapStateToProps = (state) =>{
+    return{
+        products: state.farmers.products,
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        ProductsFetch: (value) => dispatch(getFarmersProducts(value)),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FarmersProduct);

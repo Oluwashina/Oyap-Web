@@ -7,7 +7,7 @@ import Item4 from "../../../assets/images/item4.png";
 import Arrow from "../../../assets/images/arrow.svg";
 import {Link} from 'react-router-dom'
 
-const FarmersOrder = () => {
+const FarmersOrderCompleted = () => {
    
     const [toggled, setToggled] = useState(false);
  
@@ -31,7 +31,7 @@ const FarmersOrder = () => {
             <header>
             <div className="newOrders">
 
-                            <h5>New Orders</h5>
+                            <h5>Completed Orders</h5>
 
                             {/* first order */}
                             <div className="mt-3 farmersOrders">
@@ -49,7 +49,7 @@ const FarmersOrder = () => {
                                             <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 10</p>
 
                                             <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/4" className="">
+                                                <Link to="/" className="">
                                                     <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
                                                 </Link>         
                                             </div>
@@ -75,7 +75,7 @@ const FarmersOrder = () => {
                                             <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 5</p>
 
                                             <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/1" className="">
+                                                <Link to="/" className="">
                                                     <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
                                                 </Link>         
                                             </div>
@@ -99,7 +99,7 @@ const FarmersOrder = () => {
                                             <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 10</p>
 
                                             <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/2" className="">
+                                                <Link to="/" className="">
                                                     <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
                                                 </Link>         
                                             </div>
@@ -125,7 +125,7 @@ const FarmersOrder = () => {
                                             <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 10</p>
 
                                             <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/3" className="">
+                                                <Link to="/" className="">
                                                     <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
                                                 </Link>         
                                             </div>
@@ -160,4 +160,4 @@ const FarmersOrder = () => {
      );
 }
  
-export default FarmersOrder;
+export default FarmersOrderCompleted;

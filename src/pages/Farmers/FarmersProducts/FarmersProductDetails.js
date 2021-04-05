@@ -1,23 +1,21 @@
 import React, {useState} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
-import Item from "../../../assets/images/item4_big.png";
-import Item4 from "../../../assets/images/item4.png";
-import Item6 from "../../../assets/images/item6.png";
 import Default from "../../../assets/images/default.png";
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 
-const FarmersProductDetails = () => {
-   
+const FarmersProductDetails = (props) => {
+
+   const {product} = props
+
     const [toggled, setToggled] = useState(false);
  
     const handleToggleSidebar = (value) => {
       setToggled(value);
     };
 
-    
-  
 
     return (  
         <div className='app'>
@@ -36,7 +34,7 @@ const FarmersProductDetails = () => {
             <header>
 
                 <div className="mt-4">
-                 <h5>1 truck load of nigerian grade alligator pepper</h5>
+                 <h5>{product.productName}</h5>
                 </div>
 
                 <div className="mt-4">
@@ -48,26 +46,26 @@ const FarmersProductDetails = () => {
 
                         {/* product image */}
                         <div className="mt-4">
-                         <img src={Item} alt="oyap" className="img-fluid itemImage" />
+                        <img src={product.productImages[0]} alt="oyap" className="img-fluid itemImage" />
                         </div>
 
                         {/* smaller images */}
                         <div className="mt-4" style={{display:  'flex', justifyContent: 'space-between'}}>
 
-                            <div>
-                                <img src={Item4} alt="oyap" className="smallImages" />
+                              <div>
+                                <img src={!product.productImages[0] ? Default : product.productImages[0] } alt="oyap" className="smallImages" />
                             </div>
 
                             <div>
-                            <img src={Item6} alt="oyap" className="smallImages" />
+                            <img src={!product.productImages[1] ? Default : product.productImages[1]} alt="oyap" className="smallImages" />
                             </div>
 
                             <div>
-                            <img src={Item4} alt="oyap" className="smallImages" />
+                            <img src={!product.productImages[2] ? Default : product.productImages[2]} alt="oyap" className="smallImages" />
                             </div>
 
                             <div>
-                            <img src={Default} alt="oyap" className="smallImages" />
+                            <img src={!product.productImages[3] ? Default : product.productImages[3]} alt="oyap" className="smallImages" />
                             </div>
                         </div>
 
@@ -77,12 +75,14 @@ const FarmersProductDetails = () => {
                     <div className="col-lg-7">
                         {/* amount */}
                         <div className="mt-4">
-                            <h5 style={{color: '#5B9223', fontWeight: 'bold'}}>NGN 40,000</h5>
+                        <h5 style={{color: '#5B9223', fontWeight: 'bold'}}>NGN {product.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
                         </div>
 
                         {/* status */}
                         <div>
-                            <h6>Status: <span style={{color: '#5B9223', fontWeight: 'bold'}}>In Stock</span></h6>
+                        <h6>Status: <span style={{color: '#5B9223', fontWeight: 'bold'}}>
+                                {product.productPrice < 1 ? "Out of Stock" : "In Stock"}
+                                </span></h6>
                         </div>
 
                         <div>
@@ -92,28 +92,28 @@ const FarmersProductDetails = () => {
                         {/* description */}
                         <div className="mt-4">   
                             <h6 style={{fontWeight: 600}}>Description</h6>
-                            <p className="mt-2">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                            <p className="mt-2">{product.productDescription}</p>
                         </div>
 
                     {/* quantity add */}
                         <div className="mt-4">
                             <h6 style={{fontWeight: 600}}>Quantity</h6>
-                           <p className="mt-2">2000</p>
+                           <p className="mt-2">{product.productQuantity}</p>
                         </div>
                     
                     {/* category */}
                     <div className="mt-4">
                             <h6 style={{fontWeight: 600}}>Category</h6>
-                           <p className="mt-2">Vegetables</p>
+                           <p className="mt-2">{product.productCategory}</p>
                         </div>
 
                         {/* add to cart and buy buttons */}
                         <div className="mt-2" style={{display: 'flex',}}>
                             <div style={{flex: 1}}>
-                            <button className="btn btn-add btn-block mt-4">Edit</button>
+                            <Link to={`/farmers/editproduct/${product.id}`} className="btn btn-add btn-block mt-4">Edit</Link>
                             </div>
                             <div className="ml-4" style={{flex: 1}}>
-                        <Link to="/checkout" className="btn btn-buy btn-block mt-4">Delete</Link>
+                            <button className="btn btn-buy btn-block mt-4">Delete</button>
                             </div>
                         </div>
 
@@ -130,5 +130,20 @@ const FarmersProductDetails = () => {
      </div>
      );
 }
+
+const mapStateToProps = (state, ownProps) =>{
+    const id = ownProps.match.params.id
+    const products = state.farmers.products
+    const product = products.find(product => product.id === id);
+    return{
+        product: product
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+
+    }
+}
  
-export default FarmersProductDetails;
+export default connect(mapStateToProps, mapDispatchToProps)(FarmersProductDetails);

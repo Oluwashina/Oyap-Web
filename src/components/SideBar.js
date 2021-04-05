@@ -12,9 +12,12 @@ import { FaHome, FaCartArrowDown,FaPowerOff, FaWallet, FaStackOverflow } from 'r
 import 'react-pro-sidebar/dist/css/styles.css';
 import './SideBar.css'
 import {Link} from 'react-router-dom'
-import Profile from "../assets/images/profile.png";
+import Account from "../assets/images/account.svg";
+import {connect} from 'react-redux'
 
-const SideBar = ({ toggled, handleToggleSidebar }) => {
+const SideBar = ({ toggled, handleToggleSidebar, profileUrl, firstname }) => {
+
+
     return ( 
          <ProSidebar
             toggled={toggled}
@@ -23,16 +26,16 @@ const SideBar = ({ toggled, handleToggleSidebar }) => {
             >
              <SidebarHeader>
                  
-                <div className="profileDiv mt-4">
+                <Link to="/farmers/profile" className="profileDiv mt-4" style={{cursor: 'pointer'}}>
                     {/* image */}
                     <div>
-                        <img src={Profile} alt="profile pic" className="imgCircle" />
+                        <img src={profileUrl ? profileUrl : Account} alt="profile pic" className="imgCircle" />
                     </div>
-                </div>
+                </Link>
                 <div className="profileDiv">
                 {/* name */}
                 <div className="mt-2">
-                    <h6 className="mb-0" style={{color: '#323335'}}>Welcome, Jackson</h6>
+                    <h6 className="mb-0" style={{color: '#323335'}}>Welcome, {firstname}</h6>
                 </div>
             </div>
 
@@ -56,15 +59,15 @@ const SideBar = ({ toggled, handleToggleSidebar }) => {
           >
             <MenuItem>
             New Orders
-            <Link to="/farmers/order/new" />
+            <Link to="/farmers/neworder" />
             </MenuItem>
             <MenuItem>
              Confirmed Orders
-             <Link to="/farmers/order/confirmed" />
+             <Link to="/farmers/confirmedorder" />
              </MenuItem>
             <MenuItem>
             Completed Orders
-            <Link to="/farmers/order/completed" />
+            <Link to="/farmers/completedorder" />
             </MenuItem>
           </SubMenu>
           <MenuItem icon={<FaWallet />}>
@@ -87,7 +90,7 @@ const SideBar = ({ toggled, handleToggleSidebar }) => {
           }}
         >
           <Link
-             to="/farmers/product/add"
+             to="/farmers/addproduct"
             className="sidebar-btn"
           >
            
@@ -102,4 +105,18 @@ const SideBar = ({ toggled, handleToggleSidebar }) => {
      );
 }
  
-export default SideBar;
+
+const mapStateToProps = (state) =>{
+  return{
+    firstname: state.auth.firstname,
+    profileUrl: state.auth.profileImage
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return{
+
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SideBar);

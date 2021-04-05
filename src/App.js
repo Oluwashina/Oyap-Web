@@ -29,6 +29,10 @@ import FarmersCreditTransactions from "./pages/Farmers/FarmersTransactions/Farme
 import FarmersDebitTransactions from "./pages/Farmers/FarmersTransactions/FarmersDebitTransactions";
 import FarmersWithdraw from "./pages/Farmers/FarmersWithdraw/FarmersWithdraw";
 import FarmersProfile from "./pages/Farmers/FarmersProfile/FarmersProfile";
+import FarmersOrderConfirmed from "./pages/Farmers/FarmersOrder/FarmersConfirmedOrders";
+import FarmersOrderCompleted from "./pages/Farmers/FarmersOrder/FarmersCompletedOrders";
+import FarmersProductAdd from "./pages/Farmers/FarmersProducts/FarmersProductAdd";
+import FarmersProductEdit from "./pages/Farmers/FarmersProducts/FarmersProductEdit";
 
 
 // import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
@@ -58,10 +62,14 @@ function App() {
 
             {/* farmers route */}
             <Route exact path="/farmers" component={FarmersDashboard} />   
-            <Route path="/farmers/order/new" component={FarmersOrder} />   
+            <Route path="/farmers/neworder" component={FarmersOrder} />   
+            <Route path="/farmers/confirmedorder" component={FarmersOrderConfirmed} />
+            <Route path="/farmers/completedorder" component={FarmersOrderCompleted} />
             <Route path="/farmers/order/:id" component={FarmersOrderDetails} />
             <Route path="/farmers/products" component={FarmersProduct} />
             <Route path="/farmers/product/:id" component={FarmersProductDetails} />
+            <Route path="/farmers/addproduct" component={FarmersProductAdd} />
+            <Route path="/farmers/editproduct/:id" component={FarmersProductEdit} />
             <Route path="/farmers/wallet" component={FarmersWallet} />
             <Route path="/farmers/transactions/credit/:id" component={FarmersCreditTransactions} />
             <Route path="/farmers/transactions/debit/:id" component={FarmersDebitTransactions} />

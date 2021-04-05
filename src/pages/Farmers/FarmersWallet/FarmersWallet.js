@@ -5,10 +5,13 @@ import './FarmersWallet.css'
 import ArrowUp from '../../../assets/images/arrow-up-circle.svg'
 import ArrowDown from '../../../assets/images/arrow-down-circle.svg'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
 
 
 
-const FarmersWallet = () => {
+const FarmersWallet = (props) => {
+
+    const {walletBalance} = props
    
     const [toggled, setToggled] = useState(false);
  
@@ -40,10 +43,10 @@ const FarmersWallet = () => {
                     <div>
                         <p className="mb-0">Balance</p>
                         <div className="mt-2">
-                            <h4 className="walletAmount">NGN 1,020,000</h4>
+                            <h4 className="walletAmount">NGN {walletBalance ? walletBalance : 0.00}</h4>
                         </div>
                     </div>
-                    <div>
+                    <div className="mt-lg-0 mt-2">
                      <Link to="/farmers/withdraw" className="btn btn-oyap">Withdraw</Link>
                     </div>
                 </div>
@@ -59,19 +62,19 @@ const FarmersWallet = () => {
                         <div className="transactionColumn">
                            <img src={ArrowUp} alt="credit" width="25" height="25" />
                         </div>
-                        <div className="nameColumn">
+                        <div className="nameColumn mt-lg-0 mt-3">
                             <p className="mb-0" style={{fontWeight: 'bold'}}>Courtney Henry</p>
                         </div>
-                        <div className="transactionColumn">
+                        <div className="transactionColumn mt-lg-0 mt-3">
                             <p className="mb-0" style={{color:'#3A5654'}}>Credit</p>
                         </div>
-                        <div className="amountColumn ">
+                        <div className="amountColumn mt-lg-0 mt-3">
                             <p className="mb-0 creditColor">NGN 4,000.00</p>
                         </div>
-                        <div className="doubleColumn">
+                        <div className="doubleColumn mt-3">
                             <p className="mb-0" style={{color:'#3A5654'}}>28 Dec, 2020</p>
                         </div>
-                        <div className="transactionColumn">
+                        <div className="transactionColumn mt-lg-0 mt-3">
                             <Link to="/farmers/transactions/credit/1" className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>View more</Link>
                         </div>
                     </div>
@@ -83,19 +86,19 @@ const FarmersWallet = () => {
                         <div className="transactionColumn">
                            <img src={ArrowDown} alt="credit" width="25" height="25" />
                         </div>
-                        <div className="nameColumn">
+                        <div className="nameColumn mt-lg-0 mt-3">
                             <p className="mb-0" style={{fontWeight: 'bold'}}>Courtney Henry</p>
                         </div>
-                        <div className="transactionColumn">
+                        <div className="transactionColumn mt-lg-0 mt-3">
                             <p className="mb-0" style={{color:'#3A5654'}}>Debit</p>
                         </div>
-                        <div className="amountColumn ">
+                        <div className="amountColumn mt-lg-0 mt-3">
                             <p className="mb-0 debitColor">NGN 4,000.00</p>
                         </div>
-                        <div className="doubleColumn">
+                        <div className="doubleColumn mt-3">
                             <p className="mb-0" style={{color:'#3A5654'}}>28 Dec, 2020</p>
                         </div>
-                        <div className="transactionColumn">
+                        <div className="transactionColumn mt-lg-0 mt-3">
                             <Link to="/farmers/transactions/debit/1" className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>View more</Link>
                         </div>
                     </div>
@@ -107,19 +110,19 @@ const FarmersWallet = () => {
                         <div className="transactionColumn">
                            <img src={ArrowUp} alt="credit" width="25" height="25" />
                         </div>
-                        <div className="nameColumn">
+                        <div className="nameColumn mt-lg-0 mt-3">
                             <p className="mb-0" style={{fontWeight: 'bold'}}>Courtney Henry</p>
                         </div>
-                        <div className="transactionColumn">
+                        <div className="transactionColumn mt-lg-0 mt-3">
                             <p className="mb-0" style={{color:'#3A5654'}}>Credit</p>
                         </div>
-                        <div className="amountColumn ">
+                        <div className="amountColumn mt-lg-0 mt-3">
                             <p className="mb-0 creditColor">NGN 4,000.00</p>
                         </div>
-                        <div className="doubleColumn">
+                        <div className="doubleColumn mt-3">
                             <p className="mb-0" style={{color:'#3A5654'}}>28 Dec, 2020</p>
                         </div>
-                        <div className="transactionColumn">
+                        <div className="transactionColumn mt-lg-0 mt-3">
                             <Link to="/farmers/transactions/credit/1" className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>View more</Link>
                         </div>
                     </div>
@@ -136,5 +139,17 @@ const FarmersWallet = () => {
      </div>
      );
 }
- 
-export default FarmersWallet;
+
+const mapStateToProps = (state) =>{
+    return{
+        walletBalance: state.auth.walletBalance
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FarmersWallet);

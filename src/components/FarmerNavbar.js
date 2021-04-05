@@ -9,6 +9,8 @@ import './BuyerNavbar.css'
 
 const FarmerNav = (props) => {
 
+    const {profileUrl} = props
+
     return ( 
         <>
 
@@ -28,8 +30,11 @@ const FarmerNav = (props) => {
                     <span style={{color: '#ED881C', fontWeight: 'bold'}}>6</span>
                     </div>
                 </NavLink> 
-
-                <img src={Account} alt="Open Nav" className="mobile-menu mt-1 ml-2" style={{width: 30, height: 30}} id="mobile-cta"  />
+                 
+                <NavLink to="/farmers/profile">
+                <img src={profileUrl ? profileUrl : Account} alt="Open Nav" className="mobile-menu mt-1 ml-2" style={{width: 35, height: 35}} id="mobile-cta"  />
+                </NavLink>
+               
             </div>
            
 
@@ -63,9 +68,9 @@ const FarmerNav = (props) => {
                                 </div>
                         </NavLink> 
                      </li>
-                    <li className="cart-display px-lg-2 mt-lg-1"> 
+                    <li className="cart-display px-lg-2 "> 
                       <NavLink to="/farmers/profile">
-                      <img src={Account}  alt="logo" width="25" height="25" />  
+                             <img src={profileUrl ? profileUrl : Account}  alt="logo" width="30" height="30" />  
                         </NavLink>   
                          
                     </li>
@@ -82,7 +87,7 @@ const FarmerNav = (props) => {
 
 const mapStateToProps = (state) =>{
     return{
-        
+        profileUrl: state.auth.profileImage  
     }
 }
 

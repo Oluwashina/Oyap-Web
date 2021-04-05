@@ -28,10 +28,10 @@ const cartReducer = (state=initState, action) => {
             let result = {
                 ...addedItem,
                 cartQty: state.count,
-                subTotal: state.count * addedItem.price
+                subTotal: state.count * addedItem.productPrice
             }
 
-            let newCartItems =  inCart ? state.cartItems.map((item)=> item.id === action.id ? {...item, cartQty: item.cartQty + state.count, subTotal: (item.cartQty + state.count) * item.price } : item) : [...state.cartItems, result]
+            let newCartItems =  inCart ? state.cartItems.map((item)=> item.id === action.id ? {...item, cartQty: item.cartQty + state.count, subTotal: (item.cartQty + state.count) * item.productPrice } : item) : [...state.cartItems, result]
                 
             return{
                 ...state,
@@ -46,7 +46,7 @@ const cartReducer = (state=initState, action) => {
     
             }
         case actionTypes.ADJUST_QTY:
-            let cartItems = state.cartItems.map((item => item.id === action.id ? {...item, cartQty: action.qty, subTotal: action.qty * item.price} : item))
+            let cartItems = state.cartItems.map((item => item.id === action.id ? {...item, cartQty: action.qty, subTotal: action.qty * item.productPrice} : item))
             return{
                 ...state,
                 cartItems: cartItems

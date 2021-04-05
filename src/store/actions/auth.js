@@ -109,7 +109,7 @@ export const forgotPassword = (user) => {
 export const verifyResetCode = (code) => {
   return async (dispatch, getState) => {
     try {
-      const res = await PostApi("verifyCode", {code}, "", "application/json")
+      const res = await PostApi("link/verify/forgotpasswordcode", {code}, "", "application/json")
       if (res.status === 200) {
         dispatch({ type: actionTypes.VALID_RESETCODE });
       }

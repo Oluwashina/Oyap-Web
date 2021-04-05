@@ -1,10 +1,25 @@
 import * as actionTypes from "./actionTypes";
+import {GetApi} from '../helpers'
+// import cogoToast from "cogo-toast";
 
 
-
+// get all products API
 export const getProducts = () => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await GetApi("products", "");
+      if (res.status === 200) {
+        dispatch({ type: "AllProducts", data: res.data});
+      }
+      if(res.status === 400){
+        dispatch({ type: "Product_Error", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
 
-}
 
 export const createProduct = (product) => {
   return async (dispatch, getState, { getFirestore }) => {

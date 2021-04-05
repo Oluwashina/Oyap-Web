@@ -1,12 +1,16 @@
 import React, {useState} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
-import Profile from '../../../assets/images/profile.png'
+// import Profile from '../../../assets/images/profile.png'
+import Account from '../../../assets/images/account.svg'
 import {Form, Formik} from 'formik'
 import {ProfileAddressValidator} from '../../../validationSchema/validator'
+import {connect} from 'react-redux'
 
 
-const FarmersProfile = () => {
+const FarmersProfile = (props) => {
+
+    const {firstname, lastname, email, phoneNumber, profileUrl} = props
    
     const [toggled, setToggled] = useState(false);
  
@@ -44,28 +48,28 @@ const FarmersProfile = () => {
             <div className="profileDiv mt-5">
                     {/* image */}
                     <div>
-                        <img src={Profile} alt="profile pic" className="imgCircle" />
+                        <img src={profileUrl ? profileUrl : Account} alt="profile pic" className="imgCircle" />
                     </div>
              </div>
 
              <div className="profileDiv">
                 {/* name */}
                 <div className="mt-3">
-                    <h6 className="mb-0">Jackson Adanimagbagbe</h6>
+                    <h6 className="mb-0">{firstname} {lastname}</h6>
                 </div>
             </div>
 
             <div className="profileDiv">
                 {/* email */}
                 <div className="mt-1">
-                    <p className="mb-0" style={{fontSize: 14}}>Jackson24@gmail.com</p>
+                    <p className="mb-0" style={{fontSize: 14}}>{email}</p>
                 </div>
             </div>
 
             <div className="profileDiv">
                 {/* phone */}
                 <div className="mt-1">
-                    <p className="mb-0" style={{fontSize: 14}}>081623341222</p>
+                    <p className="mb-0" style={{fontSize: 14}}>{phoneNumber}</p>
                 </div>
             </div>
 
@@ -149,5 +153,21 @@ const FarmersProfile = () => {
      </div>
      );
 }
+
+const mapStateToProps = (state) =>{
+    return{
+        firstname: state.auth.firstname,
+        lastname: state.auth.lastname,
+        email: state.auth.email,
+        phoneNumber: state.auth.phoneNumber,
+        profileUrl: state.auth.profileImage
+    }
+}
+
+const mapDispatchtoProps =(dispatch) =>{
+    return{
+
+    }
+}
  
-export default FarmersProfile;
+export default connect(mapStateToProps, mapDispatchtoProps)(FarmersProfile);
