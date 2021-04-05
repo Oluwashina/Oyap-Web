@@ -39,8 +39,7 @@ const Payment = ({
         }
         onClick={() => {
           handleFlutterPayment({
-            callback: (response) => {
-              console.log(response);
+            callback: (response) => {              
               handleOrder(customerDetails);
               closePaymentModal(); // this will close the modal programmatically
             },
