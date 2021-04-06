@@ -189,16 +189,10 @@ const UserSignup = (props) => {
 };
 
 
-const mapStateToProps = (state) => {
-  return {
-      
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
       Register: (creds) => dispatch(signUp(creds)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserSignup);
+export default connect(null, mapDispatchToProps)(UserSignup);
