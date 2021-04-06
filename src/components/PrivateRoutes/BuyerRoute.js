@@ -1,31 +1,34 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { useSelector } from "react-redux";
-// import { isLoaded, isEmpty } from "react-redux-firebase";
+import { connect } from "react-redux";
 
-const BuyerRoute = ({ component: Component, ...rest }) => {
-  const { auth, profile } = useSelector((state) => state.firebase);
-
+const BuyerRoute = ({ component: Component, isAuth, role, ...rest }) => {
+  console.log(isAuth);
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (!auth.uid) {
+        if (!isAuth) {
           return (
             <Redirect
               to={{ pathname: "/login", state: { from: props.location } }}
             />
           );
         }
-        if (profile.role !== "Buyer") {
+        if (role !== "Buyer") {
           // role not authorised so redirect to unnauthorised page
-          alert("You are not a buyer!")
-          return <Redirect to="/signup" />;
+          alert("You are not a buyer!");
+          return <Redirect to="/faq" />;
         }
         return <Component {...props} />;
       }}
     />
   );
 };
-
-export default BuyerRoute;
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.isAuthenticated,
+    role: state.auth.role,
+  };
+};
+export default connect(mapStateToProps)(BuyerRoute);
