@@ -8,7 +8,6 @@ import ForgotPassword from "./pages/ForgotPassword/forgotPassword";
 import ResetPassword from "./pages/ResetPassword/resetPassword";
 import VerifyUser from './pages/VerifyUser/verifyUser';
 import CreateProduct from "./components/CreateProduct/CreateProduct";
-// import PrivateRoute from "./components/PrivateRoute"
 import BuyerHome from "./pages/Home/BuyerHome";
 import BuyerItemPage from "./pages/Home/BuyerItemPage"
 import CheckoutPage from "./pages/Home/BuyerCheckout"
@@ -17,8 +16,7 @@ import Orders from "./pages/BuyerOrders/Orders"
 import OrderDetails from "./pages/BuyerOrders/OrderDetails"
 import BuyerProfile from './pages/Home/BuyerProfile'
 import FAQ from "./pages/FAQ/faq"
-
-// import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
+// import SellerRoute from './components/PrivateRoutes/SellerRoute'
 
 function App() {
   return (
