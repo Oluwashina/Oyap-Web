@@ -17,8 +17,7 @@ const cartReducer = (state=initState, action) => {
                 ...state,
                 count: state.count - 1    
             }
-        case actionTypes.ADD_TO_CART:
-            
+        case actionTypes.ADD_TO_CART:            
             // check if product exist in cart, if true adjust quantity
             const inCart = state.cartItems.find((item) =>
             item.id === action.id ? true : false)
