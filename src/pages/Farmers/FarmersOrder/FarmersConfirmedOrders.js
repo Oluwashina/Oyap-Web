@@ -2,12 +2,13 @@ import React, {useState} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 import Item5 from "../../../assets/images/item5.png";
+import Item6 from "../../../assets/images/greenbeans.png";
 import Item1 from "../../../assets/images/item1.png";
 import Item4 from "../../../assets/images/item4.png";
 import Arrow from "../../../assets/images/arrow.svg";
 import {Link} from 'react-router-dom'
 
-const FarmersOrder = () => {
+const FarmersOrderConfirmed = () => {
    
     const [toggled, setToggled] = useState(false);
  
@@ -31,7 +32,7 @@ const FarmersOrder = () => {
             <header>
             <div className="newOrders">
 
-                            <h5>New Orders</h5>
+                            <h5>Confirmed Orders</h5>
 
                             {/* first order */}
                             <div className="mt-3 farmersOrders">
@@ -49,7 +50,7 @@ const FarmersOrder = () => {
                                             <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 10</p>
 
                                             <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/4" className="">
+                                                <Link to="/" className="">
                                                     <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
                                                 </Link>         
                                             </div>
@@ -63,7 +64,7 @@ const FarmersOrder = () => {
                             <div className="mt-4 farmersOrders">
                                 <div>
                                     <div>
-                                        <img src={Item5} alt="cart" className="cartImage" />
+                                        <img src={Item6} alt="cart" className="cartImage" />
                                     </div>
                                 </div>
 
@@ -75,7 +76,7 @@ const FarmersOrder = () => {
                                             <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 5</p>
 
                                             <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/1" className="">
+                                                <Link to="/" className="">
                                                     <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
                                                 </Link>         
                                             </div>
@@ -99,7 +100,7 @@ const FarmersOrder = () => {
                                             <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 10</p>
 
                                             <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/2" className="">
+                                                <Link to="/" className="">
                                                     <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
                                                 </Link>         
                                             </div>
@@ -125,7 +126,7 @@ const FarmersOrder = () => {
                                             <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 10</p>
 
                                             <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/3" className="">
+                                                <Link to="/" className="">
                                                     <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
                                                 </Link>         
                                             </div>
@@ -160,4 +161,4 @@ const FarmersOrder = () => {
      );
 }
  
-export default FarmersOrder;
+export default FarmersOrderConfirmed;

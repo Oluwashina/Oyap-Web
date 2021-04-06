@@ -26,18 +26,18 @@ const BuyerProducts = (props) => {
                 {/* image */}
                 <div className="text-center">
                     <Image
-                     src={product.images[0]} alt="oyap"
+                     src={product.productImages[0]} alt="oyap"
                        NativeImgProps={{className: "productImage"}}
                         fallback={<Shimmer width={140} height={150} />}
                      />
                 </div>
                 {/* name */}
                 <div className="mt-3">
-                    <p className="mb-0 text-center">{product.name ||  <Skeleton /> }</p>
+                    <p className="mb-0 text-center">{product.productName ||  <Skeleton /> }</p>
                 </div>
                 {/* price */}
                 <div className="mt-2">
-                    <p className="mb-0 price text-center">NGN {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ||  <Skeleton /> }</p>
+                    <p className="mb-0 price text-center">NGN {product.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ||  <Skeleton /> }</p>
                 </div>
             </div> 
             )

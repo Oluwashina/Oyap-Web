@@ -1,0 +1,120 @@
+
+.newOrderStyle{
+border: 1px solid #7BC30A;
+box-sizing: border-box;
+border-radius: 5px;
+padding: 30px;
+}
+
+.confirmedOrderStyle{
+    border: 1px solid #ED881C;
+    box-sizing: border-box;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+.completedOrderStyle{
+    border: 1px solid #7BC30A;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+.walletStyle{
+    border: 1px solid #7BC30A;
+    border-radius: 5px;
+    padding: 30px;  
+    width: 100px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.box-width{
+    width: 100px;
+}
+
+.box-width{
+    margin-right: 5%;
+}
+
+
+.dash-width{
+    width: 70%;
+}
+
+.newOrders{
+    background: rgba(196, 196, 196, 0.2);
+    border-radius: 5px;
+    padding: 20px 20px 30px 20px;
+}
+
+.farmersOrders{
+    display: flex;
+    align-items: center;
+    background: #FFFFFF;
+    border-radius: 5px;
+    padding: 0px 30px 0px 0px;
+}
+
+.farmersOrders div:nth-child(1){
+    flex: 1;
+}
+.farmersOrders div:nth-child(2){
+   flex: 3;
+}
+
+.page-space{
+    margin-right: 2%;
+}
+.page-space:last-of-type{
+    margin-right: 0%;
+}
+.next-page {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px; 
+    cursor: pointer;
+}
+.pagination{
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.active-pagination{
+    width: 40px;
+    height: 40px;
+    background: #5B9223;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.active-pagination span{
+    color: white;
+}
+
+@media only screen and (max-width: 768px) {
+    .dash-width{
+        width: 100%;
+    }
+    .farmersOrders{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0px 30px 20px 20px;
+    }
+    .farmersOrders div:nth-child(1){
+        flex: 1;
+    }
+    .farmersOrders div:nth-child(2){
+        flex: 1;
+        margin-top: 20px;
+    }
+    
+}

@@ -13,7 +13,7 @@ const BuyerProfile = (props) => {
     const { firstname, lastname, email, phoneNumber, ProfileUpdate } = props
 
 
-    // Sign Up button
+    // Update profile button
   const handleSubmit = async (values, setSubmitting) =>{
     console.log(values)
     await ProfileUpdate(values)

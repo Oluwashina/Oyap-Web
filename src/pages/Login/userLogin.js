@@ -59,7 +59,7 @@ const UserLogin = (props) => {
               history.push('/')
               break;
             case 'Seller':
-                history.push('/signup')
+                history.push('/farmers')
                 break;
             case 'Logistics':
               history.push('/signup')

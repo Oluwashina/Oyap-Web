@@ -17,7 +17,7 @@ const Cart = (props) => {
         let price = 0;
 
         cartItems.forEach(item =>{
-            price += item.cartQty * item.price
+            price += item.cartQty * item.productPrice
         })
 
         setTotalPrice(price)
@@ -30,11 +30,11 @@ const Cart = (props) => {
             <div style={{flex: 3}}>
                 <div style={{display: 'flex'}}>
                     <div>
-                        <img src={items.images[0]} alt="cart" className="cartImage" />
+                        <img src={items.productImages[0]} alt="cart" className="cartImage" />
                     </div>
                     <div className="ml-4">
-                        <p className="mb-0 mt-3" style={{width: '80%', lineHeight: '25px'}}>{items.name}</p>
-                        <p className="mb-0 mt-2" style={{color: '#C4C4C4', fontSize: 14}}>Sold by: {items.sellerFirstName} {items.sellerLastName}</p>
+                        <p className="mb-0 mt-3" style={{width: '80%', lineHeight: '25px'}}>{items.productName}</p>
+                        <p className="mb-0 mt-2" style={{color: '#C4C4C4', fontSize: 14}}>Sold by: {items.sellerFirstName ? items.sellerFirstName : "Name"} {items.sellerLastName ? items.sellerLastName : "name1"}</p>
                         <div className="mt-3">
                             <p className="mb-0" 
                             onClick={()=>{removeCart(items.id)}}
@@ -63,7 +63,7 @@ const Cart = (props) => {
                         </div>
                 </div>
                 <div style={{flex: 1,}}>
-                    <h6 className="mt-4 mt-lg-0 mb-4 mb-lg-0" style={{fontWeight: 700}}>NGN {items.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h6>
+                    <h6 className="mt-4 mt-lg-0 mb-4 mb-lg-0" style={{fontWeight: 700}}>NGN {items.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h6>
                 </div>
                 <div style={{flex: 1}}>
                     <h6 className="d-none d-md-block" style={{fontWeight: 700}}>NGN {items.subTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h6>
@@ -81,7 +81,7 @@ const Cart = (props) => {
 
                 <div className="text-center mt-3">
                     <h5 className="mb-0">Your cart is empty!</h5>
-                    <p className="mb-0 mt-3">{!auth ? "Browse our items and discover our best deals" :
+                    <p className="mb-0 mt-3">{auth ? "Browse our items and discover our best deals" :
                         <p className="mb-0 mt-3">
                             Already have an account ? <Link to="/login" style={{color: '#ED881C', textDecoration: 'underline'}}>Login</Link> to see the items in your cart.
                         </p> }</p>
