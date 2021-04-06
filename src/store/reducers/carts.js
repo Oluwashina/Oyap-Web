@@ -3,6 +3,7 @@ import * as actionTypes from '../actions/actionTypes'
 const initState = {
     count: 1,
     cartItems: [],
+    cartCount: 0
 }
 
 const cartReducer = (state=initState, action) => {
@@ -18,6 +19,19 @@ const cartReducer = (state=initState, action) => {
                 count: state.count - 1    
             }
         case actionTypes.ADD_TO_CART:            
+        case 'CARTITEMS':
+            return{
+                ...state,
+                cartItems: action.data
+            }
+        case 'CARTCOUNT':
+            return{
+                ...state,
+                cartCount: action.data.cartcount
+            }
+            
+        case actionTypes.ADD_TO_CART:
+            
             // check if product exist in cart, if true adjust quantity
             const inCart = state.cartItems.find((item) =>
             item.id === action.id ? true : false)

@@ -19,7 +19,7 @@ const Payment = ({
       name: "joel ugwumadu",
     },
     customizations: {
-      title: "OYAP Payment",
+      title: "AGRIMART",
       description: "Payment for items in cart",
       logo:
         "https://res.cloudinary.com/dmnghlyic/image/upload/v1614692628/PurpleGoldImages/ztmlbnjddj8bzc5w0ph2.png",

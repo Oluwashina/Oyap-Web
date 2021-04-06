@@ -71,3 +71,36 @@ export const GetApi = async (url,token) => {
         }
       }   
 };
+
+// delete request functionality
+export const DeleteApi = async (url,token) => {
+  try {
+  const data  = await axios.delete(apiUrl + `${url}`, {
+      headers: {
+          Accept: 'application/json',
+          Authorization: token,
+        }
+  });
+  return {
+      status:  data.status,
+      data: data.data
+  }
+        
+  }catch(e){
+  // check status code here and redirect to login if 401
+    var status = e.response.status
+      if(status === 401){
+          store.dispatch({type: "logout"})
+          return {
+          status: status, 
+          data: e.response.data
+      }
+      }
+      else{
+      return {
+          status: status, 
+          data: e.response.data
+       } 
+      }
+    }   
+};

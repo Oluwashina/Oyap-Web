@@ -115,38 +115,14 @@
         align-items: flex-start;
         justify-content: flex-start;
     }
-    /* .sell_circle{
+    .sell_circle{
         display: none;
-    } */
-    
-.sell_circle{
-    position: absolute;
-    right: 50px;
-    top: -50px;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    background: white;
-    border: 2px solid #7BC30A;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-}
-.sell_circle h3{
-    color: #ED881C;
-    font-size: 16px;
-    text-align: center;
-}
-
-.btn-sell{
+    }
+    .btn-sell{
     background: #ED881C;
     border-radius: 5px;
     color: white;
     padding: 5px 20px;
     transition: all ease-in 0.5s;
-}
-
-    
-     
+    }  
 }

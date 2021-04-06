@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import SellIcon from "../assets/images/sell_nav.png";
 import Logo from "../assets/images/logo.png";
 import Cart from "../assets/images/cart_icon.svg";
@@ -10,10 +10,11 @@ import {Link, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 import * as actions from "../store/actions";
 import './BuyerNavbar.css'
+import { getCartCount } from '../store/actions/carts';
 
 const BuyerNav = (props) => {
 
-    const {cartCount,auth, logout, firstname} = props
+    const {cartCount,cartItems,auth, logout, firstname, getCount} = props
 
     const [navShow, setNavShow] = useState(false);
 
@@ -26,6 +27,13 @@ const BuyerNav = (props) => {
     const ToggleDropdown = () =>{
         setDropShow(dropShow ? false : true)
     }
+
+    // make call to get cart count
+    useEffect(() => {
+        if(auth){
+            getCount();
+         }
+    }, [getCount, auth, cartItems]);
 
     return ( 
         <>
@@ -314,7 +322,8 @@ const BuyerNav = (props) => {
 
 const mapStateToProps = (state) =>{
     return{
-        cartCount: state.cart.cartItems.length,
+        cartCount: state.cart.cartCount,
+        cartItems: state.cart.cartItems,
         auth: state.auth.isAuthenticated,
         firstname: state.auth.firstname,
         lastname: state.auth.lastname
@@ -324,6 +333,7 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
     return{
         logout: () => dispatch(actions.logOut()),
+        getCount: () => dispatch(getCartCount())
     }
 }
  

@@ -5,13 +5,15 @@ import './BuyerCart.css'
 import BuyerFooter from '../../components/BuyerFooter';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
-import { adjustQty, removeCart } from '../../store/actions/carts';
+import { deleteCart, getCart, adjustCartQty } from '../../store/actions/carts';
 
 const Cart = (props) => {
 
-    const {cartItems, removeCart, Increment, Decrement, auth} = props
+    const {cartItems, Increment, Decrement, auth, getCartItems, CartRemove} = props
 
     const [totalPrice, setTotalPrice] = useState(0)
+   
+   
 
     useEffect(() =>{
         let price = 0;
@@ -22,6 +24,34 @@ const Cart = (props) => {
 
         setTotalPrice(price)
     }, [cartItems, totalPrice, setTotalPrice])
+
+    // make call to fetch cart items
+    useEffect(() => {
+        if(auth){
+            getCartItems();
+         }
+    }, [getCartItems, auth]);
+
+    const minusAdjust = (id, qty, item)  =>{
+        let result = {
+            ...item,
+            cartQty: qty,
+            subTotal: qty * item.productPrice
+        }
+        console.log(result)
+        Decrement(result)
+    }
+
+    const plusAdjust = (id, qty, item) =>{
+        let result = {
+            ...item,
+            cartQty: qty,
+            subTotal: qty * item.productPrice
+        }
+        console.log(result)
+        Increment(result)
+    }
+
 
     const itemsCart = cartItems.length ? (
         cartItems.map(items=>{
@@ -37,7 +67,7 @@ const Cart = (props) => {
                         <p className="mb-0 mt-2" style={{color: '#C4C4C4', fontSize: 14}}>Sold by: {items.sellerFirstName ? items.sellerFirstName : "Name"} {items.sellerLastName ? items.sellerLastName : "name1"}</p>
                         <div className="mt-3">
                             <p className="mb-0" 
-                            onClick={()=>{removeCart(items.id)}}
+                            onClick={()=>{CartRemove(items.id)}}
                             style={{color: '#ED881C', cursor: 'pointer'}}>REMOVE</p>
                         </div>
                     </div>
@@ -49,7 +79,7 @@ const Cart = (props) => {
                         <div>
                             <i 
                             className={items.cartQty === 1 ? "mdi mdi-minus disabled" : "mdi mdi-minus"}
-                            onClick={()=>{Decrement(items.id, items.cartQty - 1)}} 
+                            onClick={()=>{minusAdjust(items.id, items.cartQty - 1, items)}} 
                             ></i>
                         </div>
                         <div style={{fontSize: 20}}>
@@ -57,7 +87,7 @@ const Cart = (props) => {
                         </div>
                         <div>
                          <i className="mdi mdi-plus"
-                              onClick={()=>{Increment( items.id, items.cartQty + 1)}} 
+                              onClick={()=>{plusAdjust( items.id, items.cartQty + 1, items)}} 
                             style={{fontSize: 20, cursor: 'pointer'}}></i>
                             </div>
                         </div>
@@ -82,9 +112,9 @@ const Cart = (props) => {
                 <div className="text-center mt-3">
                     <h5 className="mb-0">Your cart is empty!</h5>
                     <p className="mb-0 mt-3">{auth ? "Browse our items and discover our best deals" :
-                        <p className="mb-0 mt-3">
+                        <span className="mb-0 mt-3">
                             Already have an account ? <Link to="/login" style={{color: '#ED881C', textDecoration: 'underline'}}>Login</Link> to see the items in your cart.
-                        </p> }</p>
+                        </span> }</p>
                 </div>
 
                 <div className="text-center">
@@ -173,15 +203,16 @@ const Cart = (props) => {
 const mapStateToProps = (state) =>{
     return{
         cartItems: state.cart.cartItems,
-        auth: state.auth.isAuthenticate,
+        auth: state.auth.isAuthenticated,
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        removeCart: (id) => dispatch(removeCart(id)),
-        Increment : (id, qty) => dispatch(adjustQty(id, qty)),
-        Decrement : (id, qty) => dispatch(adjustQty(id, qty)),
+        CartRemove: (id) => dispatch(deleteCart(id)),
+        Increment : (res) => dispatch(adjustCartQty(res)),
+        Decrement : (res) => dispatch(adjustCartQty(res)),
+        getCartItems: () => dispatch(getCart()),
     }
 }
  

@@ -10,4 +10,4 @@ export {
 
 export { createProduct } from "./products";
 
-export {Increment, Decrement} from "./carts"
+export {Increment, Decrement, adjustCartQty, adjustQty} from "./carts"

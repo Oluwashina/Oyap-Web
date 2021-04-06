@@ -11,17 +11,44 @@ import './BuyerItemPage.css'
 import BuyerFooter from '../../components/BuyerFooter';
 import { connect } from "react-redux";
 import { addToCart, Decrement, Increment } from '../../store/actions/carts';
+import moment from 'moment'
 
 const ItemPage = (props) => {
 
-    const {product, count, Increment, Decrement, addCartClick, products, id, history} = props
+    const {product, count, Increment, Decrement, addCartClick, products, id, history, auth} = props
 
 
-      const BuyNow = (products, id, name) =>{
-        addCartClick(products, id, name)
-        history.push('/checkout')
+      const BuyNow = (product) =>{
+        if(auth){
+            let result = {
+                ...product,
+                cartQty: count,
+                subTotal: count * product.productPrice
+            }
+            console.log(result)
+            addCartClick(result)
+            history.push('/checkout')
+          }
+          else{
+            history.push('/checkout')
+          }
       }
       
+      const addToCart = (product) =>{
+          if(auth){
+            let result = {
+                ...product,
+                cartQty: count,
+                subTotal: count * product.productPrice
+            }
+            console.log(result)
+            addCartClick(result)
+          }
+          else{
+            history.push('/cart')  
+            
+          }
+      }
 
     if(product){
     return ( 
@@ -132,7 +159,7 @@ const ItemPage = (props) => {
                         <div className="mt-2" style={{display: 'flex',}}>
                             <div style={{flex: 1}}>
                             <button className="btn btn-add btn-block mt-4"
-                              onClick={()=>{addCartClick(products, id, product.productName)}}
+                              onClick={()=>{addToCart(product)}}
                             >Add to Cart</button>
                             </div>
                             <div className="ml-4" style={{flex: 1}}>
@@ -153,7 +180,7 @@ const ItemPage = (props) => {
                                 </div>
 
                                 <div className="text-center mt-3">
-                                    <img src={Seller} alt="seller" className="img-fluid seller-image" />
+                                    <img src={!product.sellerProfilePic ? Seller : product.sellerProfilePic} alt="seller" className="img-fluid seller-image" />
                                 </div>
 
                                 <div className="text-center mt-3">
@@ -161,7 +188,7 @@ const ItemPage = (props) => {
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <p className="mb-0" style={{fontSize: 14, fontWeight: 500}}>21st Jan 2020</p>
+                                    <p className="mb-0" style={{fontSize: 14, fontWeight: 500}}>Reg Date: {moment(product.sellerRegDate).format('Do MMM YYYY')}</p>
                                 </div>
 
                                 <div className="text-center mt-2">
@@ -299,7 +326,8 @@ const mapStateToProps = (state, ownProps) => {
         products: state.products.products,
         count: state.cart.count,
         id: id,
-        cartItems: state.cart.cartItems
+        cartItems: state.cart.cartItems,
+        auth: state.auth.isAuthenticated
     };
 };
 
@@ -307,7 +335,7 @@ const mapDispatchToProps = (dispatch) =>{
     return{
         Increment : () => dispatch(Increment()),
         Decrement : () => dispatch(Decrement()),
-        addCartClick: (product, id, name) => dispatch(addToCart(product, id,name)),
+        addCartClick: (product) => dispatch(addToCart(product)),
     }
 }
  
