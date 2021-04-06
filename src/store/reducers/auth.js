@@ -10,7 +10,7 @@ const initState = {
   isVerified: false,
   isEnabled: false,
   walletBalance: "",
-  role: "",
+  role: null,
   resetcode: false,
   isLoading: false,
 };
@@ -49,6 +49,7 @@ const authReducer = (state = initState, action) => {
               isVerified: false,
               isEnabled: false,
               walletBalance: "",
+              role: null
           }
       case 'SIGNUP_SUCCESS':
         return{
