@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-const BuyerRoute = ({ component: Component, isAuth, role, ...rest }) => {
+const LogissticRouter = ({ component: Component, isAuth, role, ...rest }) => {
   console.log(isAuth);
   return (
     <Route
@@ -31,4 +31,4 @@ const mapStateToProps = (state) => {
     role: state.auth.role,
   };
 };
-export default connect(mapStateToProps)(BuyerRoute);
+export default connect(mapStateToProps)(LogissticRoute);LogissticRouter =
