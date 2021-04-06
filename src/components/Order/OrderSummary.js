@@ -6,11 +6,11 @@ import Order from "../../components/Order/Order"
 const OrderSummary = (props) => {
 
 
-  const {cartItems, handleOrder, values, errors} = props
+  const {cartItems,} = props
 
   
   const [totalPrice, setTotalPrice] = useState(0)
-  const [shippingFee] = useState(2000)
+  const [shippingFee] = useState(500)
 
   useEffect(() =>{
       let price = 0;
@@ -156,11 +156,9 @@ const OrderSummary = (props) => {
         {/* place order button */}
       <div className="mt-4">              
             <Order
-              handleOrder={handleOrder}
               amount={totalPrice}
+              shippingFee={shippingFee}
                 handleDisabled={cartItems}
-                customerDetails={values}
-                errors={errors}
                  />
         </div>
       

@@ -11,6 +11,9 @@ const initState = {
   isVerified: false,
   isEnabled: false,
   walletBalance: "",
+  billingDetails: {},
+  pickUpDetails: "",
+  profilePic: "",
   role: null,
   resetcode: false,
   isLoading: false,
@@ -33,6 +36,9 @@ const authReducer = (state = initState, action) => {
               isVerified: action.data.profile.isVerified,
               isEnabled: action.data.profile.isEnabled,
               walletBalance: action.data.profile.walletBalance,
+              billingDetails: action.data.profile.billingDetails,
+              profilePic: action.data.profile.profilePic,
+              pickUpDetails: action.data.profile.pickUpDetails,
           }
       case 'LOGIN_FAIL':
         return {
@@ -52,7 +58,10 @@ const authReducer = (state = initState, action) => {
               isVerified: false,
               isEnabled: false,
               walletBalance: "",
-              role: null
+              role: null,
+              billingDetails: {},
+              profilePic: "",
+              pickUpDetails: ""
           }
       case 'SIGNUP_SUCCESS':
         return{

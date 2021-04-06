@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-const LogissticRouter = ({ component: Component, isAuth, role, ...rest }) => {
+const LogissticRoute = ({ component: Component, isAuth, role, ...rest }) => {
   console.log(isAuth);
   return (
     <Route
@@ -15,7 +15,7 @@ const LogissticRouter = ({ component: Component, isAuth, role, ...rest }) => {
             />
           );
         }
-        if (role !== "Logistic") {
+        if (role !== "Logistics") {
           // role not authorised so redirect to unnauthorised page
           alert("You do not have access to this page as !" + role);
           return <Redirect to="/faq" />;
@@ -31,4 +31,4 @@ const mapStateToProps = (state) => {
     role: state.auth.role,
   };
 };
-export default connect(mapStateToProps)(LogissticRoute);LogissticRouter =
+export default connect(mapStateToProps)(LogissticRoute);

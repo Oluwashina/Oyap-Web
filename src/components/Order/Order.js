@@ -1,22 +1,56 @@
 import React from "react";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import {connect} from 'react-redux'
+import { CreateOrder } from "../../store/actions/orders";
 
 const Payment = ({
-  handleOrder,
   handleDisabled,
   amount,
-  customerDetails,
+  shippingFee,
+  firstname,
+  lastname,
+  phonenumber,
+  email,
+  postOrder
 }) => {
+
+
+  const getCode = () =>{
+    var numbers = "0123456789";
+    var chars= "abcdefghijklmnopqrstuvwxyz";
+  
+    var code_length = 6;
+    var number_count = 3;
+    var letter_count = 3;
+  
+    var code = '';
+  
+    for(var i=0; i < code_length; i++) {
+       var letterOrNumber = Math.floor(Math.random() * 2);
+       if((letterOrNumber === 0 || number_count === 0) && letter_count > 0) {
+          letter_count--;
+          var rnum = Math.floor(Math.random() * chars.length);
+          code += chars[rnum];
+       }
+       else {
+          number_count--;
+          var rnum2 = Math.floor(Math.random() * numbers.length);
+          code += numbers[rnum2];
+       }
+    }
+    return code
+  }
+
   const config = {
     public_key: process.env.REACT_APP_FLUTTERWAVE_PUBLIC_KEY,
-    tx_ref: Date.now(),
+    tx_ref: Date.now() + "-" + getCode(),
     amount: amount,
     currency: "NGN",
     payment_options: "card,mobilemoney,ussd",
     customer: {
-      email: "user@gmail.com",
-      phonenumber: "07064586146",
-      name: "joel ugwumadu",
+      email: email,
+      phonenumber: phonenumber,
+      name: firstname + " " + lastname,
     },
     customizations: {
       title: "AGRIMART",
@@ -25,8 +59,6 @@ const Payment = ({
         "https://res.cloudinary.com/dmnghlyic/image/upload/v1614692628/PurpleGoldImages/ztmlbnjddj8bzc5w0ph2.png",
     },
   };
-
-
 
   const handleFlutterPayment = useFlutterwave(config);
 
@@ -40,8 +72,14 @@ const Payment = ({
         onClick={() => {
           handleFlutterPayment({
             callback: (response) => {              
-              handleOrder(customerDetails);
+              // handleOrder(customerDetails);
+              console.log(response)
               closePaymentModal(); // this will close the modal programmatically
+              
+              // redirect to a success or failed page based on response
+              
+              // make an API call to backend for products paid for and all
+              postOrder(response, shippingFee, amount)
             },
             onClose: () => {},
           });
@@ -53,4 +91,19 @@ const Payment = ({
   );
 };
 
-export default Payment;
+const mapStateToProps = (state) =>{
+  return{
+    firstname: state.auth.firstname,
+    lastname: state.auth.lastname,
+    phonenumber: state.auth.phoneNumber,
+    email: state.auth.email
+  }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+  return{
+    postOrder: (response, shippingFee, amount) => dispatch(CreateOrder(response, shippingFee, amount))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Payment);

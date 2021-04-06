@@ -35,8 +35,8 @@ const Cart = (props) => {
     const minusAdjust = (id, qty, item)  =>{
         let result = {
             ...item,
-            cartQty: qty,
-            subTotal: qty * item.productPrice
+            cartQty:  -1,
+            subTotal: -1  * item.productPrice
         }
         console.log(result)
         Decrement(result)
@@ -45,8 +45,8 @@ const Cart = (props) => {
     const plusAdjust = (id, qty, item) =>{
         let result = {
             ...item,
-            cartQty: qty,
-            subTotal: qty * item.productPrice
+            cartQty: +1,
+            subTotal: 1 * item.productPrice
         }
         console.log(result)
         Increment(result)
