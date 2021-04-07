@@ -10,7 +10,7 @@ import BuyerFooter from '../../components/BuyerFooter';
 
 const BuyerProfile = (props) => {
 
-    const { firstname, lastname, email, phoneNumber, ProfileUpdate } = props
+    const { firstname, lastname, email, phoneNumber, ProfileUpdate, billingDetails } = props
 
 
     // Update profile button
@@ -79,7 +79,7 @@ const BuyerProfile = (props) => {
                     handleSubmit(values, setSubmitting)
                     }
                 validationSchema={ProfileAddressValidator}
-                initialValues={{store: "", street: "", state: "",  city: "", phone: ""}}
+                initialValues={{store: billingDetails.store ? billingDetails.store : "", street: billingDetails.address ? billingDetails.address : "", state: billingDetails.state ? billingDetails.state : "",  city: billingDetails.city ? billingDetails.city : "", phone: billingDetails.phone ? billingDetails.phone : ""}}
               >
                   {({
                       handleChange,
@@ -201,6 +201,7 @@ const mapStateToProps = (state) =>{
         lastname: state.auth.lastname,
         email: state.auth.email,
         phoneNumber: state.auth.phoneNumber,
+        billingDetails: state.auth.billingDetails
     }
 }
 

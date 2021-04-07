@@ -4,10 +4,11 @@ import BuyerNav from "../../components/BuyerNavbar";
 // import OrderBillingDetails from "../../components/Order/OrderBillingDetails";
 import OrderSummary from "../../components/Order/OrderSummary";
 import { connect } from "react-redux";
+import {Link} from 'react-router-dom'
 
 
 const Checkout = (props) => {
-  const { cartItems } = props;
+  const { cartItems, firstname, lastname, phoneNumber, billingDetails } = props;
 
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -45,10 +46,17 @@ const Checkout = (props) => {
           <h5 style={{ fontWeight: "bold" }}>CHECKOUT</h5>
         </div>
 
+
         <div className="row mt-lg-5 mt-4">
           <div className="col-lg-7 mb-lg-5 mb-4">
             <div>
               <h6 style={{ fontWeight: "bold" }}>Billing Details</h6>
+            </div>
+
+            <div 
+              className={!billingDetails.address ? "alert alert-warning mt-lg-4 mt-4" : "no-title"}
+             role="alert">
+              Billing details update required!!!
             </div>
 
             {/* billing form details */}
@@ -68,9 +76,9 @@ const Checkout = (props) => {
                   </p>
                 </div>
                 <div>
-                  <p className="mb-0" style={{ fontWeight: 600, color:'#ED881C', cursor: 'pointer' }}>
+                  <Link to="/customer/account" className="mb-0" style={{ fontWeight: 600, color:'#ED881C', cursor: 'pointer', textDecoration: 'none' }}>
                     CHANGE
-                  </p>
+                  </Link>
                 </div>
           </div>
 
@@ -88,7 +96,7 @@ const Checkout = (props) => {
               className="mb-0"
               style={{lineHeight: '23px', fontWeight: 600}}
               >
-                Oluwashina Kure-Ojo
+                {firstname} {lastname}
               </p>
 
           {/* address */}
@@ -96,14 +104,16 @@ const Checkout = (props) => {
             className="mb-0 mt-1"
             style={{lineHeight: '23px'}}
             >
-              65, Adebiyi street Joyce-B road ring-road Ibadan Oyo state, IBADAN-RING ROAD, Oyo
+              {!billingDetails.address ?
+               <span style={{color: 'red', fontStyle: 'italic'}}>Kindly update your billing address</span>
+                : `${billingDetails.address},`}  {!billingDetails.city ? "" : billingDetails.city} {!billingDetails.state ? "" : billingDetails.state}
             </p>
             {/* phone */}
             <p
             className="mb-0 mt-1"
             style={{lineHeight: '23px'}}
             >
-              +2347060825698
+              {phoneNumber}
             </p>
         </div>
 
@@ -120,7 +130,9 @@ const Checkout = (props) => {
             <h6 style={{ fontWeight: "bold" }}>Your Order</h6>
 
             {/* order summary */}
-            <OrderSummary handleOrder={handleOrderDataSubmit}  />
+            <OrderSummary
+             handleOrder={handleOrderDataSubmit}
+               />
           </div>
         </div>
       </div>
@@ -135,6 +147,10 @@ const Checkout = (props) => {
 const mapStateToProps = (state) => {
   return {
     cartItems: state.cart.cartItems,
+    firstname: state.auth.firstname,
+    lastname: state.auth.lastname,
+    billingDetails: state.auth.billingDetails,
+    phoneNumber: state.auth.phoneNumber
   };
 };
 

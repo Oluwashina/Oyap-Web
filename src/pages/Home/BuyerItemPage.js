@@ -15,7 +15,7 @@ import moment from 'moment'
 
 const ItemPage = (props) => {
 
-    const {product, count, Increment, Decrement, addCartClick, products, id, history, auth} = props
+    const {product, count, Increment, Decrement, addCartClick, history, auth} = props
 
 
       const BuyNow = (product) =>{
@@ -164,7 +164,7 @@ const ItemPage = (props) => {
                             </div>
                             <div className="ml-4" style={{flex: 1}}>
                         <button
-                        onClick={()=>{BuyNow(products, id, product.productName)}}
+                        onClick={()=>{BuyNow(product)}}
                          className="btn btn-buy btn-block mt-4">Buy Now</button>
                             </div>
                         </div>

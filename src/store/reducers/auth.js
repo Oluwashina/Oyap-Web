@@ -73,7 +73,14 @@ const authReducer = (state = initState, action) => {
       }
     case 'PROFILE_UPDATE':
       return{
-        ...state
+        ...state,
+        billingDetails: {
+          store: action.data.store,
+          address: action.data.street,
+          state: action.data.state,
+          city: action.data.city,
+          phone: action.data.phone,
+         }
       }
     case  'PROFILE_ERROR':
       return{

@@ -1,13 +1,12 @@
 import * as actionTypes from "./actionTypes";
-// import {apiUrl} from '../config'
-import {PostApi} from '../helpers'
+import {PostApi, PutApi} from '../helpers'
 import cogoToast from "cogo-toast";
 
 
-// const getToken = () => {
-// 	const token = localStorage.getItem("token");
-// 	return token
-// }
+const getToken = () => {
+	const token = localStorage.getItem("token");
+	return token
+}
 
 // login user actions functionality
 export const loginUser = (user) => {
@@ -150,16 +149,29 @@ export const ResetPassword = (val) => {
 // sign up user functionality
 export const updateProfile = (user) => {
   return async (dispatch, getState) => {
+    const id = getState().auth.id
     try {
-      const res = await PostApi("updateprofile", {
-                   store: user.store,
-                   address: user.street,
-                   state: user.state,
-                   city: user.city,
-                   phone: user.phone,
-                  }, "", "application/json")
+      const res = await PutApi("member/"+id, {
+                   firstName: getState().auth.firstname,
+                   lastName: getState().auth.lastname,
+                   role: getState().auth.role,
+                   email: getState().auth.email,
+                   phoneNumber:getState().auth.phoneNumber,
+                   isVerified: getState().auth.isVerified,
+                   isEnabled: getState().auth.isEnabled,
+                   walletBalance: getState().auth.walletBalance,
+                   profilePic: getState().auth.profilePic,
+                   pickUpDetails: getState().auth.pickUpDetails,
+                   billingDetails: {
+                    store: user.store,
+                    address: user.street,
+                    state: user.state,
+                    city: user.city,
+                    phone: user.phone,
+                   }
+                  }, getToken(), "application/json")
       if (res.status === 201) {
-        dispatch({ type: "PROFILE_UPDATE", data: res.data });
+        dispatch({ type: "PROFILE_UPDATE", data: user });
         cogoToast.success("Profile Update Successful!");
       }
       if(res.status === 400){

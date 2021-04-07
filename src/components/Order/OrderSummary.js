@@ -6,7 +6,7 @@ import Order from "../../components/Order/Order"
 const OrderSummary = (props) => {
 
 
-  const {cartItems,} = props
+  const {cartItems, billingDetails} = props
 
   
   const [totalPrice, setTotalPrice] = useState(0)
@@ -158,6 +158,7 @@ const OrderSummary = (props) => {
             <Order
               amount={totalPrice}
               shippingFee={shippingFee}
+              billingDetails={billingDetails}
                 handleDisabled={cartItems}
                  />
         </div>
@@ -170,6 +171,7 @@ const OrderSummary = (props) => {
 const mapStateToProps = (state) =>{
   return{
       cartItems: state.cart.cartItems,
+      billingDetails: state.auth.billingDetails
   }
 }
 

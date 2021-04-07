@@ -7,6 +7,7 @@ const Payment = ({
   handleDisabled,
   amount,
   shippingFee,
+  billingDetails,
   firstname,
   lastname,
   phonenumber,
@@ -67,7 +68,7 @@ const Payment = ({
       <button
         className="btn btn-place btn-block mt-4"
         disabled={
-          handleDisabled.length === 0
+          handleDisabled.length === 0 || !billingDetails.address
         }
         onClick={() => {
           handleFlutterPayment({
