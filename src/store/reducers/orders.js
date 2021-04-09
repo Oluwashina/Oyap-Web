@@ -1,19 +1,14 @@
 
 const initState = {
-    orders: []
+    customerOrders: []
 }
 
 const orderReducer = (state=initState, action) => {
     switch(action.type){        
-        case 'CARTITEMS':
+        case 'CustomerOrders':
             return{
                 ...state,
-                cartItems: action.data
-            }
-        case 'CARTCOUNT':
-            return{
-                ...state,
-                cartCount: action.data.cartcount
+                customerOrders: action.data
             }
         default:
             return state

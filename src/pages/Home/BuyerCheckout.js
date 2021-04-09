@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom'
 
 
 const Checkout = (props) => {
-  const { cartItems, firstname, lastname, phoneNumber, billingDetails } = props;
+  const { cartItems, firstname, lastname, phoneNumber, billingDetails,  } = props;
 
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -26,9 +26,12 @@ const Checkout = (props) => {
   const handleOrderDataSubmit = (values) => {    
     console.log(values);
   };
+
+
   return (
     <>
       <BuyerNav />
+
 
       {/* breadcrumbs */}
       <div style={{ background: " rgba(196, 196, 196, 0.2)", padding: "10px" }}>

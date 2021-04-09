@@ -69,6 +69,50 @@ i.mdi-minus.disabled{
     background: white;
 }
 
+.modal.show{
+    display: block;
+}
+
+body.show {
+    overflow-y: hidden;
+    pointer-events: none;
+}
+
+.fade:not(.show) {
+    opacity: 0;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+
+.modal{
+    z-index: 1072;
+}
+
+.fade {
+    transition: opacity .15s linear;
+}
+.modal-content{
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    position: relative;
+}
+
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+  }
+
 /* Media query for smaller phones */
 
 @media (max-width:767px) {

@@ -1,4 +1,4 @@
-import {PostApi,} from '../helpers'
+import {PostApi,GetApi} from '../helpers'
 
 
 
@@ -18,7 +18,7 @@ export const CreateOrder = (val, shippingFee, totalPaid) => {
             totalAmountPaid: totalPaid
         }
       try {
-        const res = await PostApi("createorder", {...data}, getToken(), "application/json")
+        const res = await PostApi("order", {...data}, getToken(), "application/json")
         if (res.status === 201) {
           dispatch({ type: "Order_Created", data: res.data });
         }
@@ -31,6 +31,23 @@ export const CreateOrder = (val, shippingFee, totalPaid) => {
     };
   };
 
+
+  // get pendig orders by a buyer
+export const getCustomersOrders = (value) => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await GetApi("buyer/orders/"+value, getToken());
+      if (res.status === 200) {
+        dispatch({ type: "CustomerOrders", data: res.data});
+      }
+      if(res.status === 400){
+        dispatch({ type: "Orders_Error", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
 
 
 

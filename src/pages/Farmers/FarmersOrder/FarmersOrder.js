@@ -1,19 +1,89 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
-import Item5 from "../../../assets/images/item5.png";
-import Item1 from "../../../assets/images/item1.png";
-import Item4 from "../../../assets/images/item4.png";
 import Arrow from "../../../assets/images/arrow.svg";
-import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import { getNewOrdersLimit, orderbyId } from '../../../store/actions/farmers';
+import Moment from "react-moment";
 
-const FarmersOrder = () => {
+const FarmersOrder = (props) => {
+
+    const { getOrder, auth, neworders, history, filterOrder} = props
    
     const [toggled, setToggled] = useState(false);
+
+    const [name] = useState('new')
  
     const handleToggleSidebar = (value) => {
       setToggled(value);
     };
+
+    useEffect(() =>{
+        if(auth){
+          const values = {
+              limit: 5,
+              offset: 1
+          }
+          getOrder(values)
+        } 
+    }, [getOrder, auth])
+
+
+//   map pending orders layout
+const newOrderLayout = neworders.length ? (
+    neworders.map((value) => {
+      return (
+        <div key={value.id} className="mt-3 farmersOrders">
+            <div>
+                <div>
+                    <img src={value.cartItem.productImages[0]} alt="cart" className="cartImage" />
+                </div>
+            </div>
+
+            <div style={{flex: 4}}>
+                <div className="ml-0">
+                        <p className="mb-0" style={{fontWeight: 'bold'}}>{value.cartItem.productName}</p>
+                        <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 
+                        <Moment className="ml-1" format="MMMM Do, YYYY">
+                                 {value.createdAt}
+                            </Moment></p>
+                        <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time: 
+                            <Moment className="ml-1" format="LT">
+                                    {value.createdAt}
+                                    </Moment></p>
+                        <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: {value.cartItem.cartQty}</p>
+
+                        <div className="text-right mt-lg-0 mt-2">
+                            <div onClick={()=>{handleRoute(value.id)}} style={{cursor: 'pointer'}}>
+                                <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
+                            </div>         
+                        </div>
+                </div>
+            </div>
+
+            
+        </div>
+      );
+    })
+  ) : (
+    <div className="mb-3">
+      <div className="text-center mt-5">
+           <i className="mdi mdi-shopping-outline cartIcon" style={{color: '#5FA30E', fontSize: 50, background: 'none'}}></i>
+      </div>
+  
+       <div className="text-center mt-3">
+            <h5 className="mb-0">No New Orders Placed Yet!</h5>
+            <p className="mb-0 mt-3" style={{fontStyle: 'italic'}}>New orders will appear here as soon as you have any!</p>
+         </div>
+
+    </div>
+  );
+
+  const handleRoute = (id) =>{
+    history.push('/farmers/order/'+id)
+    filterOrder(name, id)
+  }
+
     return (  
         <div className='app'>
          <SideBar
@@ -33,110 +103,13 @@ const FarmersOrder = () => {
 
                             <h5>New Orders</h5>
 
-                            {/* first order */}
-                            <div className="mt-3 farmersOrders">
-                                <div>
-                                    <div>
-                                        <img src={Item5} alt="cart" className="cartImage" />
-                                    </div>
-                                </div>
-
-                                <div style={{flex: 4}}>
-                                    <div className="ml-0">
-                                            <p className="mb-0" style={{fontWeight: 'bold'}}>Maize</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 23rd sept, 2020</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time: 2:00pm</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 10</p>
-
-                                            <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/4" className="">
-                                                    <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
-                                                </Link>         
-                                            </div>
-                                    </div>
-                                </div>
-
-                                
-                            </div>
-
-                            {/* second order */}
-                            <div className="mt-4 farmersOrders">
-                                <div>
-                                    <div>
-                                        <img src={Item5} alt="cart" className="cartImage" />
-                                    </div>
-                                </div>
-
-                                <div style={{flex: 4}}>
-                                    <div className="ml-0">
-                                            <p className="mb-0" style={{fontWeight: 'bold'}}>Maize</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 23rd sept, 2020</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time: 2:00pm</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 5</p>
-
-                                            <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/1" className="">
-                                                    <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
-                                                </Link>         
-                                            </div>
-                                    </div>
-                                </div> 
-                            </div>
-
-                            {/* third order */}
-                            <div className="mt-4 farmersOrders">
-                                <div>
-                                    <div>
-                                        <img src={Item1} alt="cart" className="cartImage" />
-                                    </div>
-                                </div>
-
-                                <div style={{flex: 4}}>
-                                    <div className="ml-0">
-                                            <p className="mb-0" style={{fontWeight: 'bold'}}>Green Beans</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 23rd sept, 2020</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time: 2:00pm</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 10</p>
-
-                                            <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/2" className="">
-                                                    <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
-                                                </Link>         
-                                            </div>
-                                    </div>
-                                </div>
-
-                                
-                            </div>
-
-                            {/* fifth order */}
-                         <div className="mt-4 farmersOrders">
-                                <div>
-                                    <div>
-                                        <img src={Item4} alt="cart" className="cartImage" />
-                                    </div>
-                                </div>
-
-                                <div style={{flex: 4}}>
-                                    <div className="ml-0">
-                                            <p className="mb-0" style={{fontWeight: 'bold'}}>Pepper</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 23rd sept, 2020</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time: 2:00pm</p>
-                                            <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 10</p>
-
-                                            <div className="text-right mt-lg-0 mt-2">
-                                                <Link to="/farmers/order/3" className="">
-                                                    <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
-                                                </Link>         
-                                            </div>
-                                    </div>
-                                </div>
-
-                                
-                            </div>
+                            {newOrderLayout}
 
                             {/* pagination layout */}
-                            <div className="mt-4" style={{display: 'flex', justifyContent: 'flex-end'}}>
+
+                            {neworders.length ? 
+
+                                <div className="mt-4" style={{display: 'flex', justifyContent: 'flex-end'}}>
 
                                     <div className="active-pagination page-space">
                                         <span>1</span>
@@ -150,6 +123,10 @@ const FarmersOrder = () => {
                                         <span>Next Page <i className="mdi mdi-chevron-right" style={{color: '#c4c4c4'}}></i></span>
                                     </div>
                             </div>
+                            :
+                            ""
+                            }  
+                                     
                         </div>
                     </header>
         
@@ -159,5 +136,23 @@ const FarmersOrder = () => {
      </div>
      );
 }
+
+
+const mapStateToProps = (state) =>{
+    return{
+        auth: state.auth.isAuthenticated,
+        firstname: state.auth.firstname,
+        lastname: state.auth.lastname,
+        neworders: state.farmers.newOrders
+    }
+}
+
+const mapDispatchtoProps = (dispatch) =>{
+    return{
+        getOrder: (values) => dispatch(getNewOrdersLimit(values)),
+        filterOrder: (value, id) => dispatch(orderbyId(value, id)),
+    }
+}
  
-export default FarmersOrder;
+
+export default connect(mapStateToProps, mapDispatchtoProps)(FarmersOrder);

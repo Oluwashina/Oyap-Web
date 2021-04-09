@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 import {connect} from 'react-redux'
 import { CreateOrder } from "../../store/actions/orders";
+
+import { useHistory } from "react-router-dom";
 
 const Payment = ({
   handleDisabled,
@@ -12,9 +14,10 @@ const Payment = ({
   lastname,
   phonenumber,
   email,
-  postOrder
+  postOrder, 
 }) => {
 
+  let history = useHistory()
 
   const getCode = () =>{
     var numbers = "0123456789";
@@ -63,8 +66,41 @@ const Payment = ({
 
   const handleFlutterPayment = useFlutterwave(config);
 
+  
+  const [modalShow, setModalShow] = useState(false);
+
+  const handleOrderProceed = () =>{
+    setModalShow(modalShow ? false : true)
+    history.push("/orders");
+  }
+
   return (
     <>
+
+    {/* modal show */}
+  <div 
+    className={ modalShow ? "modal fade show" : "modal fade" }
+    data-backdrop="static"
+     id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal-dialog">
+        <div className="modal-content" style={{background: '#fff', borderRadius: '10px'}} >
+          <div className="" style={{padding: '20px 30px'}}>
+            <h5 className="modal-title" id="exampleModalLabel">Order Placed</h5>
+          </div>
+          <div style={{padding: '2px 30px', lineHeight: '25px'}}>
+          Your order has been placed successfully. 
+        you can track your order in the orders page
+          </div>
+          <div className="mt-2" style={{display: 'flex', justifyContent: 'flex-end', padding: '15px 20px'}} >
+           <button type="button" 
+            onClick={handleOrderProceed}
+            id="shutServer" className="btn btn-oyap">OK</button>
+        </div>
+          
+        </div>
+      </div>
+      </div>
+
       <button
         className="btn btn-place btn-block mt-4"
         disabled={
@@ -77,10 +113,12 @@ const Payment = ({
               console.log(response)
               closePaymentModal(); // this will close the modal programmatically
               
-              // redirect to a success or failed page based on response
+              // redirect to a success or failed page based on response / show dialog
+              setModalShow(modalShow ? false : true)
               
               // make an API call to backend for products paid for and all
               postOrder(response, shippingFee, amount)
+
             },
             onClose: () => {},
           });
