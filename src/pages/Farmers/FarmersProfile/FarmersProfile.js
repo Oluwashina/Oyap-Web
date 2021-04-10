@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 // import Profile from '../../../assets/images/profile.png'
@@ -6,13 +6,16 @@ import Account from '../../../assets/images/account.svg'
 import {Form, Formik} from 'formik'
 import {ProfileAddressValidator} from '../../../validationSchema/validator'
 import {connect} from 'react-redux'
-
+import { updateFarmersProfile, UploadPhoto } from '../../../store/actions/auth';
+import './FarmersProfile.css'
 
 const FarmersProfile = (props) => {
 
-    const {firstname, lastname, email, phoneNumber, profileUrl} = props
+    const {firstname, lastname, email, phoneNumber, profileUrl, pickUpDetails, ProfileUpdate, handlePicture, photoloader} = props
    
     const [toggled, setToggled] = useState(false);
+
+    const fileRef = useRef(null)
  
     const handleToggleSidebar = (value) => {
       setToggled(value);
@@ -22,6 +25,15 @@ const FarmersProfile = (props) => {
     // Profile update
   const handleSubmit = async (values, setSubmitting) =>{
     console.log(values)
+    await ProfileUpdate(values)
+  }
+
+//   upload profile picture
+const handleFile = () =>{
+    var file = fileRef.current.files[0]
+    // setfileName(fileRef.current.files[0].name)
+    handlePicture(file)
+
   }
 
     return (  
@@ -45,11 +57,25 @@ const FarmersProfile = (props) => {
                 </div>
 
                 
-            <div className="profileDiv mt-5">
+            <div className="profileDiv mt-4">
                     {/* image */}
-                    <div>
-                        <img src={profileUrl ? profileUrl : Account} alt="profile pic" className="imgCircle" />
+                    <div style={{position: 'relative'}}>
+                        <img src={profileUrl ? profileUrl : Account} alt="profile pic" style={{width: '150px', height: '150px', borderRadius: '50%'}}/>
                     </div>
+             </div>
+
+             <div className="profileDiv mt-3">
+                 
+                 {/* edit button to change image */}
+                 <div>
+                            <label className={photoloader ? "file disabled" : "file"}
+                            ><i className="mdi mdi-camera-outline mr-1"></i> Change Photo
+                            <input type="file" size="60"
+                                ref={fileRef}
+                                 onChange={() => handleFile()}
+                            />
+                            </label> 
+                 </div>
              </div>
 
              <div className="profileDiv">
@@ -88,7 +114,7 @@ const FarmersProfile = (props) => {
                     handleSubmit(values, setSubmitting)
                     }
                 validationSchema={ProfileAddressValidator}
-                initialValues={{store: "", street: "", state: "",  city: "", phone: ""}}
+                initialValues={{store: pickUpDetails.store ? pickUpDetails.store : "", street: pickUpDetails.address ? pickUpDetails.address : "", state: pickUpDetails.state ? pickUpDetails.state : "",  city: pickUpDetails.city ? pickUpDetails.city : "", phone: pickUpDetails.phone ? pickUpDetails.phone : ""}}
               >
                   {({
                       handleChange,
@@ -100,7 +126,23 @@ const FarmersProfile = (props) => {
                       errors
                   })=>(
                       <Form onSubmit={handleSubmit}>    
-               
+                            {/* Store Name */}
+                          <div className="form-group mt-4">
+                            <label htmlFor="email">Store Name (Optional)</label>
+                            <input
+                              className="form-control input-style"
+                              placeholder=""
+                              type="text"
+                              onBlur={handleBlur}
+                              onChange={handleChange}
+                              id="store"
+                              value={values.store}
+                            />
+                            <small style={{ color: "#dc3545" }}>
+                                        {touched.store && errors.store}
+                               </small>
+                          </div>
+
                             {/* Street Address */}
                             <div className="form-group mt-3">
                               <label htmlFor="password">PickUp Address</label>
@@ -115,6 +157,37 @@ const FarmersProfile = (props) => {
                                   {touched.street && errors.street}
                               </small>
                             </div>
+
+                            {/* State */}
+                            <div className="form-group">
+                              <label htmlFor="password">State</label>
+                              <input className="form-control input-style"
+                              type="text"
+                              id="state"
+                              value={values.state}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              placeholder="" />
+                               <small style={{ color: "#dc3545" }}>
+                                  {touched.state && errors.state}
+                              </small>
+                            </div>
+
+                             {/* City */}
+                             <div className="form-group">
+                              <label htmlFor="password">City</label>
+                              <input className="form-control input-style"
+                              type="text"
+                              id="city"
+                              value={values.city}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              placeholder="" />
+                               <small style={{ color: "#dc3545" }}>
+                                  {touched.city && errors.city}
+                              </small>
+                            </div>
+
 
                              {/* phone number */}
                              <div className="form-group">
@@ -160,13 +233,16 @@ const mapStateToProps = (state) =>{
         lastname: state.auth.lastname,
         email: state.auth.email,
         phoneNumber: state.auth.phoneNumber,
-        profileUrl: state.auth.profileImage
+        profileUrl: state.auth.profilePic,
+        pickUpDetails: state.auth.pickUpDetails,
+        photoloader: state.auth.photoloader
     }
 }
 
 const mapDispatchtoProps =(dispatch) =>{
     return{
-
+        ProfileUpdate : (creds) => dispatch(updateFarmersProfile(creds)),  
+        handlePicture: (values) => dispatch(UploadPhoto(values))
     }
 }
  

@@ -6,20 +6,22 @@ import Wallet from "../../../assets/images/wallet.svg";
 import Arrow from "../../../assets/images/arrow.svg";
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { getNewOrders, orderbyId } from '../../../store/actions/farmers';
+import { getDashboardCount, getNewOrders, orderbyId } from '../../../store/actions/farmers';
 import Moment from "react-moment";
+
 
 const FarmersDashboard = (props) => {
 
-    const {firstname, getOrder, auth, neworders, filterOrder, history} = props
+    const {firstname, getOrder, auth, neworders, filterOrder, history, getCount, count} = props
 
     const [name] = useState('new')
 
     useEffect(() =>{
         if(auth){
           getOrder()
+          getCount()
         } 
-    }, [getOrder, auth])
+    }, [getOrder, auth, getCount])
 
 
      //   map pending orders layout
@@ -102,7 +104,9 @@ const newOrderLayout = neworders.length ? (
                         <div className="mt-5 dash-width" style={{display: 'flex', flexWrap: 'wrap', }}>
 
                             <div className="box-width">
-                                <p className="mb-0 newOrderStyle text-center">200</p>
+                                 <Link to="/farmers/neworder" style={{textDecoration: 'none', color: '#323335'}}>
+                                <p className="mb-0 newOrderStyle text-center">{count.countNewOrder}</p>
+                                </Link>
                                 <div className="text-center mt-3">
                                     <p className="mb-0" style={{lineHeight: '25px', fontWeight: 500}}>New Orders</p>
                                 </div>
@@ -110,14 +114,18 @@ const newOrderLayout = neworders.length ? (
                             
 
                             <div className="box-width">
-                                <p className="mb-0 confirmedOrderStyle text-center">100</p>
+                                 <Link to="/farmers/confirmedorder" style={{textDecoration: 'none', color: '#323335'}}>
+                                <p className="mb-0 confirmedOrderStyle text-center">{count.countConfirmedOrder}</p>
+                                </Link>
                                 <div className="text-center mt-3">
                                     <p className="mb-0" style={{lineHeight: '25px', color: '#ED881C', fontWeight: 500}}>Confirmed Orders</p>
                                 </div>
                             </div>
 
                             <div className="box-width">
-                                <p className="mb-0 completedOrderStyle text-center">50</p>
+                            <Link to="/farmers/completedorder" style={{textDecoration: 'none', color: '#323335'}}>
+                                <p className="mb-0 completedOrderStyle text-center">{count.countCompletedOrder}</p>
+                             </Link>
                                 <div className="text-center mt-3">
                                     <p className="mb-0" style={{lineHeight: '25px', fontWeight: 500}}>Completed Orders</p>
                                 </div>
@@ -130,7 +138,9 @@ const newOrderLayout = neworders.length ? (
                         <div className="mt-3 dash-width" style={{display: 'flex', flexWrap: 'wrap', }}>
 
                             <div className="box-width">
-                                <p className="mb-0 newOrderStyle text-center">200</p>
+                                <Link to="/farmers/products" style={{textDecoration: 'none', color: '#323335'}}>
+                                    <p className="mb-0 newOrderStyle text-center">{count.countAllProductSeller}</p>
+                                </Link>
                                 <div className="text-center mt-3">
                                     <p className="mb-0" style={{lineHeight: '25px', fontWeight: 500}}>Total Products</p>
                                 </div>
@@ -201,7 +211,8 @@ const mapStateToProps = (state) =>{
         auth: state.auth.isAuthenticated,
         firstname: state.auth.firstname,
         lastname: state.auth.lastname,
-        neworders: state.farmers.newOrders
+        neworders: state.farmers.newOrders,
+        count: state.farmers.dashboardCount
     }
 }
 
@@ -209,6 +220,7 @@ const mapDispatchtoProps = (dispatch) =>{
     return{
         getOrder: () => dispatch(getNewOrders()),
         filterOrder: (value, id) => dispatch(orderbyId(value, id)),
+        getCount: () => dispatch(getDashboardCount())
     }
 }
  

@@ -109,7 +109,7 @@ const SideBar = ({ toggled, handleToggleSidebar, profileUrl, firstname }) => {
 const mapStateToProps = (state) =>{
   return{
     firstname: state.auth.firstname,
-    profileUrl: state.auth.profileImage
+    profileUrl: state.auth.profilePic
   }
 }
 

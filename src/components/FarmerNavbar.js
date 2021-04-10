@@ -32,7 +32,7 @@ const FarmerNav = (props) => {
                 </NavLink> 
                  
                 <NavLink to="/farmers/profile">
-                <img src={profileUrl ? profileUrl : Account} alt="Open Nav" className="mobile-menu mt-1 ml-2" style={{width: 35, height: 35}} id="mobile-cta"  />
+                    <img src={profileUrl ? profileUrl : Account} alt="Open Nav" className="mobile-menu mt-1 ml-2" style={{width: 35, height: 35, borderRadius: '50%'}} id="mobile-cta"  />
                 </NavLink>
                
             </div>
@@ -70,7 +70,7 @@ const FarmerNav = (props) => {
                      </li>
                     <li className="cart-display px-lg-2 "> 
                       <NavLink to="/farmers/profile">
-                             <img src={profileUrl ? profileUrl : Account}  alt="logo" width="30" height="30" />  
+                             <img src={profileUrl ? profileUrl : Account}  alt="logo" width="30" height="30" style={{borderRadius: '50%'}} />  
                         </NavLink>   
                          
                     </li>
@@ -87,7 +87,7 @@ const FarmerNav = (props) => {
 
 const mapStateToProps = (state) =>{
     return{
-        profileUrl: state.auth.profileImage  
+        profileUrl: state.auth.profilePic  
     }
 }
 

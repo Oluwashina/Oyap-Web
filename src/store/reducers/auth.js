@@ -12,11 +12,12 @@ const initState = {
   isEnabled: false,
   walletBalance: "",
   billingDetails: {},
-  pickUpDetails: "",
+  pickUpDetails: {},
   profilePic: "",
   role: null,
   resetcode: false,
   isLoading: false,
+  photoloader: false
 };
 
 const authReducer = (state = initState, action) => {
@@ -82,10 +83,36 @@ const authReducer = (state = initState, action) => {
           phone: action.data.phone,
          }
       }
-    case  'PROFILE_ERROR':
+    case 'PICKUP_UPDATE':
+      return{
+        ...state,
+        pickUpDetails: {
+          store: action.data.store,
+          address: action.data.street,
+          state: action.data.state,
+          city: action.data.city,
+          phone: action.data.phone,
+         }
+      }
+    case 'PROFILE_ERROR':
       return{
         ...state
       }
+     case 'PhotoLoader':
+        return{
+            ...state,
+            photoloader: true
+        }
+    case 'StopPhotoLoader':
+        return{
+            ...state,
+            photoloader: false
+      }
+   case 'profilePicture':
+        return{
+            ...state,
+            profilePic: action.image   
+        }
     case actionTypes.VALID_RESETCODE:
       return{
         ...state,

@@ -1,6 +1,8 @@
 import * as actionTypes from "./actionTypes";
 import {PostApi, PutApi} from '../helpers'
 import cogoToast from "cogo-toast";
+import axios from 'axios'
+import {apiUrl} from '../config'
 
 
 const getToken = () => {
@@ -146,7 +148,7 @@ export const ResetPassword = (val) => {
 };
 
 
-// sign up user functionality
+// profile update of user functionality
 export const updateProfile = (user) => {
   return async (dispatch, getState) => {
     const id = getState().auth.id
@@ -180,6 +182,99 @@ export const updateProfile = (user) => {
       }
     } catch (err) {
       console.log(err)
+    }
+  };
+};
+
+
+
+// profile update of farmers
+export const updateFarmersProfile = (user) => {
+  return async (dispatch, getState) => {
+    const id = getState().auth.id
+    try {
+      const res = await PutApi("member/"+id, {
+                   firstName: getState().auth.firstname,
+                   lastName: getState().auth.lastname,
+                   role: getState().auth.role,
+                   email: getState().auth.email,
+                   phoneNumber:getState().auth.phoneNumber,
+                   isVerified: getState().auth.isVerified,
+                   isEnabled: getState().auth.isEnabled,
+                   walletBalance: getState().auth.walletBalance,
+                   profilePic: getState().auth.profilePic,
+                   billingDetails: getState().auth.billingDetails,
+                   pickUpDetails: {
+                    store: user.store,
+                    address: user.street,
+                    state: user.state,
+                    city: user.city,
+                    phone: user.phone,
+                   }
+                  }, getToken(), "application/json")
+      if (res.status === 201) {
+        dispatch({ type: "PICKUP_UPDATE", data: user });
+        cogoToast.success("Profile Update Successful!");
+      }
+      if(res.status === 400){
+        dispatch({ type: "PROFILE_ERROR", err: res.data});
+        cogoToast.error('Error while updating profile!!!')
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  };
+};
+  
+
+// Upload a profile picture functionality
+export const UploadPhoto = (value) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: "PhotoLoader"});
+      let formdata = new FormData()
+      formdata.append("file", value);
+    try {
+      const res = await PostApi("profileimage", formdata, getToken(), "multipart/form-data");
+      if (res.status === 201) {
+            var image = res.data.imageUrl
+            // actual call to update profile 
+            dispatch({type: "profilePicture", image})
+               const id = getState().auth.id
+              const values = {
+                firstName: getState().auth.firstname,
+                lastName: getState().auth.lastname,
+                role: getState().auth.role,
+                email: getState().auth.email,
+                phoneNumber:getState().auth.phoneNumber,
+                isVerified: getState().auth.isVerified,
+                isEnabled: getState().auth.isEnabled,
+                walletBalance: getState().auth.walletBalance,
+                profilePic: image,
+                pickUpDetails: getState().auth.pickUpDetails,
+                billingDetails: getState().auth.billingDetails
+              }
+              axios.put(apiUrl + "member/"+id, {...values}, {
+                  headers: {
+                      Accept: 'application/json',
+                      Authorization: getToken()
+                  }
+              }).then((res) => {
+                  if (res.status === 201) {
+                    dispatch({ type: "StopPhotoLoader"});
+                    cogoToast.success('Image updated successfully!')
+                  } 
+              }).catch((err) => {
+                 dispatch({ type: "StopPhotoLoader"});
+                  cogoToast.error('Error while uploading picture!')
+              })
+        }
+        if(res.status === 400 || res.status === 404){
+          cogoToast.error('Error while uploading image!')
+          dispatch({ type: "StopPhotoLoader"});
+        }
+    } catch (err) {
+      // var message = err.response.data
+        console.log(err)
     }
   };
 };

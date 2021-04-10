@@ -26,7 +26,7 @@ const BuyerFooter = () => {
                         </div>
 
                         <div className="text-center mt-4">
-                            <p className="text-white">&copy; { new Date().getFullYear()} OYAP.com.ng</p>
+                            <p className="text-white">&copy; { new Date().getFullYear()} ioyap.com</p>
                         </div>
 
                         <div className="mt-4" style={{display: 'flex', justifyContent: 'center'}}>

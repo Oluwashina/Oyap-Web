@@ -1,14 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 import './FarmersOrder.css'
 import {connect} from 'react-redux'
 import Moment from "react-moment";
+import { confirmMyOrder } from '../../../store/actions/farmers';
+import {useHistory} from 'react-router-dom'
+import cogoToast from "cogo-toast";
 
 
 const FarmersOrderDetails = (props) => {
 
-    const {order} = props
+    const {order, id, confirmNewOrder, loader, success, pickUpDetails} = props
    
     const [toggled, setToggled] = useState(false);
  
@@ -16,7 +19,7 @@ const FarmersOrderDetails = (props) => {
       setToggled(value);
     };
 
-   
+    const history = useHistory()
 
     //   tab layout
       const timelineLayout = order.timeLine.length ? (
@@ -53,6 +56,25 @@ const FarmersOrderDetails = (props) => {
         </div>
       );
 
+    //   confirm an order
+    const confirmOrder = (id) =>{
+        // check if the farmer has updated a pickup details else he should update before confirming
+        if(!pickUpDetails.address){
+            cogoToast.warn('Update your pickup address on your profile!')
+        }
+        else{   
+          confirmNewOrder(id)
+        }
+    }
+
+    useEffect(() =>{
+        if(success){
+            history.push("/farmers/confirmedorder");
+        } 
+    }, [success, history])
+
+
+
     return (  
         <div className='app'>
          <SideBar
@@ -72,6 +94,12 @@ const FarmersOrderDetails = (props) => {
                 <div className="mt-lg-1 mt-4">
                     <h5 style={{fontWeight: 'bold'}}>Order details</h5>
                 </div>
+
+             <div 
+              className={!pickUpDetails.address ? "alert alert-warning mt-lg-4 mt-4" : "no-title"}
+             role="alert">
+              Kindly update your pickup address before confirming this order!
+            </div>
 
             {/* details */}
             <div className="row mt-lg-0 mt-1">
@@ -222,11 +250,13 @@ const FarmersOrderDetails = (props) => {
 
                             <div className="mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
                                 <div>
-                                <button className="btn btn-cancel" >Cancel Order</button>
+                                <button className="btn btn-cancel" disabled >Cancel Order</button>
                                 </div>
 
                                 <div>
-                                <button className="btn btn-confirm" >Confirm Order</button>
+                                <button
+                                 disabled={loader}
+                                 className="btn btn-confirm" onClick={() =>confirmOrder(id)} >Confirm Order</button>
                                 </div>
                             </div>
 
@@ -247,16 +277,21 @@ const FarmersOrderDetails = (props) => {
      );
 }
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state, ownProps) =>{
+    const id = ownProps.match.params.id
     return{
         order: state.farmers.orderDetails,
         auth: state.auth.isAuthenticated,
+        id: id,
+        loader: state.farmers.confirmloader,
+        success: state.farmers.success,
+        pickUpDetails: state.auth.pickUpDetails
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-
+        confirmNewOrder: (id) => dispatch(confirmMyOrder(id)),
     }
 }
  

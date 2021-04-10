@@ -1,5 +1,5 @@
-import {GetApi} from '../helpers'
-// import cogoToast from "cogo-toast";
+import {GetApi, PutApi} from '../helpers'
+import cogoToast from "cogo-toast";
 
 
 
@@ -125,6 +125,42 @@ export const getFarmersProducts = () => {
       }
     }
 }
+
+// get farmers dashboard Count
+export const getDashboardCount = () => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await GetApi("dashboard/seller/count", getToken());
+      if (res.status === 200) {
+        dispatch({ type: "DashboardCount", data: res.data});
+      }
+      if(res.status === 400){
+        dispatch({ type: "Count_Error", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
   
-  
+
+// confirm new order
+export const confirmMyOrder = (id) => {
+  return async (dispatch, getState) => {
+    dispatch({ type: "confirm_Loader", });
+    try {
+      const res = await PutApi("confirm/orders/"+id, "", getToken())
+      if (res.status === 200) {
+        dispatch({ type: "Confirm_Success", err: res.data });
+        cogoToast.success("Order confirmed successfully!");
+      }
+      if(res.status === 400){
+        dispatch({ type: "Confirm_Error", err: res.data });
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  };
+};
+
   

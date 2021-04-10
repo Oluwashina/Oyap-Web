@@ -5,7 +5,10 @@ const initState = {
     newOrders: [],
     confirmedOrders: [],
     completedOrders: [],
-    orderDetails: {}
+    orderDetails: {},
+    dashboardCount: {},
+    confirmloader: false,
+    success: false
 }
 
 const farmersReducer = (state=initState, action) => {
@@ -18,7 +21,19 @@ const farmersReducer = (state=initState, action) => {
         case 'NewOrders':
             return{
                 ...state,
-                newOrders: action.data
+                newOrders: action.data,
+                success: false
+            }
+        case 'confirm_Loader':
+            return{
+                ...state,
+                confirmloader: true
+            }
+        case 'Confirm_Success':
+            return{
+                ...state,
+                confirmloader: false,
+                success: true
             }
         case 'NewOrderFilter':
             let newOrder = state.newOrders.find(pro=> pro.id === action.id)
@@ -56,6 +71,11 @@ const farmersReducer = (state=initState, action) => {
                     ...completeOrder,
                     orderStatus: action.name
                 }
+            }
+        case 'DashboardCount':
+            return{
+                ...state,
+                dashboardCount: action.data
             }
         default:
             return state
