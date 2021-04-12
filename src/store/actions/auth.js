@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import {PostApi, PutApi} from '../helpers'
+import {PostApi, PutApi, GetApi} from '../helpers'
 import cogoToast from "cogo-toast";
 import axios from 'axios'
 import {apiUrl} from '../config'
@@ -275,6 +275,25 @@ export const UploadPhoto = (value) => {
     } catch (err) {
       // var message = err.response.data
         console.log(err)
+    }
+  };
+};
+
+
+// get a user by id
+export const getUserById = () => {
+  return async (dispatch, getState) => {
+    try {
+      const id  = getState().auth.id
+      const res = await GetApi("member/"+id, getToken());
+      if (res.status === 200) {
+        dispatch({ type: "UserById", data: res.data});
+      }
+      if(res.status === 400){
+        dispatch({ type: "User_Error", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
     }
   };
 };

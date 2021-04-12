@@ -46,6 +46,11 @@ const authReducer = (state = initState, action) => {
             ...state,
             isAuthenticated: false,
         }
+    case 'UserById':
+      return{
+        ...state,
+        walletBalance: action.data.walletBalance
+      }
     case 'logout':
           return {
               ...state,

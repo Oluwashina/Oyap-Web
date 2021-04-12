@@ -8,12 +8,13 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import { getFarmersTransactions } from '../../../store/actions/farmers';
 import Moment from "react-moment";
+import { getUserById } from '../../../store/actions/auth';
 
 
 
 const FarmersWallet = (props) => {
 
-    const {walletBalance, getTransaction, auth, transactions} = props
+    const {walletBalance, getTransaction, auth, transactions, getWalletBalance} = props
    
     const [toggled, setToggled] = useState(false);
  
@@ -23,9 +24,10 @@ const FarmersWallet = (props) => {
 
     useEffect(() =>{
         if(auth){
+          getWalletBalance()
           getTransaction()
         } 
-    }, [getTransaction, auth])
+    }, [getTransaction, auth, getWalletBalance])
 
     // mapping transactions
     const transactionsLayout = transactions.length ? (
@@ -141,6 +143,7 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
     return{
         getTransaction: () => dispatch(getFarmersTransactions()),
+        getWalletBalance: () => dispatch(getUserById()),
     }
 }
 

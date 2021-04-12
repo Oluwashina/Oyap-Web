@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
-// import {Link} from 'react-router-dom'
-import Item5 from "../../../assets/images/item5.png";
 import {connect} from 'react-redux'
+import Moment from "react-moment";
+
 
 const FarmersCreditTransactions = (props) => {
 
@@ -48,15 +48,16 @@ const FarmersCreditTransactions = (props) => {
                         <div className=" orderDetails" >
 
                             <div>
-                                <img src={Item5} alt="cart" className="cartImage" />
+                                <img src={transaction.productDetails.cartItem.productImages[0]} alt="cart" className="cartImage" />
                             </div>
 
                             <div className="ml-4 ml-lg-5">
                               <div className="">
-                                    <p className="mb-0 mt-0 mt-lg-4" style={{fontWeight: 'bold', lineHeight: '25px'}}>1 truck load of nigerian grade fresh maize</p>
-                                    <p className="mb-0 mt-2" style={{fontSize: 14}}>Qty: 1</p>
+                                    <p className="mb-0 mt-0 mt-lg-4" style={{fontWeight: 'bold', lineHeight: '25px'}}>{transaction.productDetails.cartItem.productName}</p>
+                                    <p className="mb-0 mt-2" style={{fontSize: 14}}>Qty: {transaction.productDetails.cartItem.cartQty}</p>
                                     <div className="mt-2">
-                                        <p className="mb-0" style={{color: '#ED881C', fontSize: 14, fontWeight: '500'}}>Status: <span style={{color: '#ED881C', fontWeight: 700, lineHeight: '20px'}}>Order Confirmed</span></p>
+                                        <p className="mb-0" style={{color: '#ED881C', fontSize: 14, fontWeight: '500'}}>Status: <span style={{color: '#ED881C', fontWeight: 700, lineHeight: '20px'}}>
+                                        {transaction.productDetails.timeLine.length ? transaction.productDetails.timeLine[transaction.productDetails.timeLine.length - 1].status : ""}</span></p>
                                     </div>
                                  </div>
                             </div>
@@ -72,8 +73,8 @@ const FarmersCreditTransactions = (props) => {
 
                             <div className="ml-4 ml-lg-5">
                               <div className="">
-                                    <p className="mb-0" style={{lineHeight: '25px', fontSize: 15}}>4517 Washington Ave. Manchester, Kentucky 39495</p>
-                                    <p className="mb-0 mt-3" style={{fontSize: 15}}>0815433445223</p>
+                                    <p className="mb-0" style={{lineHeight: '25px', fontSize: 15}}>{transaction.productDetails.billingDetails.address} {transaction.productDetails.billingDetails.state}</p>
+                                    <p className="mb-0 mt-3" style={{fontSize: 15}}>{transaction.productDetails.billingDetails.phone}</p>
                                   
                                  </div>
                             </div>
@@ -97,7 +98,7 @@ const FarmersCreditTransactions = (props) => {
                                     <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>Order Id</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>123343432DHG</p> 
+                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>{transaction.orderId}</p> 
                                 </div>
                             </div>
 
@@ -110,7 +111,10 @@ const FarmersCreditTransactions = (props) => {
                                     <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Date Ordered</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>23rd Sept, 2020</p> 
+                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>
+                                   <Moment format="MMMM Do, YYYY">
+                                            {transaction.createdAt}
+                                    </Moment></p> 
                                 </div>
                             </div>
 
@@ -123,7 +127,7 @@ const FarmersCreditTransactions = (props) => {
                                     <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Amount</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 600}}>NGN 40,000</p> 
+                                   <p className="mb-0" style={{fontWeight: 600}}>NGN {transaction.productDetails.cartItem.productPrice}</p> 
                                 </div>
                             </div>
                             
@@ -137,7 +141,7 @@ const FarmersCreditTransactions = (props) => {
                                     <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Shipping Fee</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 600}}>NGN 2,000</p> 
+                                   <p className="mb-0" style={{fontWeight: 600}}>NGN {transaction.productDetails.shippingFee}</p> 
                                 </div>
                             </div>
 
@@ -165,7 +169,7 @@ const FarmersCreditTransactions = (props) => {
                                     <p className="mb-0" style={{fontWeight: 700}}>TOTAL CREDIT</p>
                                 </div>
                                 <div>
-                                   <h6 className="mb-0" style={{fontWeight: 600, color: '#5B9223'}}>NGN 42,000</h6> 
+                                   <h6 className="mb-0" style={{fontWeight: 600, color: '#5B9223'}}>NGN {transaction.productDetails.subTotal}</h6> 
                                 </div>
                             </div>
                         </div>
