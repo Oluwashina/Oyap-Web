@@ -3,8 +3,13 @@ import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 // import {Link} from 'react-router-dom'
 import Item5 from "../../../assets/images/item5.png";
+import {connect} from 'react-redux'
 
-const FarmersCreditTransactions = () => {
+const FarmersCreditTransactions = (props) => {
+
+    const {transaction} = props
+
+    console.log(transaction)
    
     const [toggled, setToggled] = useState(false);
  
@@ -176,5 +181,22 @@ const FarmersCreditTransactions = () => {
      </div>
      );
 }
+
+const mapStateToProps = (state, ownProps) =>{
+    let id = ownProps.match.params.id
+    console.log(id)
+    const transactions = state.farmers.transactions
+    const transaction = transactions.find(val => val.id === id);
+    return{
+        transaction:  transaction,
+        id: id
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+
+    }
+}
  
-export default FarmersCreditTransactions;
+export default connect(mapStateToProps, mapDispatchToProps)(FarmersCreditTransactions);

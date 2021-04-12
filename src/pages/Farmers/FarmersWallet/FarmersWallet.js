@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 import './FarmersWallet.css'
@@ -6,18 +6,80 @@ import ArrowUp from '../../../assets/images/arrow-up-circle.svg'
 import ArrowDown from '../../../assets/images/arrow-down-circle.svg'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import { getFarmersTransactions } from '../../../store/actions/farmers';
+import Moment from "react-moment";
 
 
 
 const FarmersWallet = (props) => {
 
-    const {walletBalance} = props
+    const {walletBalance, getTransaction, auth, transactions} = props
    
     const [toggled, setToggled] = useState(false);
  
     const handleToggleSidebar = (value) => {
       setToggled(value);
     };
+
+    useEffect(() =>{
+        if(auth){
+          getTransaction()
+        } 
+    }, [getTransaction, auth])
+
+    // mapping transactions
+    const transactionsLayout = transactions.length ? (
+        transactions.map((value) => {
+          return (
+         <div key={value.id} 
+          className={value.type = 'Credit' ? "creditDiv mt-3" : "debitDiv mt-3"}
+         >
+            <div className="transactionRow">
+                <div className="transactionColumn">
+                   <img 
+                   src={value.type = 'Credit' ? ArrowUp  : ArrowDown}
+                    alt="transactionbar" width="25" height="25" />
+                </div>
+                <div className="nameColumn mt-lg-0 mt-3">
+                    <p 
+                     className={value.type = 'Credit' ? "mb-0 creditColor" : "mb-0 debitColor"}
+                     >{value.status}</p>
+                </div>
+                <div className="transactionColumn mt-lg-0 mt-3">
+                    <p className="mb-0" style={{color:'#3A5654'}}>
+                        {value.type = 'Credit' ? "Credit" : "Debit"}
+                    </p>
+                </div>
+                <div className="amountColumn mt-lg-0 mt-3">
+                    <p 
+                    className={value.type = 'Credit' ? "mb-0 creditColor" : "mb-0 debitColor"}
+                     >
+                        NGN {value.amount}</p>
+                </div>
+                <div className="doubleColumn mt-lg-0 mt-3">
+                    <p className="mb-0" style={{color:'#3A5654'}}>
+                         <Moment format="MMMM Do, YYYY">
+                                 {value.createdAt}
+                            </Moment>
+                    </p>
+                </div>
+                <div className="transactionColumn mt-lg-0 mt-3">
+                    <Link to={value.type = 'Credit' ? `/farmers/transactions/credit/${value.id}` : `/farmers/transactions/debit/${value.id}`} className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>View more</Link>
+                </div>`
+            </div>
+        </div>
+
+          );
+        })
+      ) : (
+        <div className="mb-3">
+           <div className="text-center mt-3">
+                <p className="mb-0 mt-3" style={{fontStyle: 'italic'}}>No transactions available for display!</p>
+             </div>
+        </div>
+      );
+
+
     return (  
         <div className='app'>
          <SideBar
@@ -57,80 +119,8 @@ const FarmersWallet = (props) => {
                 </div>
 
                 {/* transaction details */}
-                <div className="creditDiv mt-3">
-                    <div className="transactionRow">
-                        <div className="transactionColumn">
-                           <img src={ArrowUp} alt="credit" width="25" height="25" />
-                        </div>
-                        <div className="nameColumn mt-lg-0 mt-3">
-                            <p className="mb-0" style={{fontWeight: 'bold'}}>Courtney Henry</p>
-                        </div>
-                        <div className="transactionColumn mt-lg-0 mt-3">
-                            <p className="mb-0" style={{color:'#3A5654'}}>Credit</p>
-                        </div>
-                        <div className="amountColumn mt-lg-0 mt-3">
-                            <p className="mb-0 creditColor">NGN 4,000.00</p>
-                        </div>
-                        <div className="doubleColumn mt-3">
-                            <p className="mb-0" style={{color:'#3A5654'}}>28 Dec, 2020</p>
-                        </div>
-                        <div className="transactionColumn mt-lg-0 mt-3">
-                            <Link to="/farmers/transactions/credit/1" className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>View more</Link>
-                        </div>
-                    </div>
-                </div>
-
-                {/* debit */}
-                <div className="debitDiv">
-                    <div className="transactionRow">
-                        <div className="transactionColumn">
-                           <img src={ArrowDown} alt="credit" width="25" height="25" />
-                        </div>
-                        <div className="nameColumn mt-lg-0 mt-3">
-                            <p className="mb-0" style={{fontWeight: 'bold'}}>Courtney Henry</p>
-                        </div>
-                        <div className="transactionColumn mt-lg-0 mt-3">
-                            <p className="mb-0" style={{color:'#3A5654'}}>Debit</p>
-                        </div>
-                        <div className="amountColumn mt-lg-0 mt-3">
-                            <p className="mb-0 debitColor">NGN 4,000.00</p>
-                        </div>
-                        <div className="doubleColumn mt-3">
-                            <p className="mb-0" style={{color:'#3A5654'}}>28 Dec, 2020</p>
-                        </div>
-                        <div className="transactionColumn mt-lg-0 mt-3">
-                            <Link to="/farmers/transactions/debit/1" className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>View more</Link>
-                        </div>
-                    </div>
-                </div>
-
-                {/* credit */}
-                <div className="creditDiv">
-                    <div className="transactionRow">
-                        <div className="transactionColumn">
-                           <img src={ArrowUp} alt="credit" width="25" height="25" />
-                        </div>
-                        <div className="nameColumn mt-lg-0 mt-3">
-                            <p className="mb-0" style={{fontWeight: 'bold'}}>Courtney Henry</p>
-                        </div>
-                        <div className="transactionColumn mt-lg-0 mt-3">
-                            <p className="mb-0" style={{color:'#3A5654'}}>Credit</p>
-                        </div>
-                        <div className="amountColumn mt-lg-0 mt-3">
-                            <p className="mb-0 creditColor">NGN 4,000.00</p>
-                        </div>
-                        <div className="doubleColumn mt-3">
-                            <p className="mb-0" style={{color:'#3A5654'}}>28 Dec, 2020</p>
-                        </div>
-                        <div className="transactionColumn mt-lg-0 mt-3">
-                            <Link to="/farmers/transactions/credit/1" className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>View more</Link>
-                        </div>
-                    </div>
-                </div>
-
-
-                  
-
+                {/* layout */}
+                {transactionsLayout}
             </header>
         
             
@@ -142,13 +132,15 @@ const FarmersWallet = (props) => {
 
 const mapStateToProps = (state) =>{
     return{
-        walletBalance: state.auth.walletBalance
+        walletBalance: state.auth.walletBalance,
+        auth: state.auth.isAuthenticated,
+        transactions: state.farmers.transactions
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-
+        getTransaction: () => dispatch(getFarmersTransactions()),
     }
 }
 

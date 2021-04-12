@@ -163,4 +163,21 @@ export const confirmMyOrder = (id) => {
   };
 };
 
+
+// get the transactions for a farmer
+export const getFarmersTransactions = () => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await GetApi("transactions/seller", getToken());
+      if (res.status === 200) {
+        dispatch({ type: "Transactions", data: res.data});
+      }
+      if(res.status === 400){
+        dispatch({ type: "Transact_Error", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
   

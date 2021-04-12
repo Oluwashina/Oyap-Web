@@ -8,7 +8,8 @@ const initState = {
     orderDetails: {},
     dashboardCount: {},
     confirmloader: false,
-    success: false
+    success: false,
+    transactions: []
 }
 
 const farmersReducer = (state=initState, action) => {
@@ -76,6 +77,11 @@ const farmersReducer = (state=initState, action) => {
             return{
                 ...state,
                 dashboardCount: action.data
+            }
+        case 'Transactions':
+            return{
+                ...state,
+                transactions: action.data
             }
         default:
             return state
