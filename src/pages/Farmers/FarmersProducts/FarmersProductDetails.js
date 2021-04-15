@@ -2,19 +2,35 @@ import React, {useState} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 import Default from "../../../assets/images/default.png";
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {deleteProduct} from '../../../store/actions/farmers'
+
 
 
 const FarmersProductDetails = (props) => {
 
-   const {product} = props
+   const {product, productDelete, disabledBtn} = props
+
+   const history = useHistory()
 
     const [toggled, setToggled] = useState(false);
  
     const handleToggleSidebar = (value) => {
       setToggled(value);
     };
+
+    const handleDelete = (id) =>{
+        var confirm_flag = window.confirm("Are you sure you wish to delete this product?");
+
+        if(confirm_flag){
+            productDelete(id)
+
+            setTimeout(() => {
+                history.push('/farmers/products')
+              }, 1000);
+        }
+    }
 
 
     return (  
@@ -113,7 +129,10 @@ const FarmersProductDetails = (props) => {
                             <Link to={`/farmers/editproduct/${product.id}`} className="btn btn-add btn-block mt-4">Edit</Link>
                             </div>
                             <div className="ml-4" style={{flex: 1}}>
-                            <button className="btn btn-buy btn-block mt-4">Delete</button>
+                            <button 
+                            disabled={disabledBtn}
+                            onClick={() => handleDelete(product.id)}
+                            className="btn btn-oyap btn-block mt-4">Delete</button>
                             </div>
                         </div>
 
@@ -136,13 +155,14 @@ const mapStateToProps = (state, ownProps) =>{
     const products = state.farmers.products
     const product = products.find(product => product.id === id);
     return{
-        product: product
+        product: product,
+        disabledBtn: state.farmers.deleteBtn
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-
+        productDelete: (id) => dispatch(deleteProduct(id))
     }
 }
  

@@ -22,6 +22,26 @@
     box-shadow: none;
     outline: 0 none;
   }
+
+  .select-style{
+    border: 1px solid rgba(95, 163, 14, 0.5);
+    height: 52px;  
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url(../../assets/images/selectArrow.svg);
+    background-position:
+      calc(100% - 20px) calc(1em + 4px),
+      calc(100% - 15px) calc(1em + 2px),
+      100% 0;
+    background-repeat: no-repeat;
+    cursor: pointer;
+  }
+  .select-style:focus{
+    border: 1px solid rgba(95, 163, 14, 0.5);
+    outline: 0 none;
+    box-shadow: none; 
+  }
+
   .tab{
       cursor: pointer;
   }

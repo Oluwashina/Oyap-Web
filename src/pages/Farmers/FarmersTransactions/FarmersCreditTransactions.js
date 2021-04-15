@@ -57,7 +57,7 @@ const FarmersCreditTransactions = (props) => {
                                     <p className="mb-0 mt-2" style={{fontSize: 14}}>Qty: {transaction.productDetails.cartItem.cartQty}</p>
                                     <div className="mt-2">
                                         <p className="mb-0" style={{color: '#ED881C', fontSize: 14, fontWeight: '500'}}>Status: <span style={{color: '#ED881C', fontWeight: 700, lineHeight: '20px'}}>
-                                        {transaction.productDetails.timeLine.length ? transaction.productDetails.timeLine[transaction.productDetails.timeLine.length - 1].status : ""}</span></p>
+                                        {transaction.status}</span></p>
                                     </div>
                                  </div>
                             </div>
@@ -188,7 +188,6 @@ const FarmersCreditTransactions = (props) => {
 
 const mapStateToProps = (state, ownProps) =>{
     let id = ownProps.match.params.id
-    console.log(id)
     const transactions = state.farmers.transactions
     const transaction = transactions.find(val => val.id === id);
     return{

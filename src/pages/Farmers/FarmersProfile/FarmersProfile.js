@@ -71,6 +71,7 @@ const handleFile = () =>{
                             <label className={photoloader ? "file disabled" : "file"}
                             ><i className="mdi mdi-camera-outline mr-1"></i> Change Photo
                             <input type="file" size="60"
+                            className="photo"
                                 ref={fileRef}
                                  onChange={() => handleFile()}
                             />

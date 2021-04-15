@@ -1,22 +1,43 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 import {Form, Formik} from 'formik'
-import {registerValidator} from '../../../validationSchema/validator'
+import {withdrawValidator} from '../../../validationSchema/validator'
+import {connect } from 'react-redux'
+import { CloseWithdrawModal, WithdrawAmount } from '../../../store/actions/farmers';
+import { useHistory } from "react-router-dom";
 
 
-const FarmersWithdraw = () => {
-   
+const FarmersWithdraw = (props) => {
+
+    const {handleWithdraw, success, handleClose} = props
+
+    let history = useHistory()
+
     const [toggled, setToggled] = useState(false);
  
     const handleToggleSidebar = (value) => {
       setToggled(value);
     };
 
+    const [modalShow, setModalShow] = useState(false);
+
      // Withdraw button
   const handleSubmit = async (values, setSubmitting) =>{
-        console.log(values)
+       await handleWithdraw(values)
   }
+
+  const handleProceed = () =>{
+    setModalShow(modalShow ? false : true)
+    history.push("/farmers/wallet");
+    handleClose()
+  }
+
+  useEffect(() =>{
+    if(success){
+      setModalShow(true)
+    } 
+}, [success, setModalShow])
 
     return (  
         <div className='app'>
@@ -30,6 +51,31 @@ const FarmersWithdraw = () => {
             <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
                 <FaBars />
             </div>
+
+            
+    {/* modal show */}
+  <div 
+    className={ modalShow ? "modal fade show" : "modal fade" }
+    data-backdrop="static"
+     id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div className="modal-dialog">
+        <div className="modal-content" style={{background: '#fff', borderRadius: '10px'}} >
+          <div className="" style={{padding: '20px 30px'}}>
+            <h5 className="modal-title" id="exampleModalLabel">Processing Withdraw</h5>
+          </div>
+          <div style={{padding: '2px 30px', lineHeight: '25px'}}>
+            Your withdraw order has been received and its been 
+           processed. This might take up to to 24 hours
+          </div>
+          <div className="mt-2" style={{display: 'flex', justifyContent: 'flex-end', padding: '15px 20px'}} >
+           <button type="button" 
+            onClick={handleProceed}
+            id="shutServer" className="btn btn-oyap" style={{width: '30%'}}>OK</button>
+        </div>
+          
+        </div>
+      </div>
+      </div>
             
             {/* content of page  layout*/}
             <header>
@@ -46,8 +92,8 @@ const FarmersWithdraw = () => {
                 onSubmit={(values, {setSubmitting}) =>
                     handleSubmit(values, setSubmitting)
                     }
-                validationSchema={registerValidator}
-                initialValues={{firstName: "", lastName: "", phoneNumber: "",  email: "", password: "", confirm_password: ""}}
+                validationSchema={withdrawValidator}
+                initialValues={{amount: "", accountNumber: "", bank: "",  accountName: "", narration: "",}}
               >
                   {({
                       handleChange,
@@ -59,7 +105,7 @@ const FarmersWithdraw = () => {
                       errors
                   })=>(
                       <Form onSubmit={handleSubmit}>
-                          {/* First name */}
+                          {/* Amount */}
                           <div className="form-group mt-3">
                             <label htmlFor="email">Amount</label>
                             <input
@@ -68,11 +114,11 @@ const FarmersWithdraw = () => {
                               type="text"
                               onBlur={handleBlur}
                               onChange={handleChange}
-                              id="firstName"
-                              value={values.firstName}
+                              id="amount"
+                              value={values.amount}
                             />
                             <small style={{ color: "#dc3545" }}>
-                                        {touched.firstName && errors.firstName}
+                                        {touched.amount && errors.amount}
                                </small>
                           </div>
                              
@@ -82,13 +128,13 @@ const FarmersWithdraw = () => {
                               <label htmlFor="password">Account Number</label>
                               <input className="form-control input-style"
                               type="text"
-                              id="lastName"
-                              value={values.lastName}
+                              id="accountNumber"
+                              value={values.accountNumber}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               placeholder="Account Number" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.lastName && errors.lastName}
+                                  {touched.accountNumber && errors.accountNumber}
                               </small>
                             </div>
 
@@ -97,13 +143,13 @@ const FarmersWithdraw = () => {
                               <label htmlFor="password">Bank</label>
                               <input className="form-control input-style"
                               type="text"
-                              id="phoneNumber"
-                              value={values.phoneNumber}
+                              id="bank"
+                              value={values.bank}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               placeholder="Bank" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.phoneNumber && errors.phoneNumber}
+                                  {touched.bank && errors.bank}
                               </small>
                             </div>
 
@@ -111,14 +157,14 @@ const FarmersWithdraw = () => {
                              <div className="form-group">
                               <label htmlFor="password">Account Name</label>
                               <input className="form-control input-style"
-                              type="email"
-                              id="email"
-                              value={values.email}
+                              type="text"
+                              id="accountName"
+                              value={values.accountName}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               placeholder="Account Name" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.email && errors.email}
+                                  {touched.accountName && errors.accountName}
                               </small>
                             </div>
 
@@ -127,14 +173,14 @@ const FarmersWithdraw = () => {
                              <div className="form-group">
                               <label htmlFor="password">Narration</label>
                               <input className="form-control input-style"
-                              type="password"
-                              id="password"
-                              value={values.password}
+                              type="text"
+                              id="narration"
+                              value={values.narration}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               placeholder="Narration" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.password && errors.password}
+                                  {touched.narration && errors.narration}
                               </small>
                             </div>
 
@@ -161,5 +207,18 @@ const FarmersWithdraw = () => {
      </div>
      );
 }
+
+const mapStateToProps = (state) =>{
+  return{
+      success: state.farmers.withdrawsuccess
+  }
+}
+
+const mapDispatchToProps =(dispatch) =>{
+  return{
+    handleWithdraw: (val) => dispatch(WithdrawAmount(val)),
+    handleClose: (val) => dispatch(CloseWithdrawModal()),
+  }
+}
  
-export default FarmersWithdraw;
+export default connect(mapStateToProps, mapDispatchToProps)(FarmersWithdraw);

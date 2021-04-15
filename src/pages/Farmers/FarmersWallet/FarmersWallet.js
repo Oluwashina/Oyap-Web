@@ -32,29 +32,30 @@ const FarmersWallet = (props) => {
     // mapping transactions
     const transactionsLayout = transactions.length ? (
         transactions.map((value) => {
+            
           return (
          <div key={value.id} 
-          className={value.type = 'Credit' ? "creditDiv mt-3" : "debitDiv mt-3"}
+          className={value.type === 'Credit' ? "creditDiv mt-3" : "debitDiv mt-3"}
          >
             <div className="transactionRow">
                 <div className="transactionColumn">
                    <img 
-                   src={value.type = 'Credit' ? ArrowUp  : ArrowDown}
+                   src={value.type === 'Credit' ? ArrowUp  : ArrowDown}
                     alt="transactionbar" width="25" height="25" />
                 </div>
                 <div className="nameColumn mt-lg-0 mt-3">
                     <p 
-                     className={value.type = 'Credit' ? "mb-0 creditColor" : "mb-0 debitColor"}
-                     >{value.status}</p>
+                     className={value.type === 'Credit' ? "mb-0 creditColor" : "mb-0 debitColor"}
+                     >{value.status.toUpperCase()}</p>
                 </div>
                 <div className="transactionColumn mt-lg-0 mt-3">
                     <p className="mb-0" style={{color:'#3A5654'}}>
-                        {value.type = 'Credit' ? "Credit" : "Debit"}
+                        {value.type === 'Credit' ? "Credit" : "Debit"}
                     </p>
                 </div>
                 <div className="amountColumn mt-lg-0 mt-3">
                     <p 
-                    className={value.type = 'Credit' ? "mb-0 creditColor" : "mb-0 debitColor"}
+                    className={value.type === 'Credit' ? "mb-0 creditColor" : "mb-0 debitColor"}
                      >
                         NGN {value.amount}</p>
                 </div>
@@ -66,7 +67,7 @@ const FarmersWallet = (props) => {
                     </p>
                 </div>
                 <div className="transactionColumn mt-lg-0 mt-3">
-                    <Link to={value.type = 'Credit' ? `/farmers/transactions/credit/${value.id}` : `/farmers/transactions/debit/${value.id}`} className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>View more</Link>
+                    <Link to={value.type === 'Credit' ? `/farmers/transactions/credit/${value.id}` : `/farmers/transactions/debit/${value.id}`} className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>View more</Link>
                 </div>`
             </div>
         </div>
@@ -107,7 +108,9 @@ const FarmersWallet = (props) => {
                     <div>
                         <p className="mb-0">Balance</p>
                         <div className="mt-2">
-                            <h4 className="walletAmount">NGN {walletBalance ? walletBalance : 0.00}</h4>
+                            <h4 className="walletAmount">NGN {walletBalance.toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",") ? walletBalance.toString()
+                                  .replace(/\B(?=(\d{3})+(?!\d))/g, ",") : 0.00}</h4>
                         </div>
                     </div>
                     <div className="mt-lg-0 mt-2">

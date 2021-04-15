@@ -1,4 +1,4 @@
-import {GetApi, PutApi} from '../helpers'
+import {GetApi, PutApi, PostApi, DeleteApi} from '../helpers'
 import cogoToast from "cogo-toast";
 
 
@@ -28,6 +28,112 @@ export const getFarmersProducts = () => {
 };
 
 
+// Upload a product image
+export const UploadProductImage = (value, index) => {
+  return async (dispatch, getState) => {
+    // show a spinner or progress bar
+    dispatch({ type: "StartProductLoader"});
+      let formdata = new FormData()
+      formdata.append("file", value);
+    try {
+      const res = await PostApi("image", formdata, getToken(), "multipart/form-data");
+      if (res.status === 201) {
+            var image = res.data.imageUrl
+            // stop loader after success
+            cogoToast.success('Product image uploaded successfully!')
+                 // check for index and upload
+            switch(index){
+              case 0:
+                dispatch({type: "productZero", image, index})
+                break;
+              case 1:
+                dispatch({type: "productOne", image, index})
+                break;
+              case 2:
+                dispatch({type: "productTwo", image, index})
+                break;
+              case 3:
+                dispatch({type: "productThree", image, index})
+                break;
+              default:
+                break;
+            }
+       
+           
+        }
+        if(res.status === 400 || res.status === 404){
+          // stop loader for error
+          cogoToast.error('Error while uploading image!')
+          dispatch({ type: "StopProductLoader"});
+        }
+    } catch (err) {
+      // var message = err.response.data
+        console.log(err)
+    }
+  };
+};
+
+// add a farmers product functionality
+export const addProduct = (val) => {
+  return async (dispatch, getState) => {
+    let image = [];
+    let stock;
+    var result = [
+      ...image,
+      getState().farmers.productZero,
+      getState().farmers.productOne,
+      getState().farmers.productTwo,
+      getState().farmers.productThree
+    ]
+    if(val.quantity <= 0){
+      stock = false
+    }
+    else{
+      stock = true
+    }
+      const data = {
+        productName: val.name,
+        productType: val.type,
+        productCategory: val.category,
+        productPrice: val.price,
+        productQuantity: val.quantity,
+        productDescription: val.description,
+        productInStock: stock,
+        productImages: result
+      }
+    try {
+      const res = await PostApi("product", {...data}, getToken(), "application/json")
+      if (res.status === 201) {
+        dispatch({ type: "Product_Created" });
+        cogoToast.success('Product added successfully!')
+      }
+      if(res.status === 400){
+        dispatch({ type: "Order_Error", err: res.data});
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  };
+};
+
+// delete a farmers product
+export const deleteProduct = (id) => {
+  return async (dispatch, getState) => {
+    dispatch({type: 'StartDelete'})
+    try {
+      const res = await DeleteApi("products/"+id, getToken());
+      if (res.status === 200) {
+        dispatch({ type: "DELETE_SUCCESS"});
+        cogoToast.success(`Product deleted successfully`); 
+      }
+      if(res.status === 400){
+        dispatch({ type: "PRODUCT_ERROR", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
 
   // get new orders of a seller
   export const getNewOrders = () => {
@@ -180,4 +286,40 @@ export const getFarmersTransactions = () => {
     }
   };
 };
+
+// withdraw functionality
+export const WithdrawAmount = (val) => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await PostApi("withdraw", {
+                      amount: val.amount,
+                      accountName: val.accountName,
+                      accountNumber: val.accountNumber,
+                      bankName: val.bank,
+                      narration: val.narration
+                     }, getToken(), "application/json")
+      if (res.status === 200) {  
+        dispatch({ type: 'Withdraw' });
+      }
+      if(res.status === 400){
+        // error while making withdraw
+        dispatch({ type: 'Withdraw_Error' });
+        cogoToast.error(`${res.data.message}`);
+      }
+      if(res.status === 500){
+        cogoToast.error(`${res.data.message}`);
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  };
+};
+
+
+// close withdraw modal
+export const CloseWithdrawModal = (id, qty) =>{
+  return dispatch =>{
+      dispatch({type: 'WithdrawClose'})
+  }
+}
   

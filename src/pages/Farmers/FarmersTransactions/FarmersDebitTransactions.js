@@ -2,9 +2,13 @@ import React, {useState} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 // import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import Moment from "react-moment";
 
 
-const FarmersDebitTransactions = () => {
+const FarmersDebitTransactions = (props) => {
+
+    const {transaction} = props
    
     const [toggled, setToggled] = useState(false);
  
@@ -44,10 +48,10 @@ const FarmersDebitTransactions = () => {
 
                             <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                 <div>
-                                    <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>Payment Id</p>
+                                    <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>Transaction Id</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>123343432DHG</p> 
+                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>{transaction.id}</p> 
                                 </div>
                             </div>
 
@@ -57,10 +61,31 @@ const FarmersDebitTransactions = () => {
 
                             <div className="mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
                                 <div>
-                                    <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Date Payed</p>
+                                    <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Date Requested</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>23rd Sept, 2020</p> 
+                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>
+                                    <Moment format="MMMM Do, YYYY">
+                                                {transaction.createdAt}
+                                        </Moment>
+                                       </p> 
+                                </div>
+                            </div>
+
+                            <div>
+                                <hr className="mt-4 mb-0" style={{borderTop: '1px solid rgba(196, 196, 196, 0.5)'}} />
+                            </div>
+
+                            <div className="mt-4" style={{display: 'flex', justifyContent: 'space-between'}}>
+                                <div>
+                                    <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Status</p>
+                                </div>
+                                <div>
+                                   <p 
+                                   style={ { color: transaction.status.includes('P') ? '#FF0000' : '#5B9223', fontWeight: 500, fontSize: 14} } 
+                                   className="mb-0">
+                                     {transaction.status}
+                                       </p> 
                                 </div>
                             </div>
 
@@ -73,7 +98,7 @@ const FarmersDebitTransactions = () => {
                                     <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Account No</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0">3042314777</p> 
+                                   <p className="mb-0">{transaction.accountNumber}</p> 
                                 </div>
                             </div>
                             
@@ -87,7 +112,7 @@ const FarmersDebitTransactions = () => {
                                     <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Bank</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0">Firstbank</p> 
+                                   <p className="mb-0">{transaction.bankName}</p> 
                                 </div>
                             </div>
 
@@ -100,7 +125,7 @@ const FarmersDebitTransactions = () => {
                                     <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Account Name</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>Jide Olalelwonlere</p> 
+                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>{transaction.accountName}</p> 
                                 </div>
                             </div>
 
@@ -113,7 +138,7 @@ const FarmersDebitTransactions = () => {
                                     <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Amount</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 600, fontSize: 14,}}>NGN 40,000</p> 
+                                   <p className="mb-0" style={{fontWeight: 600, fontSize: 14,}}>NGN {transaction.amount}</p> 
                                 </div>
                             </div>
 
@@ -126,7 +151,7 @@ const FarmersDebitTransactions = () => {
                                     <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Charges</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>NGN 200</p> 
+                                   <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>NGN 0.00</p> 
                                 </div>
                             </div>
 
@@ -141,7 +166,7 @@ const FarmersDebitTransactions = () => {
                                     <p className="mb-0" style={{fontWeight: 700}}>TOTAL DEBIT</p>
                                 </div>
                                 <div>
-                                   <h6 className="mb-0" style={{fontWeight: 600, color: '#5B9223'}}>NGN 42,000</h6> 
+                                   <h6 className="mb-0" style={{fontWeight: 600, color: '#5B9223'}}>NGN {transaction.amount}</h6> 
                                 </div>
                             </div>
                         </div>
@@ -157,5 +182,21 @@ const FarmersDebitTransactions = () => {
      </div>
      );
 }
+
+const mapStateToProps = (state, ownProps) =>{
+    let id = ownProps.match.params.id
+    const transactions = state.farmers.transactions
+    const transaction = transactions.find(val => val.id === id);
+    return{
+        transaction: transaction,
+        id: id
+    }
+}
+
+const mapDispatchToProps =(dispatch) =>{
+    return{
+
+    }
+}
  
-export default FarmersDebitTransactions;
+export default connect(mapStateToProps, mapDispatchToProps)(FarmersDebitTransactions);

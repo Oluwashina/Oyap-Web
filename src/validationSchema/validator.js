@@ -57,3 +57,37 @@ export const ProfileAddressValidator = Yup.object({
     .required("Phonenumber is required")
     .matches(/(^[+]?[234]\d{12}$)/, "Enter a valid phone number"),
 });
+
+export const withdrawValidator = Yup.object({
+  amount: Yup.string()
+  .required("Amount is required")
+  .matches(/^-?[0-9]+(.[0-9]{1-7})?$/, "Enter a valid amount"),
+  accountNumber: Yup.string()
+  .required("Account number is required")
+  .matches(/^-?[0-9]+(.[0-9]{1-7})?$/, "Enter a valid account number")
+  .max(10, 'Account number cannot be more than 10 digits'),
+  bank: Yup.string()
+    .required("Bank is required"),
+  accountName: Yup.string()
+    .required("Account name is required"),
+  narration: Yup.string()
+    .required("Narration is required"),
+});
+
+
+export const addProductValidator = Yup.object({
+  type: Yup.string()
+    .required("Product type is required"),
+  category: Yup.string()
+    .required("Category is required"),
+  name: Yup.string()
+    .required("Product name is required"),
+  price: Yup.string()
+  .required("Price is required")
+  .matches(/^-?[0-9]+(.[0-9]{1-7})?$/, "Enter a valid amount"),
+  quantity: Yup.string()
+  .required("Quantity is required")
+  .matches(/^-?[0-9]+(.[0-9]{1-7})?$/, "Enter a valid quantity"),
+  description: Yup.string()
+    .required("Description is required"),
+});

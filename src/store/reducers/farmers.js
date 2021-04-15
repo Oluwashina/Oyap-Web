@@ -2,6 +2,11 @@
 const initState = {
     isLoading: false,
     products:[],
+    productImages: [],
+    productZero: "",
+    productOne: "",
+    productTwo: "",
+    productThree: "",
     newOrders: [],
     confirmedOrders: [],
     completedOrders: [],
@@ -9,7 +14,9 @@ const initState = {
     dashboardCount: {},
     confirmloader: false,
     success: false,
-    transactions: []
+    transactions: [],
+    withdrawsuccess: false,
+    deleteBtn: false
 }
 
 const farmersReducer = (state=initState, action) => {
@@ -18,6 +25,34 @@ const farmersReducer = (state=initState, action) => {
             return{
                 ...state,
                 products: action.data
+            }
+        case 'productZero':  
+            return{
+                ...state,
+                productZero: action.image
+            }
+        case 'productOne':  
+            return{
+                ...state,
+                productOne: action.image
+            }
+        case 'productTwo':  
+            return{
+                ...state,
+                productTwo: action.image
+            }
+        case 'productThree':
+            return{
+                ...state,
+                productThree: action.image
+            }
+        case 'Product_Created':
+            return{
+                ...state,
+                productZero: "",
+                productOne: "",
+                productTwo: "",
+                productThree: ""
             }
         case 'NewOrders':
             return{
@@ -82,6 +117,26 @@ const farmersReducer = (state=initState, action) => {
             return{
                 ...state,
                 transactions: action.data
+            }
+        case 'Withdraw':
+            return{
+                ...state,
+                withdrawsuccess: true
+            }
+        case 'WithdrawClose':
+            return{
+                ...state,
+                withdrawsuccess: false
+            }
+        case 'StartDelete':
+            return{
+                ...state,
+                deleteBtn: true
+            }
+        case 'DELETE_SUCCESS':
+            return{
+                ...state,
+                deleteBtn: false
             }
         default:
             return state
