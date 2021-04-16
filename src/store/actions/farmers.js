@@ -116,6 +116,64 @@ export const addProduct = (val) => {
   };
 };
 
+// filter a product by id
+export const EditProduct = (id) =>{
+  return dispatch =>{
+      dispatch({type: 'EditProduct', id})
+  }
+}
+
+// clear the product images
+export const clearProductImages = (id, qty) =>{
+  return dispatch =>{
+      dispatch({type: 'clearProductImages'})
+  }
+}
+
+// update a product
+export const updateProduct = (val) => {
+  return async (dispatch, getState) => {
+    let image = [];
+    let stock;
+    var result = [
+      ...image,
+      getState().farmers.productZero,
+      getState().farmers.productOne,
+      getState().farmers.productTwo,
+      getState().farmers.productThree
+    ]
+    if(val.quantity <= 0){
+      stock = false
+    }
+    else{
+      stock = true
+    }
+    const data = {
+      productName: val.name,
+      productType: val.type,
+      productCategory: val.category,
+      productPrice: val.price,
+      productQuantity: val.quantity,
+      productDescription: val.description,
+      productInStock: stock,
+      productImages: result
+    }
+    try {
+      const res = await PutApi("products/"+val.id, {...data}, getToken())
+      if (res.status === 200) {
+        dispatch({ type: "Update_Success", err: res.data });
+        cogoToast.success("Product updated successfully!");
+      }
+      if(res.status === 400){
+        dispatch({ type: "Update_Error", err: res.data });
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  };
+};
+
+
 // delete a farmers product
 export const deleteProduct = (id) => {
   return async (dispatch, getState) => {

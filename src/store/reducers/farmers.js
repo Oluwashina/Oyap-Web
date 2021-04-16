@@ -26,6 +26,24 @@ const farmersReducer = (state=initState, action) => {
                 ...state,
                 products: action.data
             }
+        case 'EditProduct':
+            let product = state.products.find(product => product.id === action.id);
+            let images = product.productImages
+            return{
+                ...state,
+                productZero: images[0],
+                productOne: images[1],
+                productTwo: images[2],
+                productThree: images[3]
+            }
+        case 'clearProductImages':
+            return{
+                ...state,
+                productZero: "",
+                productOne: "",
+                productTwo: "",
+                productThree: "",
+            }
         case 'productZero':  
             return{
                 ...state,

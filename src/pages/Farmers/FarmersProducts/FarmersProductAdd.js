@@ -1,18 +1,18 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 import {Form, Formik} from 'formik'
 import {addProductValidator} from '../../../validationSchema/validator'
 import Default from "../../../assets/images/default.png";
 import {connect} from 'react-redux'
-import {addProduct, UploadProductImage} from '../../../store/actions/farmers'
+import {addProduct, UploadProductImage, clearProductImages} from '../../../store/actions/farmers'
 import cogoToast from "cogo-toast";
 
 
 
 const FarmersProductAdd = (props) => {
 
-    const {handlePicture, productZero, productOne, productTwo, productThree, handleAdd} = props
+    const {handlePicture, productZero, productOne, productTwo, productThree, handleAdd, emptyImage} = props
    
     const [toggled, setToggled] = useState(false);
 
@@ -20,8 +20,11 @@ const FarmersProductAdd = (props) => {
     const fileRef2 = useRef(null)
     const fileRef3 = useRef(null)
     const fileRef4 = useRef(null)
+
+    useEffect(() => {
+        emptyImage();
+      }, [emptyImage]);
     
-    // const [items, setItems] = useState([])
     
     const handleToggleSidebar = (value) => {
       setToggled(value);
@@ -315,7 +318,8 @@ const mapStateToProps = (state) =>{
 const mapDispatchToProps = (dispatch) =>{
     return{
         handlePicture: (values, index) => dispatch(UploadProductImage(values, index)),
-        handleAdd: (values) => dispatch(addProduct(values))
+        handleAdd: (values) => dispatch(addProduct(values)),
+        emptyImage: (values) => dispatch(clearProductImages(values))
 
     }
 }

@@ -1,26 +1,80 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import SideBar from '../../../components/SideBar';
 import {FaBars } from 'react-icons/fa';
 import {Form, Formik} from 'formik'
-import {registerValidator} from '../../../validationSchema/validator'
+import {addProductValidator} from '../../../validationSchema/validator'
 import Default from "../../../assets/images/default.png";
-import item4 from "../../../assets/images/item4.png";
-import item6 from "../../../assets/images/item6.png";
-
+import {connect} from 'react-redux'
+import { EditProduct, UploadProductImage, updateProduct } from '../../../store/actions/farmers';
+import cogoToast from "cogo-toast";
 
 const FarmersProductEdit = (props) => {
 
-   
+    const {product, handlePicture, id, filterProduct, productZero,productOne, productTwo, productThree, handleUpdate} = props
+
     const [toggled, setToggled] = useState(false);
+
+    const fileRef = useRef(null)
+    const fileRef2 = useRef(null)
+    const fileRef3 = useRef(null)
+    const fileRef4 = useRef(null)
+  
+    // make call to filter product by id on load of page
+  useEffect(() => {
+    filterProduct(id);
+  }, [filterProduct,id]);
  
     const handleToggleSidebar = (value) => {
       setToggled(value);
     };
 
-       // Add proiduct button
+    
+    //   upload profile picture1
+    const handlePic = (index) =>{
+        var file = fileRef.current.files[0]
+        console.log(file)
+        handlePicture(file, index)
+  }
+
+  
+  //   upload profile picture2
+  const handlePic2 = (index) =>{
+    var file = fileRef2.current.files[0]
+    console.log(file)
+    handlePicture(file, index)
+}
+
+//   upload profile picture3
+const handlePic3 = (index) =>{
+    var file = fileRef3.current.files[0]
+    console.log(file)
+    handlePicture(file, index)
+}
+
+//   upload profile picture4
+const handlePic4 = (index) =>{
+    var file = fileRef4.current.files[0]
+    console.log(file)
+    handlePicture(file, index)
+} 
+ 
+
+       // update product button
   const handleSubmit = async (values, setSubmitting) =>{
-        console.log(values)
+         // check if at least an image of the product  is added
+         if(productZero === ''){
+            cogoToast.error('Upload at least a first product image!!!')
+        }
+        else{
+            const res = {
+                ...values,
+                id
+            }
+            handleUpdate(res)
+        }
     }
+
+
 
 
     return (  
@@ -52,8 +106,8 @@ const FarmersProductEdit = (props) => {
                 onSubmit={(values, {setSubmitting}) =>
                     handleSubmit(values, setSubmitting)
                     }
-                validationSchema={registerValidator}
-                initialValues={{firstName: "Maize", lastName: "40,000", phoneNumber: "Vegetables",  email: "2000", password: "Amet minim mollit non deserunt ullamco est.", confirm_password: ""}}
+                validationSchema={addProductValidator}
+                initialValues={{type: product.productType, category: product.productCategory, name: product.productName,  price: product.productPrice, quantity: product.productQuantity, description: product.productDescription}}
               >
                   {({
                       handleChange,
@@ -65,85 +119,120 @@ const FarmersProductEdit = (props) => {
                       errors
                   })=>(
                       <Form onSubmit={handleSubmit}>
-                          {/* First name */}
+                          {/* Product type */}
                           <div className="form-group mt-3">
-                            <label htmlFor="email">Product Name</label>
-                            <input
-                              className="form-control input-style"
-                              placeholder=""
-                              type="text"
-                              onBlur={handleBlur}
-                              onChange={handleChange}
-                              id="firstName"
-                              value={values.firstName}
-                            />
-                            <small style={{ color: "#dc3545" }}>
-                                        {touched.firstName && errors.firstName}
-                               </small>
-                          </div>
-                             
-               
-                            {/* Account Number */}
+                            <label htmlFor="type">Product Type</label>
+                            <select
+                                 name="type"
+                                 values={values.type}
+                                 onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className="form-control select-style" 
+                                    id="type">
+                                    <option defaultValue="" >--Select--</option>
+                                    <option value="Goods" >Goods</option>
+                                    <option value="Services" >Services</option>
+                                
+                                </select>
+                                <small style={{ color: "#dc3545" }}>
+                                  {touched.type && errors.type}
+                              </small>
+                          </div>     
+
+                        {/* product category */}
+                        <div className="form-group">
+                              <label htmlFor="category">Product Category</label>
+                              <select
+                                 name="category"
+                                 values={values.category}
+                                 onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className="form-control select-style" 
+                                    id="category">
+                                    <option defaultValue="" >--Select--</option>
+                                    <option value="Agro Chemical" >Agro Chemical(organic)</option>
+                                    <option value="Agro Chemical" >Agro Chemical(Inorganic)</option>
+                                    <option value="Fertilizers" >Fertilizers(organic)</option>
+                                    <option value="Services" >Fertilizers(Inorganic)</option>
+                                    <option value="Livestock" >Livestock Feeds</option>
+                                    <option value="Crop" >Crop Seeds</option>
+                                    <option value="Vegetables" >Vegetables</option>
+                                    <option value="Spices" >Spices</option>
+                                    <option value="Farm Fresh Foods" >Farm Fresh Foods</option>
+                                    <option value="Fruits" >Fruits</option>
+                                    <option value="Cash Crops" >Cash Crops</option>
+                                
+                                </select>
+                                <small style={{ color: "#dc3545" }}>
+                                  {touched.category && errors.category}
+                              </small>
+                            </div>
+
+                            
+                            {/* product name */}
                             <div className="form-group">
-                              <label htmlFor="password">Price</label>
+                              <label htmlFor="password">Product Name</label>
                               <input className="form-control input-style"
                               type="text"
-                              id="lastName"
-                              value={values.lastName}
+                              id="name"
+                              value={values.name}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               placeholder="" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.lastName && errors.lastName}
+                                  {touched.name && errors.name}
                               </small>
                             </div>
 
-                            {/* Bank */}
-                            <div className="form-group">
-                              <label htmlFor="password">Category</label>
+                        {/* product price */}
+                        <div className="form-group">
+                              <label htmlFor="password">Product Price(Naira)</label>
                               <input className="form-control input-style"
-                              type="text"
-                              id="phoneNumber"
-                              value={values.phoneNumber}
+                              type="tel"
+                              id="price"
+                              value={values.price}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               placeholder="" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.phoneNumber && errors.phoneNumber}
+                                  {touched.price && errors.price}
                               </small>
                             </div>
 
-                             {/* Account name */}
-                             <div className="form-group">
+                            {/* Quantity */}
+                            <div className="form-group">
                               <label htmlFor="password">Quantity in stock</label>
                               <input className="form-control input-style"
-                              type="email"
-                              id="email"
-                              value={values.email}
+                              type="tel"
+                              id="quantity"
+                              value={values.quantity}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               placeholder="" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.email && errors.email}
+                                  {touched.quantity && errors.quantity}
                               </small>
                             </div>
 
 
-                             {/* Narration */}
+                             {/* Description */}
                              <div className="form-group">
-                              <label htmlFor="password">Description</label>
-                              <input className="form-control input-style"
-                              type="text"
-                              id="password"
-                              value={values.password}
+                              <label htmlFor="password">Description(Features)</label>
+                              <textarea className="form-control input-style"
+                              id="description"
+                              rows="4"
+                              style={{resize: 'none'}}
+                              value={values.description}
                               onChange={handleChange}
                               onBlur={handleBlur}
                               placeholder="" />
                                <small style={{ color: "#dc3545" }}>
-                                  {touched.password && errors.password}
+                                  {touched.description && errors.description}
                               </small>
                             </div>
 
+
+                            
                         {/* product images */}
                         <div>
                             <h6>Product Images</h6>
@@ -151,20 +240,48 @@ const FarmersProductEdit = (props) => {
 
                         <div className="mt-2" style={{display: 'flex'}}>
 
-                            <div style={{marginRight: '2%'}}>
-                                <img src={item4} width="70" height="70" alt="Default" />
+                            <div style={{marginRight: '2%', position: 'relative'}}>
+                                <img src={productZero ? productZero : Default} width="70" height="70" alt="Default" />
+                                <label>
+                                <input type="file"
+                                    className="file_upload"
+                                    ref={fileRef}
+                                    onChange={() => handlePic(0)}
+                                   />
+                                   </label>
                             </div>
 
-                            <div style={{marginRight: '2%'}}>
-                                <img src={item6} width="70" height="70" alt="Default" />
+                            <div style={{marginRight: '2%', position: 'relative'}}>
+                                <img src={productOne ? productOne : Default} width="70" height="70" alt="Default" />
+                                <label>
+                                <input type="file"
+                                    className="file_upload"
+                                    ref={fileRef2}
+                                    onChange={() => handlePic2(1)}
+                                   />
+                                   </label>
                             </div>
 
-                            <div style={{marginRight: '2%'}}>
-                                <img src={item4} width="70" height="70" alt="Default" />
+                            <div style={{marginRight: '2%', position: 'relative'}}>
+                                <img src={productTwo ? product.productTwo : Default} width="70" height="70" alt="Default" />
+                                <label>
+                                <input type="file"
+                                    className="file_upload"
+                                    ref={fileRef3}
+                                    onChange={() => handlePic3(2)}
+                                   />
+                                   </label>
                             </div>
 
-                            <div>
-                                <img src={Default} width="70" height="70" alt="Default" />
+                            <div style={{position: 'relative'}}>
+                                <img src={productThree ? productThree : Default} width="70" height="70" alt="Default" />
+                                <label>
+                                <input type="file"
+                                    className="file_upload"
+                                    ref={fileRef4}
+                                    onChange={() => handlePic4(3)}
+                                   />
+                                   </label>
                             </div>
 
                         </div>
@@ -194,5 +311,27 @@ const FarmersProductEdit = (props) => {
      </div>
      );
 }
+
+const mapStateToProps = (state, ownProps) =>{
+    const id = ownProps.match.params.id
+    const products = state.farmers.products
+    const product = products.find(product => product.id === id);
+    return{
+        product: product,
+        id: id,
+        productZero: state.farmers.productZero,
+        productOne: state.farmers.productOne,
+        productTwo: state.farmers.productTwo,
+        productThree: state.farmers.productThree
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        handlePicture: (values, index) => dispatch(UploadProductImage(values, index)),
+        filterProduct: (id) => dispatch(EditProduct(id)),
+        handleUpdate: (values) => dispatch(updateProduct(values))
+    }
+}
  
-export default FarmersProductEdit;
+export default connect(mapStateToProps, mapDispatchToProps)(FarmersProductEdit);
