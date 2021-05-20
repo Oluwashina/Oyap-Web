@@ -38,6 +38,7 @@ import FarmersProductEdit from "./pages/Farmers/FarmersProducts/FarmersProductEd
 import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
 import AdminUserManage from "./pages/Admin/UserManagement/UserManagement";
 import UserPortfolio from "./pages/Admin/UserManagement/UserPortfolio";
+import AdminOrderDetails from "./pages/Admin/AdminOrders/AdminOrderDetails";
 
 
 // import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
@@ -85,6 +86,7 @@ function App() {
             <Route path="/admin/dashboard" component={AdminDashboard} />
             <Route path="/admin/users" component={AdminUserManage} />
             <Route path="/admin/user/:id" component={UserPortfolio} />
+            <Route path="/admin/order/:id" component={AdminOrderDetails} />
           </Switch>
         </Router>
       </div>
