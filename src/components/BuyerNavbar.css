@@ -1,3 +1,6 @@
+.body-hidden {
+    overflow: hidden;
+}
 
 .cartDiv{
     position: absolute;

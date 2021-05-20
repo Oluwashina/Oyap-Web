@@ -1,0 +1,42 @@
+.portfolioDiv{
+    background: rgba(196, 196, 196, 0.2);
+    border-radius: 5px;
+    padding: 20px 30px;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.btn-delete{
+    background: #FF0000;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 40px;
+    transition: all ease-in 0.5s;
+  }
+
+  .btn-delete:hover{
+      color: white;
+  }
+
+  .btn-blocking{
+    background: #ED881C;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 40px;
+    transition: all ease-in 0.5s; 
+  }
+
+  .btn-blocking:hover{
+      color: white;
+  }
+
+  
+
+  
+@media only screen and (max-width: 768px) {
+    .portfolioDiv{
+        flex-direction: column;
+    }
+
+}

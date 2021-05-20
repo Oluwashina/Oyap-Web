@@ -248,9 +248,10 @@ const FarmersProductAdd = (props) => {
                                 <input type="file"
                                     className="file_upload"
                                     ref={fileRef}
+                                    accept="image/*"
                                     onChange={() => handlePic(0)}
                                    />
-                                   </label>
+                                </label>
                             </div>
 
                             <div style={{marginRight: '2%', position: 'relative'}}>
@@ -258,6 +259,7 @@ const FarmersProductAdd = (props) => {
                                 <input type="file"
                                  className="file_upload"
                                     ref={fileRef2}
+                                    accept="image/*"
                                     onChange={() => handlePic2(1)}
                                   />
                             </div>
@@ -266,6 +268,7 @@ const FarmersProductAdd = (props) => {
                                 <img src={productTwo ? productTwo : Default} width="70" height="70" alt="Default" />
                                 <input type="file" className="file_upload"
                                 ref={fileRef3}
+                                accept="image/*"
                                 onChange={() => handlePic3(2)}
                                 />
                             </div>
@@ -274,6 +277,7 @@ const FarmersProductAdd = (props) => {
                                 <img src={productThree ? productThree : Default} width="70" height="70" alt="Default" />
                                 <input type="file" className="file_upload"
                                 ref={fileRef4}
+                                accept="image/*"
                                 onChange={() => handlePic4(3)}
                                  />
                             </div>

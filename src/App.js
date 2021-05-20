@@ -34,6 +34,12 @@ import FarmersProductAdd from "./pages/Farmers/FarmersProducts/FarmersProductAdd
 import FarmersProductEdit from "./pages/Farmers/FarmersProducts/FarmersProductEdit";
 
 
+// admin route
+import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
+import AdminUserManage from "./pages/Admin/UserManagement/UserManagement";
+import UserPortfolio from "./pages/Admin/UserManagement/UserPortfolio";
+
+
 // import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
 
 function App() {
@@ -74,6 +80,11 @@ function App() {
             <Route path="/farmers/transactions/debit/:id" component={FarmersDebitTransactions} />
             <Route path="/farmers/withdraw" component={FarmersWithdraw} />
             <Route path="/farmers/profile" component={FarmersProfile} />
+
+            {/* admin routes */}
+            <Route path="/admin/dashboard" component={AdminDashboard} />
+            <Route path="/admin/users" component={AdminUserManage} />
+            <Route path="/admin/user/:id" component={UserPortfolio} />
           </Switch>
         </Router>
       </div>

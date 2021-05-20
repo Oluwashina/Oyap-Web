@@ -76,7 +76,7 @@ const FarmersWallet = (props) => {
         })
       ) : (
         <div className="mb-3">
-           <div className="text-center mt-3">
+           <div className="text-center mt-5">
                 <p className="mb-0 mt-3" style={{fontStyle: 'italic'}}>No transactions available for display!</p>
              </div>
         </div>

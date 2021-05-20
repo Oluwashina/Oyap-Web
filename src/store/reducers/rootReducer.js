@@ -5,12 +5,20 @@ import cartReducers from './carts'
 import farmersReducer from "./farmers";
 import orderReducer from "./orders";
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
   products: productsReducer,
   cart: cartReducers,
   farmers: farmersReducer,
   order: orderReducer
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === 'logout') {
+    state = undefined
+  }
+
+    return appReducer(state, action)
+  }
 
 export default rootReducer;

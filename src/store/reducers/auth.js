@@ -51,24 +51,6 @@ const authReducer = (state = initState, action) => {
         ...state,
         walletBalance: action.data.walletBalance
       }
-    case 'logout':
-          return {
-              ...state,
-              isAuthenticated: false,
-              token: '',
-              firstname: "",
-              lastname: "",
-              email: "",
-              id: "",
-              phoneNumber: "",
-              isVerified: false,
-              isEnabled: false,
-              walletBalance: "",
-              role: null,
-              billingDetails: {},
-              profilePic: "",
-              pickUpDetails: ""
-          }
       case 'SIGNUP_SUCCESS':
         return{
           ...state,

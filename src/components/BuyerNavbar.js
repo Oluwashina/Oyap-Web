@@ -22,6 +22,16 @@ const BuyerNav = (props) => {
 
     const ToggleMenu = () =>{
         setNavShow(navShow ? false : true);
+        switch(navShow){
+            case false:
+                document.body.classList.add('body-hidden');
+            break;
+            case true:
+                document.body.classList.remove('body-hidden');
+                break;
+            default:
+                break;
+        }
     }
 
     const ToggleDropdown = () =>{
@@ -306,8 +316,10 @@ const BuyerNav = (props) => {
                                 </div>
                         </NavLink> 
                      </li>
-                    {auth ? <li className="cart-display px-lg-2 mt-lg-1">    
-                        <img src={Account}  alt="logo" width="25" height="25" />   
+                    {auth ? <li className="cart-display px-lg-2 mt-lg-1">
+                        <NavLink to="/customer/account">
+                        <img src={Account}  alt="logo" width="25" height="25" />
+                        </NavLink>
                     </li>
                     : "" }
                 </ul>

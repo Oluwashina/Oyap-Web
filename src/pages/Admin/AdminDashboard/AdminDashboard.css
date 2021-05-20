@@ -1,0 +1,149 @@
+.adminDash{
+    border: 1px solid rgba(196, 196, 196, 0.5);
+    box-sizing: border-box;
+    border-radius: 10px;
+    padding: 15px 20px;
+}
+.adminPendingCircle{
+    background: rgba(123, 195, 10, 0.2);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+.adminPendingDeliveryCircle{
+    background: rgba(237, 136, 28, 0.2);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto; 
+}
+.adminCompletedOrdersCircle{
+    background: rgba(70, 94, 130, 0.2);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto;  
+}
+.adminPendingPaymentCircle{
+    background: rgba(70, 94, 130, 0.2);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin: 0 auto;   
+}
+.recentStyle{
+    color: #5B9223;
+    font-weight: 600;
+    position: relative;
+}
+
+.recentStyle::after{
+    content: "";
+    height: 2px;
+    width: 80%;
+    background: #5B9223;
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    transition: .5s;
+}
+
+.userTable{
+    background: #FFFFFF;
+    border-radius: 5px;
+    display: flex;
+    text-align: left;
+    align-items: center;
+    padding: 10px 20px;
+    overflow: auto hidden;
+    width: 100%;
+}
+
+.userImage{
+    flex: 0.5;
+    max-width: 100%;
+    min-width: 100px;
+}
+.userName{
+    flex: 1;
+    max-width: 100%;
+    min-width: 100px;
+
+}
+.userEmail{
+    flex: 1;
+    max-width: 100%;
+    min-width: 100px;
+}
+.userStatus{
+    flex: 1;
+    max-width: 100%;
+    min-width: 100px;
+}
+
+.approveDiv{
+    background: #7BC30A;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.pendingApprove{
+    background: #ED881C;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;   
+}
+
+/* admin tab */
+.activeAdminTab{
+    font-weight: 600;
+    position: relative;
+    cursor: pointer;
+    color:#5B9223;
+
+}
+.activeAdminTab:after {
+    content: "";
+    height: 2px;
+    width: 100%;
+    background: #5B9223;
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    transition: .5s;
+}
+.tabSpace {
+    margin-right: 20px;
+}
+.adminTab {
+    cursor: pointer;
+    color: rgba(50, 51, 53, 0.4);
+    font-weight: 600;
+}
+
+
+@media only screen and (max-width: 768px) {
+    .userImage{
+        max-width: 100%;
+        min-width: 100px;
+    }
+    .userName{
+        max-width: 100%;
+        min-width: 200px;
+    }
+    .userEmail{
+        max-width: 100%;
+        min-width: 200px;
+    }
+    .userStatus{
+        max-width: 100%;
+        min-width: 200px;
+    }
+    .userActions{
+        display: inherit;
+        max-width: 100%;
+        min-width: 100px;
+    }
+}

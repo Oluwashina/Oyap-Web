@@ -60,7 +60,7 @@ const FarmerNav = (props) => {
 
                 <ul className="secondary-nav">
                     <li className="nav-item px-lg-2">
-                        <NavLink className="nav-link cart-display"  to="/" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
+                        <NavLink className="nav-link cart-display"  to="/farmers" style={{position: 'relative'}}  aria-haspopup="true" aria-expanded="false">
                                 <img src={Bell}  alt="logo" width="30" height="30" />   
                                 <div
                                 className="cartDiv">

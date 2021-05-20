@@ -43,7 +43,7 @@ const farmersReducer = (state=initState, action) => {
                 productOne: "",
                 productTwo: "",
                 productThree: "",
-            }
+        }
         case 'productZero':  
             return{
                 ...state,
