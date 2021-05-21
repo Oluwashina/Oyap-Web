@@ -52,6 +52,7 @@ ul{
 
 .mynav nav.menu-btn {
     display: block;
+    overflow-x: hidden;
 }
 
 

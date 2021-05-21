@@ -2,12 +2,12 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-const LogisticRoute = ({ component: Component, isAuth, role, ...rest }) => {
+const AdminRoute = ({ component: Component, isAuth, role, ...rest }) => {
   console.log(isAuth);
   return (
     <Route
       {...rest}
-      render={(props) =>  role !== 'Logistics' ? (
+      render={(props) =>  role !== 'Admin' ? (
         <>
          <Redirect to={'/'} />
         </>
@@ -24,4 +24,4 @@ const mapStateToProps = (state) => {
     role: state.auth.role,
   };
 };
-export default connect(mapStateToProps)(LogisticRoute);
+export default connect(mapStateToProps)(AdminRoute);

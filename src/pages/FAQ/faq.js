@@ -45,7 +45,7 @@ const FAQ = () => {
                         <div className="card">
                           <div className="card-header" id="headingOne">
                             <h2 className="mb-0">
-                              <button className="btn btn-header-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-1-1" aria-expanded="true" aria-controls="collapseOne">
+                              <button className="btn btn-header-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse-1-1" aria-expanded="true" aria-controls="collapseOne">
                                Can i add items to my order?
                               </button>
                             </h2>
@@ -61,7 +61,7 @@ const FAQ = () => {
                           <div className="card">
                           <div className="card-header" id="headingOne">
                             <h2 className="mb-0">
-                              <button className="btn btn-header-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-1-2" aria-expanded="true" aria-controls="collapseOne">
+                              <button className="btn btn-header-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse-1-2" aria-expanded="true" aria-controls="collapseOne">
                                 Can i cancel my order?
                               </button>
                             </h2>
@@ -77,7 +77,7 @@ const FAQ = () => {
                         <div className="card">
                           <div className="card-header" id="headingOne">
                             <h2 className="mb-0">
-                              <button className="btn btn-header-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-1-3" aria-expanded="true" aria-controls="collapseOne">
+                              <button className="btn btn-header-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse-1-3" aria-expanded="true" aria-controls="collapseOne">
                                 Can i change my address?
                               </button>
                             </h2>
@@ -93,7 +93,7 @@ const FAQ = () => {
                         <div className="card">
                           <div className="card-header" id="headingOne">
                             <h2 className="mb-0">
-                              <button className="btn btn-header-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-1-4" aria-expanded="true" aria-controls="collapseOne">
+                              <button className="btn btn-header-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse-1-4" aria-expanded="true" aria-controls="collapseOne">
                                 Can i merge my address?
                               </button>
                             </h2>
@@ -128,7 +128,7 @@ const FAQ = () => {
                         <div className="card">
                           <div className="card-header" id="headingOne">
                             <h2 className="mb-0">
-                              <button className="btn btn-header-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-2-1" aria-expanded="true" aria-controls="collapseOne">
+                              <button className="btn btn-header-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-1" aria-expanded="true" aria-controls="collapseOne">
                                Which carrier will deliver my order?
                               </button>
                             </h2>
@@ -144,7 +144,7 @@ const FAQ = () => {
                           <div className="card">
                           <div className="card-header" id="headingOne">
                             <h2 className="mb-0">
-                              <button className="btn btn-header-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="true" aria-controls="collapseOne">
+                              <button className="btn btn-header-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-2" aria-expanded="true" aria-controls="collapseOne">
                                 Where is my order?
                               </button>
                             </h2>
@@ -160,7 +160,7 @@ const FAQ = () => {
                         <div className="card">
                           <div className="card-header" id="headingOne">
                             <h2 className="mb-0">
-                              <button className="btn btn-header-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-2-3" aria-expanded="true" aria-controls="collapseOne">
+                              <button className="btn btn-header-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-3" aria-expanded="true" aria-controls="collapseOne">
                                 Will i have to pay some duties?
                               </button>
                             </h2>
@@ -176,7 +176,7 @@ const FAQ = () => {
                         <div className="card">
                           <div className="card-header" id="headingOne">
                             <h2 className="mb-0">
-                              <button className="btn btn-header-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-2-4" aria-expanded="true" aria-controls="collapse-2-4">
+                              <button className="btn btn-header-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse-2-4" aria-expanded="true" aria-controls="collapse-2-4">
                                 Can i merge my address?
                               </button>
                             </h2>
@@ -211,7 +211,7 @@ const FAQ = () => {
                         <div className="card">
                           <div className="card-header" id="headingOne">
                             <h2 className="mb-0">
-                              <button className="btn btn-header-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-3-1" aria-expanded="true" aria-controls="collapseOne">
+                              <button className="btn btn-header-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse-3-1" aria-expanded="true" aria-controls="collapseOne">
                                I've received the wrong item?
                               </button>
                             </h2>
@@ -227,7 +227,7 @@ const FAQ = () => {
                           <div className="card">
                           <div className="card-header" id="headingOne">
                             <h2 className="mb-0">
-                              <button className="btn btn-header-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse-3-2" aria-expanded="true" aria-controls="collapseOne">
+                              <button className="btn btn-header-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapse-3-2" aria-expanded="true" aria-controls="collapseOne">
                                 Can i exchange my order?
                               </button>
                             </h2>

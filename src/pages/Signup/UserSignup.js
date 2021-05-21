@@ -21,7 +21,10 @@ const UserSignup = (props) => {
       role
     }
    await Register(result)
-    history.push('/login')
+
+    setTimeout(() => {
+      history.push('/login')
+    }, 2000);
   }
 
   
@@ -106,7 +109,7 @@ const UserSignup = (props) => {
                               value={values.phoneNumber}
                               onChange={handleChange}
                               onBlur={handleBlur}
-                              placeholder="+234 800 000 0000" />
+                              placeholder="0800 000 0000" />
                                <small style={{ color: "#dc3545" }}>
                                   {touched.phoneNumber && errors.phoneNumber}
                               </small>

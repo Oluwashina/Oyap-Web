@@ -17,7 +17,8 @@ const initState = {
   role: null,
   resetcode: false,
   isLoading: false,
-  photoloader: false
+  photoloader: false,
+  forgot_success: false
 };
 
 const authReducer = (state = initState, action) => {
@@ -58,6 +59,16 @@ const authReducer = (state = initState, action) => {
     case 'SIGNUP_FAIL':
       return{
         ...state
+      }
+    case 'FORGOT_SUCCESS':
+      return{
+        ...state,
+        forgot_success: false
+      }
+    case 'FORGOT_ERROR':
+      return{
+        ...state,
+        forgot_success: true
       }
     case 'PROFILE_UPDATE':
       return{

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef} from "react";
 import Logo from "../../assets/images/logo.png";
 import WelcomeImg from "../../assets/images/welcome-img.png";
 import {Form, Formik} from 'formik'
@@ -11,9 +11,16 @@ const VerifyUser = (props) => {
 
   const { verify } = props
 
+  const ref = useRef()
+
   // Verify code button functionality
   const handleSubmit = async (values, setSubmitting) =>{
     await verify(values)
+
+     // reset the form
+     setTimeout(() => {
+      ref.current.reset()
+     }, 500);
   }
 
 
@@ -48,7 +55,7 @@ const VerifyUser = (props) => {
                       touched,
                       errors
                   })=>(
-                      <Form onSubmit={handleSubmit}>
+                      <Form ref={ref} onSubmit={handleSubmit}>
                           
                              {/* Email */}
                              <div className="form-group mt-4">

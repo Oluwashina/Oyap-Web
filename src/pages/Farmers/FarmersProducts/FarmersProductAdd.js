@@ -21,6 +21,26 @@ const FarmersProductAdd = (props) => {
     const fileRef3 = useRef(null)
     const fileRef4 = useRef(null)
 
+    const [tabType] = useState([
+        { id: 1, value: "Goods"},
+        { id: 2, value: "Services"},
+      ]);
+
+    const [tabCategory] = useState([
+        { id: 1, value: "Agro Chemical"},
+        { id: 2, value: "Agro Chemical(Inorganic)"},
+        { id: 3, value: "Fertilizers(organic)"},
+        { id: 4, value: "Fertilizers(Inorganic)"},
+        { id: 5, value: "Livestock Feeds"},
+        { id: 6, value: "Crop Seeds"},
+        { id: 6, value: "Vegetables"},
+        { id: 7, value: "Spices"},
+        { id: 8, value: "Farm Fresh Foods"},
+        { id: 9, value: "Fruits"},
+        { id: 10, value: "Cash Crops"},
+      ]);
+
+
     useEffect(() => {
         emptyImage();
       }, [emptyImage]);
@@ -132,8 +152,9 @@ const FarmersProductAdd = (props) => {
                                     className="form-control select-style" 
                                     id="type">
                                     <option defaultValue="" >--Select--</option>
-                                    <option value="Goods" >Goods</option>
-                                    <option value="Services" >Services</option>
+                                    {tabType.map((opt, index) => {
+                                            return <option key={index} value={opt.value}>{opt.value}</option>
+                                        })}
                                 
                                 </select>
                                 <small style={{ color: "#dc3545" }}>
@@ -152,19 +173,11 @@ const FarmersProductAdd = (props) => {
                                     onBlur={handleBlur}
                                     className="form-control select-style" 
                                     id="category">
-                                    <option defaultValue="" >--Select--</option>
-                                    <option value="Agro Chemical" >Agro Chemical(organic)</option>
-                                    <option value="Agro Chemical" >Agro Chemical(Inorganic)</option>
-                                    <option value="Fertilizers" >Fertilizers(organic)</option>
-                                    <option value="Services" >Fertilizers(Inorganic)</option>
-                                    <option value="Livestock" >Livestock Feeds</option>
-                                    <option value="Crop" >Crop Seeds</option>
-                                    <option value="Vegetables" >Vegetables</option>
-                                    <option value="Spices" >Spices</option>
-                                    <option value="Farm Fresh Foods" >Farm Fresh Foods</option>
-                                    <option value="Fruits" >Fruits</option>
-                                    <option value="Cash Crops" >Cash Crops</option>
-                                
+                                  <option defaultValue="" >--Select--</option>
+                                    {tabCategory.map((opt, index) => {
+                                            return <option key={index} value={opt.value}>{opt.value}</option>
+                                        })}
+
                                 </select>
                                 <small style={{ color: "#dc3545" }}>
                                   {touched.category && errors.category}

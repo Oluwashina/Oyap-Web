@@ -13,8 +13,9 @@ import './SideBar.css'
 import {Link} from 'react-router-dom'
 import Account from "../assets/images/account.svg";
 import {connect} from 'react-redux'
+import * as actions from "../store/actions";
 
-const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname }) => {
+const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, logout }) => {
 
 
     return ( 
@@ -71,7 +72,7 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname }) =
 
           <MenuItem icon={<FaPowerOff />}>
                Logout
-               <Link to="/login" />
+               <Link to="/"  onClick={logout} />
           </MenuItem>
         </Menu>
         
@@ -110,7 +111,7 @@ const mapStateToProps = (state) =>{
 
 const mapDispatchToProps = (dispatch) =>{
   return{
-
+    logout: () => dispatch(actions.logOut()),
   }
 }
 

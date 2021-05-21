@@ -93,11 +93,13 @@ export const forgotPassword = (user) => {
     try {
       const res = await PostApi("forgotpassword", {...user}, "", "application/json")
       if (res.status === 201) {
+        dispatch({ type: "FORGOT_SUCCESS" });
         cogoToast.success("Check your email for password reset instructions!", {
           position: "top-center",
         });
       }
       if(res.status === 400){
+        dispatch({ type: "FORGOT_ERROR" });
         cogoToast.error("Kindly check that the credentials entered is valid!");
       }
     } catch (err) {

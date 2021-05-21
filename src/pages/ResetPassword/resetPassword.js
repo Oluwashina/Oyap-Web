@@ -26,9 +26,10 @@ const UserReset = ({ Reset, verifyCode, code, isLoading }) => {
       password: values.password,
     };
     await Reset(creds);
-    if (!isLoading) {
-      history.push("/login");
-    }
+    
+    setTimeout(() => {
+      history.push('/')
+    }, 2000);
   };
 
   if (code) {

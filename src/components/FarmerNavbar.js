@@ -2,7 +2,7 @@ import React from 'react';
 import Logo from "../assets/images/logo.png";
 import Bell from "../assets/images/bell.svg";
 import Account from "../assets/images/account.svg";
-import {Link, NavLink} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
 import * as actions from "../store/actions";
 import './BuyerNavbar.css'
@@ -17,9 +17,9 @@ const FarmerNav = (props) => {
             {/* new navbar */}
             <div className="container mynav">
                 <div className="contain" >
-             <Link className="mt-lg-1" to="/">
+             <div className="mt-lg-1" >
                   <img src={Logo}  alt="logo" width="50" height="50"/>
-                    </Link>
+                    </div>
 
 
             <div className="mobile-div">

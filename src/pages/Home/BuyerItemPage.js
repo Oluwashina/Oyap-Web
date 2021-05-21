@@ -12,6 +12,8 @@ import BuyerFooter from '../../components/BuyerFooter';
 import { connect } from "react-redux";
 import { addToCart, Decrement, Increment } from '../../store/actions/carts';
 import moment from 'moment'
+import ImageZoom from 'react-medium-image-zoom'
+
 
 const ItemPage = (props) => {
 
@@ -30,7 +32,7 @@ const ItemPage = (props) => {
             history.push('/checkout')
           }
           else{
-            history.push('/checkout')
+            history.push('/cart')
           }
       }
       
@@ -80,26 +82,106 @@ const ItemPage = (props) => {
 
                         {/* product image */}
                         <div className="mt-4">
-                         <img src={product.productImages[0]} alt="oyap" className="img-fluid itemImage" />
+                        <ImageZoom
+                                 image={{
+                                 src: product.productImages[0],
+                                 alt: 'oyap',
+                                 className: 'img-fluid itemImage',
+                                 
+                                 }}  
+                                 zoomImage={{
+                                 src: product.productImages[1],
+                                 alt: 'agriculture'
+                                 }}
+                            />
+                       
                         </div>
 
                         {/* smaller images */}
                         <div className="mt-4" style={{display:  'flex', justifyContent: 'space-between'}}>
 
                             <div>
-                                <img src={!product.productImages[0] ? Default : product.productImages[0] } alt="oyap" className="smallImages" />
+                               {
+                                 !product.productImages[0] ? 
+                                 <img src={Default} alt="defualt" className="smallImages" />
+                                 :
+                                 <ImageZoom
+                                 image={{
+                                 src: product.productImages[0],
+                                 alt: 'agriculture',
+                                 className: 'smallImages',
+                                 
+                                 }}  
+                                 zoomImage={{
+                                 src: product.productImages[0],
+                                 alt: 'agriculture'
+                                 }}
+                             />
+
+                               }  
+                         </div>
+
+                            <div>
+                            {
+                                 !product.productImages[1] ? 
+                                 <img src={Default} alt="defualt" className="smallImages" />
+                                 :
+                                 <ImageZoom
+                                 image={{
+                                 src: product.productImages[1],
+                                 alt: 'agriculture',
+                                 className: 'smallImages',
+                                 
+                                 }}  
+                                 zoomImage={{
+                                 src: product.productImages[1],
+                                 alt: 'agriculture'
+                                 }}
+                             />
+
+                               }  
                             </div>
 
                             <div>
-                            <img src={!product.productImages[1] ? Default : product.productImages[1]} alt="oyap" className="smallImages" />
+                            {
+                                 !product.productImages[2] ? 
+                                 <img src={Default} alt="defualt" className="smallImages" />
+                                 :
+                                 <ImageZoom
+                                 image={{
+                                 src: product.productImages[2],
+                                 alt: 'agriculture',
+                                 className: 'smallImages',
+                                 
+                                 }}  
+                                 zoomImage={{
+                                 src: product.productImages[2],
+                                 alt: 'agriculture'
+                                 }}
+                             />
+                               }  
                             </div>
 
                             <div>
-                            <img src={!product.productImages[2] ? Default : product.productImages[2]} alt="oyap" className="smallImages" />
-                            </div>
+                            {
+                                 !product.productImages[3] ? 
+                                 <img src={Default} alt="defualt" className="smallImages" />
+                                 :
+                                 <ImageZoom
+                                 image={{
+                                 src: product.productImages[3],
+                                 alt: 'agriculture',
+                                 className: 'smallImages',
+                                 
+                                 }}  
+                                 zoomImage={{
+                                 src: product.productImages[3],
+                                 alt: 'agriculture'
+                                 }}
+                             />
 
-                            <div>
-                            <img src={!product.productImages[3] ? Default : product.productImages[3]} alt="oyap" className="smallImages" />
+                               }  
+                           
                             </div>
                         </div>
 

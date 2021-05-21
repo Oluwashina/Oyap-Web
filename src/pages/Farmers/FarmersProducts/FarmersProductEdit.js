@@ -14,6 +14,27 @@ const FarmersProductEdit = (props) => {
 
     const [toggled, setToggled] = useState(false);
 
+    const [tabType] = useState([
+        { id: 1, value: "Goods"},
+        { id: 2, value: "Services"},
+      ]);
+
+    const [tabCategory] = useState([
+        { id: 1, value: "Agro Chemical"},
+        { id: 2, value: "Agro Chemical(Inorganic)"},
+        { id: 3, value: "Fertilizers(organic)"},
+        { id: 4, value: "Fertilizers(Inorganic)"},
+        { id: 5, value: "Livestock Feeds"},
+        { id: 6, value: "Crop Seeds"},
+        { id: 6, value: "Vegetables"},
+        { id: 7, value: "Spices"},
+        { id: 8, value: "Farm Fresh Foods"},
+        { id: 9, value: "Fruits"},
+        { id: 10, value: "Cash Crops"},
+      ]);
+
+
+
     const fileRef = useRef(null)
     const fileRef2 = useRef(null)
     const fileRef3 = useRef(null)
@@ -107,7 +128,7 @@ const handlePic4 = (index) =>{
                     handleSubmit(values, setSubmitting)
                     }
                 validationSchema={addProductValidator}
-                initialValues={{type: product.productType, category: product.productCategory, name: product.productName,  price: product.productPrice, quantity: product.productQuantity, description: product.productDescription}}
+                initialValues={{type: product.productType ? product.productType : "", category: product.productCategory ?  product.productCategory : "", name: product.productName,  price: product.productPrice, quantity: product.productQuantity, description: product.productDescription}}
               >
                   {({
                       handleChange,
@@ -129,10 +150,12 @@ const handlePic4 = (index) =>{
                                     onBlur={handleBlur}
                                     className="form-control select-style" 
                                     id="type">
-                                    <option defaultValue="" >--Select--</option>
-                                    <option value="Goods" >Goods</option>
-                                    <option value="Services" >Services</option>
-                                
+                                <option value={product.productType} >{product.productType}</option>
+                                {tabType.filter(val => val.value !== product.productType).map((opt, index) => {
+                                            return <option key={index}
+                                             value={opt.value}>{opt.value}</option>
+                                        })}
+
                                 </select>
                                 <small style={{ color: "#dc3545" }}>
                                   {touched.type && errors.type}
@@ -149,18 +172,12 @@ const handlePic4 = (index) =>{
                                     onBlur={handleBlur}
                                     className="form-control select-style" 
                                     id="category">
-                                    <option defaultValue="" >--Select--</option>
-                                    <option value="Agro Chemical" >Agro Chemical(organic)</option>
-                                    <option value="Agro Chemical" >Agro Chemical(Inorganic)</option>
-                                    <option value="Fertilizers" >Fertilizers(organic)</option>
-                                    <option value="Services" >Fertilizers(Inorganic)</option>
-                                    <option value="Livestock" >Livestock Feeds</option>
-                                    <option value="Crop" >Crop Seeds</option>
-                                    <option value="Vegetables" >Vegetables</option>
-                                    <option value="Spices" >Spices</option>
-                                    <option value="Farm Fresh Foods" >Farm Fresh Foods</option>
-                                    <option value="Fruits" >Fruits</option>
-                                    <option value="Cash Crops" >Cash Crops</option>
+                                    <option value={product.productCategory} >{product.productCategory}</option>
+                                    {tabCategory.filter(val => val.value !== product.productCategory).map((opt, index) => {
+                                            return <option key={index}
+                                             value={opt.value}>{opt.value}</option>
+                                        })}
+
                                 
                                 </select>
                                 <small style={{ color: "#dc3545" }}>

@@ -54,7 +54,7 @@ const Orders = (props) => {
       className={initialTab === item.id ? "activeOrderTab tabSpace" : "orderTab tabSpace"}
       onClick={() => handleToggle(item.id)}
         >
-      <p className="mb-0 text-center">{item.text}</p>
+      <p className="mb-0 text-center">{item.text} {initialTab === item.id ? `(${customerOrder.length})` : ""}</p>
     </div>
   ));
 

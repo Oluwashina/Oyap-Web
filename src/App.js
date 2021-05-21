@@ -39,9 +39,13 @@ import AdminDashboard from "./pages/Admin/AdminDashboard/AdminDashboard";
 import AdminUserManage from "./pages/Admin/UserManagement/UserManagement";
 import UserPortfolio from "./pages/Admin/UserManagement/UserPortfolio";
 import AdminOrderDetails from "./pages/Admin/AdminOrders/AdminOrderDetails";
+import AdminLogin from "./pages/Admin/AdminLogin/AdminLogin";
+import AdminForgot from './pages/ForgotPassword/adminForgotPassword'
 
+// protected routes
+import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
+import SellerRoute from './components/PrivateRoutes/SellerRoute'
 
-// import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
 
 function App() {
   return (
@@ -52,7 +56,7 @@ function App() {
           {/* <Route exact path="/" component={BuyerHome} /> */}
             <Route exact path="/" component={BuyerHome} />
             <Route path="/item/:id" component={BuyerItemPage} />
-            <Route path="/checkout" component={CheckoutPage} />
+            <BuyerRoute path="/checkout" component={CheckoutPage} />
             <Route path="/cart" component={Cart} />
             <Route path="/orders" component={Orders} />
             <Route path="/customer/account" component={BuyerProfile} />
@@ -67,7 +71,7 @@ function App() {
             <Route path="/faq" component={FAQ} /> 
 
             {/* farmers route */}
-            <Route exact path="/farmers" component={FarmersDashboard} />   
+            <SellerRoute exact path="/farmers" component={FarmersDashboard} />   
             <Route path="/farmers/neworder" component={FarmersOrder} />   
             <Route path="/farmers/confirmedorder" component={FarmersOrderConfirmed} />
             <Route path="/farmers/completedorder" component={FarmersOrderCompleted} />
@@ -83,6 +87,8 @@ function App() {
             <Route path="/farmers/profile" component={FarmersProfile} />
 
             {/* admin routes */}
+            <Route path="/admin/login" component={AdminLogin} />
+            <Route path="/admin/forgotpassword" component={AdminForgot} />
             <Route path="/admin/dashboard" component={AdminDashboard} />
             <Route path="/admin/users" component={AdminUserManage} />
             <Route path="/admin/user/:id" component={UserPortfolio} />

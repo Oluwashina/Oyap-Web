@@ -7,7 +7,7 @@ import* as actions from '../../store/actions/auth'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-const UserForgot = (props) => {
+const AdminForgot = (props) => {
 
   const { forgot, forgot_success } = props
 
@@ -16,16 +16,17 @@ const UserForgot = (props) => {
   // Forgot password submit button
   const handleSubmit = async (values, setSubmitting) =>{
     await forgot(values)
+      
   }
 
   useEffect(() =>{
-    if(!forgot_success){
-      // reset the form
-      setTimeout(() => {
-          ref.current.reset()
-      }, 500);
-    }
-},[forgot_success])
+      if(!forgot_success){
+        // reset the form
+        setTimeout(() => {
+            ref.current.reset()
+        }, 500);
+      }
+  },[forgot_success])
 
 
 
@@ -88,7 +89,7 @@ const UserForgot = (props) => {
 
 
               <div className="text-center mt-5">
-                Already have an account? <Link to="/login" style={{textDecoration: 'none', color: '#7BC30A'}}>
+                Remember password? <Link to="/admin/login" style={{textDecoration: 'none', color: '#7BC30A'}}>
                    Sign In
                 </Link>
                 
@@ -108,7 +109,7 @@ const UserForgot = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    forgot_success: state.auth.forgot_sucsess 
+    forgot_success: state.auth.forgot_sucsess
   };
 };
 
@@ -118,4 +119,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserForgot);
+export default connect(mapStateToProps, mapDispatchToProps)(AdminForgot);
