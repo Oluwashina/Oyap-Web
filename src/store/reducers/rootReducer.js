@@ -4,13 +4,15 @@ import productsReducer from './products'
 import cartReducers from './carts'
 import farmersReducer from "./farmers";
 import orderReducer from "./orders";
+import adminReducer from './admin'
 
 const appReducer = combineReducers({
   auth: authReducer,
   products: productsReducer,
   cart: cartReducers,
   farmers: farmersReducer,
-  order: orderReducer
+  order: orderReducer,
+  admin: adminReducer
 });
 
 const rootReducer = (state, action) => {

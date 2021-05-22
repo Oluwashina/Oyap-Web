@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FaBars } from 'react-icons/fa';
 import AdminSidebar from '../../../components/AdminSidebar';
 import './AdminDashboard.css'
@@ -13,8 +13,12 @@ import user3 from '../../../assets/images/seller1.png'
 import declineIcon from '../../../assets/images/x-circle.svg'
 import approveIcon from '../../../assets/images/check-circle.svg'
 import ViewIcon from '../../../assets/images/eye.svg'
+import { getAdminDashboardCount } from '../../../store/actions/admin';
+import {connect} from 'react-redux'
 
-const AdminDashboard = () => {
+const AdminDashboard = (props) => {
+
+    const {auth, getCount, count} = props
 
     const [toggled, setToggled] = useState(false);
 
@@ -26,6 +30,13 @@ const AdminDashboard = () => {
     const handleRoute = (id) =>{
         alert(id)
     }
+
+    useEffect(() =>{
+        if(auth){
+          getCount()
+        } 
+    }, [auth, getCount])
+
 
       
     return (  
@@ -57,7 +68,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">500</h5>
+                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countPendingOrder : "0"}</h5>
                                 </div>
 
                                 <div className="text-center mt-1">
@@ -74,7 +85,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">200</h5>
+                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countPendingDelivery : "0"}</h5>
                                 </div>
 
                                 <div className="text-center mt-1">
@@ -91,7 +102,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">50</h5>
+                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countCompletedOrder  : "0"}</h5>
                                 </div>
 
                                 <div className="text-center mt-1">
@@ -108,7 +119,7 @@ const AdminDashboard = () => {
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">10</h5>
+                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countPendingPayment : "0"}</h5>
                                 </div>
 
                                 <div className="text-center mt-1">
@@ -340,5 +351,18 @@ const AdminDashboard = () => {
         </>
     );
 }
+
+const mapStateToProps = (state) =>{
+    return{
+        auth: state.auth.isAuthenticated,
+        count: state.admin.dashboardCount
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        getCount: () => dispatch(getAdminDashboardCount())
+    }
+}
  
-export default AdminDashboard;
+export default connect(mapStateToProps, mapDispatchToProps)(AdminDashboard);
