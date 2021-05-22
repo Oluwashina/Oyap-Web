@@ -3,22 +3,18 @@ import {FaBars } from 'react-icons/fa';
 import AdminSidebar from '../../../components/AdminSidebar';
 import './AdminDashboard.css'
 import {Link} from 'react-router-dom'
-import item5 from '../../../assets/images/item5.png'
-import item1 from '../../../assets/images/item1.png'
-// import Moment from "react-moment";
 import Arrow from "../../../assets/images/arrow.svg";
-import user1 from '../../../assets/images/user2.png'
-import user2 from '../../../assets/images/profile.png'
-import user3 from '../../../assets/images/seller1.png'
+import userProfile from '../../../assets/images/userProfile.svg'
 import declineIcon from '../../../assets/images/x-circle.svg'
 import approveIcon from '../../../assets/images/check-circle.svg'
 import ViewIcon from '../../../assets/images/eye.svg'
-import { getAdminDashboardCount } from '../../../store/actions/admin';
+import { getAdminDashboardCount, getAdminRecentOrders, getAdminRecentUsers } from '../../../store/actions/admin';
 import {connect} from 'react-redux'
+import Moment from "react-moment";
 
 const AdminDashboard = (props) => {
 
-    const {auth, getCount, count} = props
+    const {auth, getCount, count, getRecentUsers, recentusers, getRecentOrders, recentorders} = props
 
     const [toggled, setToggled] = useState(false);
 
@@ -34,8 +30,119 @@ const AdminDashboard = (props) => {
     useEffect(() =>{
         if(auth){
           getCount()
+          getRecentUsers()
+          getRecentOrders()
         } 
-    }, [auth, getCount])
+    }, [auth, getCount, getRecentUsers, getRecentOrders])
+
+    // mapping recent users
+    const recentUsersLayout = recentusers.length ? (
+        recentusers.map((value) => {
+          return (
+        <div key={value.id} className="userTable mb-3">
+            {/* image */}
+            <div className="userImage">
+                <img src={value.profilePic ? value.profilePic : userProfile} alt="user" style={{width: '40px', height: '40px', borderRadius: '50%'}} />    
+            </div>
+
+            {/* name */}
+            <div className="userName">
+                <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>{value.firstName} {value.lastName}</p>
+            </div>
+
+            {/* email */}
+            <div className="userEmail">
+                <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>{value.email}</p>
+            </div>
+
+            {/* status */}
+            <div className="userStatus">
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <div 
+                      className={value.isEnabled ? "approveDiv mr-3" : "pendingApprove mr-3"}
+                   ></div>
+                    <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>
+                        {value.isEnabled ? "Approved" : "Pending Approval"}
+                    </p>
+                </div>
+                
+            </div>
+            
+            {/* actions to approve or reject */}
+            <div className="userActions">
+                <img src={value.isEnabled ? declineIcon : approveIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
+                <img className="ml-3"
+                onClick={() => ViewUser(value.id)}
+                 src={ViewIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
+            </div>
+        </div>
+    
+          );
+        })
+      ) : (
+        <div>
+           <div className="text-center mt-3">
+                <p className="mb-0 mt-3" style={{fontStyle: 'italic'}}>No users available for display</p>
+             </div>
+        </div>
+      );
+
+    //   mapping recent orders
+    const recentOrderLayout = recentorders.length ? (
+        recentorders.map((value) => {
+          return (
+         <div key={value.id} className="mt-3 farmersOrders">
+            <div>
+                <div>
+                    <img src={value.cartItem.productImages[0]} alt="cart" className="cartImage" />
+                </div>
+            </div>
+    
+            <div>
+                <div className="ml-lg-3 ml-0">
+                        <p className="mb-0" style={{fontWeight: 'bold'}}>{value.cartItem.productName}</p>
+                        <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 
+                             <Moment className="ml-1" format="MMMM Do, YYYY">
+                                     {value.createdAt}
+                                </Moment></p>
+                        <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time:
+                                     <Moment className="ml-1" format="LT">
+                                        {value.createdAt}
+                                        </Moment></p>
+                        <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: {value.cartItem.cartQty}</p>
+    
+                        <div className="text-right mt-lg-0 mt-2">
+                            <div onClick={()=>{handleRoute(value.id)}} style={{cursor: 'pointer'}} >
+                                <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
+                            </div>         
+                        </div>
+                </div>
+            </div>
+    
+            
+        </div> 
+          );
+        })
+      ) : (
+        <div className="mb-3">
+          <div className="text-center mt-5">
+               <i className="mdi mdi-shopping-outline cartIcon" style={{color: '#5FA30E', fontSize: 50, background: 'none'}}></i>
+          </div>
+      
+           <div className="text-center mt-3">
+                <h5 className="mb-0">No New Orders Placed Yet!</h5>
+                <p className="mb-0 mt-3" style={{fontStyle: 'italic'}}>New orders will appear here as soon as you have any!</p>
+             </div>
+    
+        </div>
+      );
+    
+
+    // viewing a user
+      const ViewUser = (id) =>{
+          alert(id)
+      }
+    
 
 
       
@@ -62,6 +169,7 @@ const AdminDashboard = (props) => {
                     <div className="row">
                         {/* pending orders */}
                         <div className="col-lg-3">
+                            
                             <div className="adminDash">
 
                                 <div className="text-center adminPendingCircle">
@@ -144,87 +252,8 @@ const AdminDashboard = (props) => {
 
                     {/* recent orders layout */}
                     <div className="newOrders mt-4">
-                        {/* 1st */}
-                        <div className="mt-3 farmersOrders">
-                         <div>
-                            <div>
-                                <img src={item5} alt="cart" className="cartImage" />
-                            </div>
-                        </div>
-
-                        <div style={{flex: 4}}>
-                        <div className="ml-0">
-                                <p className="mb-0" style={{fontWeight: 'bold'}}>1 truck load of nigerian grade fresh maize</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 
-                                             23rd sept, 2020</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time: 
-                                    2:00pm</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 2</p>
-
-                                <div className="text-right mt-lg-0 mt-2">
-                                    <div onClick={()=>{handleRoute(2)}} style={{cursor: 'pointer'}}>
-                                        <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
-                                    </div>         
-                                </div>
-                        </div>
+                        {recentOrderLayout}
                     </div>
-
-                    </div>
-                    {/* 2nd */}
-                    <div className="mt-3 farmersOrders">
-                         <div>
-                            <div>
-                                <img src={item5} alt="cart" className="cartImage" />
-                            </div>
-                        </div>
-
-                        <div style={{flex: 4}}>
-                        <div className="ml-0">
-                                <p className="mb-0" style={{fontWeight: 'bold'}}>1 truck load of nigerian grade fresh maize</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 
-                                             23rd sept, 2020</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time: 
-                                    2:00pm</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 2</p>
-
-                                <div className="text-right mt-lg-0 mt-2">
-                                    <div onClick={()=>{handleRoute(2)}} style={{cursor: 'pointer'}}>
-                                        <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
-                                    </div>         
-                                </div>
-                        </div>
-                    </div>
-
-                    </div>
-
-                    {/* 3rd */}
-                    <div className="mt-3 farmersOrders">
-                         <div>
-                            <div>
-                                <img src={item1} alt="cart" className="cartImage" />
-                            </div>
-                        </div>
-
-                        <div style={{flex: 4}}>
-                        <div className="ml-0">
-                                <p className="mb-0" style={{fontWeight: 'bold'}}>1 truck load of nigerian grade fresh maize</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 
-                                             23rd sept, 2020</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time: 
-                                    2:00pm</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 2</p>
-
-                                <div className="text-right mt-lg-0 mt-2">
-                                    <div onClick={()=>{handleRoute(2)}} style={{cursor: 'pointer'}}>
-                                        <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
-                                    </div>         
-                                </div>
-                        </div>
-                    </div>
-
-                    </div>
-
-                 </div>
 
                  
                     {/* recent orders head */}
@@ -233,7 +262,7 @@ const AdminDashboard = (props) => {
                             <p className="mb-0 recentStyle">Recent Users</p>
                         </div>
                         <div>
-                            <Link to="/admin" style={{textDecoration: 'none'}}>
+                            <Link to="/admin/users" style={{textDecoration: 'none'}}>
                              <p className="mb-0" style={{color: '#465E82'}}>View All</p>
                             </Link>
                         </div>
@@ -242,104 +271,7 @@ const AdminDashboard = (props) => {
                     {/* recent users layout */}
                     <div className="newOrders mt-4" style={{padding: '20px'}}>
 
-                    {/* ist */}
-                        <div className="userTable">
-                            {/* image */}
-                            <div className="userImage">
-                                <img src={user1} alt="user" style={{width: '40px', height: '40px', borderRadius: '50%'}} />    
-                            </div>
-
-                            {/* name */}
-                            <div className="userName">
-                                <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>Cameron Williamson</p>
-                            </div>
-
-                            {/* email */}
-                            <div className="userEmail">
-                                <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>cameron@gmail.com</p>
-                            </div>
-
-                            {/* status */}
-                            <div className="userStatus">
-                                <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <div className="approveDiv mr-3"></div>
-                                    <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>Approved</p>
-                                </div>
-                                
-                            </div>
-                            
-                            {/* actions to approve or reject */}
-                            <div className="userActions">
-                                <img src={declineIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
-                                <img className="ml-3" src={ViewIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
-                            </div>
-                        </div>
-
-                        {/* 2nd */}
-                        <div className="userTable mt-3">
-                            {/* image */}
-                            <div className="userImage">
-                                <img src={user2} alt="user" style={{width: '40px', height: '40px', borderRadius: '50%'}} />    
-                            </div>
-
-                            {/* name */}
-                            <div className="userName">
-                                <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>Jerome Bell</p>
-                            </div>
-
-                            {/* email */}
-                            <div className="userEmail">
-                                <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>bell@gmail.com</p>
-                            </div>
-
-                            {/* status */}
-                            <div className="userStatus">
-                                <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <div className="pendingApprove mr-3"></div>
-                                    <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>Pending Approval</p>
-                                </div>
-                                
-                            </div>
-                            
-                            {/* actions to approve or reject */}
-                            <div className="userActions">
-                                <img src={approveIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
-                                <img className="ml-3" src={ViewIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
-                            </div>
-                        </div>
-
-                        {/* 3rd */}
-                        <div className="userTable mt-3">
-                            {/* image */}
-                            <div className="userImage">
-                                <img src={user3} alt="user" style={{width: '40px', height: '40px', borderRadius: '50%'}} />    
-                            </div>
-
-                            {/* name */}
-                            <div className="userName">
-                                <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>Cameron Williamson</p>
-                            </div>
-
-                            {/* email */}
-                            <div className="userEmail">
-                                <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>cameron@gmail.com</p>
-                            </div>
-
-                            {/* status */}
-                            <div className="userStatus">
-                                <div style={{display: 'flex', alignItems: 'center'}}>
-                                    <div className="approveDiv mr-3"></div>
-                                    <p className="mb-0" style={{color: 'rgba(50, 51, 53, 0.4)', fontSize: 15}}>Approved</p>
-                                </div>
-                                
-                            </div>
-                            
-                            {/* actions to approve or reject */}
-                            <div className="userActions">
-                                <img src={declineIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
-                                <img className="ml-3" src={ViewIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
-                            </div>
-                        </div>
+                        {recentUsersLayout}
 
                     </div>
 
@@ -355,13 +287,17 @@ const AdminDashboard = (props) => {
 const mapStateToProps = (state) =>{
     return{
         auth: state.auth.isAuthenticated,
-        count: state.admin.dashboardCount
+        count: state.admin.dashboardCount,
+        recentusers: state.admin.recentUsers,
+        recentorders: state.admin.recentOrders
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        getCount: () => dispatch(getAdminDashboardCount())
+        getCount: () => dispatch(getAdminDashboardCount()),
+        getRecentUsers: () => dispatch(getAdminRecentUsers()),
+        getRecentOrders: () => dispatch(getAdminRecentOrders()),
     }
 }
  
