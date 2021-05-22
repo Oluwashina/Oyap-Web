@@ -42,9 +42,13 @@ import AdminOrderDetails from "./pages/Admin/AdminOrders/AdminOrderDetails";
 import AdminLogin from "./pages/Admin/AdminLogin/AdminLogin";
 import AdminForgot from './pages/ForgotPassword/adminForgotPassword'
 
+// not found route
+import NotFoundPage from "./pages/404/NotFound";
+
 // protected routes
 import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
 import SellerRoute from './components/PrivateRoutes/SellerRoute'
+
 
 
 function App() {
@@ -93,6 +97,9 @@ function App() {
             <Route path="/admin/users" component={AdminUserManage} />
             <Route path="/admin/user/:id" component={UserPortfolio} />
             <Route path="/admin/order/:id" component={AdminOrderDetails} />
+
+            {/* not found route */}
+            <Route path="*" component={NotFoundPage} />
           </Switch>
         </Router>
       </div>

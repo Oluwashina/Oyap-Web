@@ -36,7 +36,7 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, log
                 <div className="profileDiv">
                 {/* name */}
                 <div className="mt-3">
-                    <h6 className="mb-0" style={{color: '#323335'}}>Welcome, Jackson {firstname}</h6>
+                    <h6 className="mb-0" style={{color: '#323335'}}>Welcome, {firstname}</h6>
                 </div>
             </div>
 
