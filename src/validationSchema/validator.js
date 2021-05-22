@@ -95,3 +95,13 @@ export const addProductValidator = Yup.object({
   description: Yup.string()
     .required("Description is required"),
 });
+
+export const ChangePasswordValidator = Yup.object({
+  password:  Yup.string()
+  .required('Password is required'),
+  newpassword:  Yup.string()
+  .required('Enter a new password'),
+   confirm_password:Yup.string()
+   .required("Passwords must match")
+   .oneOf([Yup.ref('newpassword'), null], 'Passwords must match')
+});

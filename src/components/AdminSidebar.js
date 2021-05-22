@@ -28,9 +28,9 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, log
                  
                 <div className="profileDiv mt-4">
                     {/* image */}
-                    <div>
+                    <Link to="/admin/profile">
                         <img src={profileUrl ? profileUrl : Account} alt="profile pic" style={{width: '80px', height: '80px', borderRadius: '50%'}} />
-                    </div>
+                    </Link>
                 </div>
 
                 <div className="profileDiv">
