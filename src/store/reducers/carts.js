@@ -50,7 +50,7 @@ const cartReducer = (state=initState, action) => {
                 cartItems: newCartItems
             }
         case actionTypes.REMOVE_FROM_CART:
-            let removedItem = state.cartItems.filter(item=> item.id !== action.id)
+            let removedItem = state.cartItems.filter(item => item.id !== action.id)
         
             return{
                 ...state,

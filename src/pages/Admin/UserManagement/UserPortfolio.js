@@ -1,18 +1,37 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FaBars } from 'react-icons/fa';
 import AdminSidebar from '../../../components/AdminSidebar';
 import '../AdminDashboard/AdminDashboard.css'
 import './UserPortfolio.css'
-import user from '../../../assets/images/peterson.svg'
-import item5 from '../../../assets/images/item5.png'
-import item1 from '../../../assets/images/item1.png'
+import userProfile from '../../../assets/images/userProfile.svg'
+
+
 // import Moment from "react-moment";
 import Arrow from "../../../assets/images/arrow.svg";
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import { getAdminUserOrder, getUserStatistics } from '../../../store/actions/admin';
+import Moment from "react-moment";
 
-const UserPortfolio = () => {
+
+const UserPortfolio = (props) => {
+
+    const {user, getStats, id, stats, getOrders, role, order} = props
+
+  
 
     const [toggled, setToggled] = useState(false);
+
+    const [status, setStatus] = useState(role === "Logistics" ? "Confirmed" : "Pending")
+
+    useEffect(() =>{
+        const value = {
+            id: id,
+            status: role === "Logistics" ? "Confirmed" :  "Pending"
+        }
+         getStats(id)
+        getOrders(value)  
+    }, [getStats, getOrders, id, role])
 
 
     const handleToggleSidebar = (value) => {
@@ -28,27 +47,73 @@ const UserPortfolio = () => {
         { id: 3, name: "tab-3", text: "Completed Orders" }
       ]);
 
-      const handleToggle = (id) => {
-        switch(id){
+      const [logisticsData] = useState([
+        { id: 1, name: "tab-1", text: "Pending Delivery" },
+        { id: 2, name: "tab-2", text: "Completed Delivery" }
+      ]);
+
+      const handleToggle = (val) => {
+        setTab(val)
+        var values;
+        switch(val){
             case 1:
-                setTab(id)
+                setStatus("Pending")
+                values = {
+                    id: props.match.params.id,
+                    status: "Pending"
+                }
+                getOrders(values)
                 break;
           case 2:
-              setTab(id);
+              setStatus("Confirmed")
+             values = {
+                id: props.match.params.id,
+                status: "Confirmed"
+            }
+            getOrders(values)
               break;
           case 3:
-              setTab(id);
+              setStatus("Completed")
+               values = {
+                id: props.match.params.id,
+                status: "Completed"
+            }
+            getOrders(values)
               break;
-          case 4: 
-          setTab(id);
-          break;
           default:
               break;
         }
     }
 
+    const handleLogisticsToggle = (val) => {
+        setTab(val)
+        var values;
+        switch(val){
+            case 1:
+                setStatus("Confirmed")
+                values = {
+                    id: props.match.params.id,
+                    status: "Confirmed"
+                }
+                getOrders(values)
+                break;
+          case 2:
+              setStatus("Completed")
+              values = {
+                id: props.match.params.id,
+                status: "Completed"
+            }
+            getOrders(values)
+              break;
+          default:
+              break;
+        }
+    }
+
+
   //   tab layout
-  const tabLayout = tabData.map((item) => (
+  const tabLayout = role !== "Logistics" ?
+  tabData.map((item) => (
       <div 
       key={item.id}
         className={initialTab === item.id ? "activeAdminTab tabSpace" : "adminTab tabSpace"}
@@ -56,11 +121,334 @@ const UserPortfolio = () => {
           >
         <p className="mb-0 text-center">{item.text}</p>
       </div>
-    ));
+    ))
+       :
+     logisticsData.map((item) => (
+        <div 
+        key={item.id}
+          className={initialTab === item.id ? "activeAdminTab tabSpace" : "adminTab tabSpace"}
+          onClick={() => handleLogisticsToggle(item.id)}
+            >
+          <p className="mb-0 text-center">{item.text}</p>
+        </div>
+     ));
 
     const handleRoute = (id) =>{
         alert(id)
     }
+
+
+    // order layout
+    const OrderLayout = order.length ? (
+        order.map((value) => {
+          return (
+         <div key={value.id} className="mt-3 farmersOrders">
+            <div>
+                <div>
+                    <img src={value.cartItem.productImages[0]} alt="cart" className="cartImage" />
+                </div>
+            </div>
+    
+            <div>
+                <div className="ml-lg-3 ml-0">
+                        <p className="mb-0" style={{fontWeight: 'bold'}}>{value.cartItem.productName}</p>
+                        <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 
+                             <Moment className="ml-1" format="MMMM Do, YYYY">
+                                     {value.createdAt}
+                                </Moment></p>
+                        <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time:
+                                     <Moment className="ml-1" format="LT">
+                                        {value.createdAt}
+                                        </Moment></p>
+                        <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: {value.cartItem.cartQty}</p>
+    
+                        <div className="text-right mt-lg-0 mt-2">
+                            <div onClick={()=>{handleRoute(value.id)}} style={{cursor: 'pointer'}} >
+                                <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
+                            </div>         
+                        </div>
+                </div>
+            </div>
+    
+            
+        </div> 
+          );
+        })
+      ) : (
+        <div className="mb-3">
+          <div className="text-center mt-5">
+               <i className="mdi mdi-shopping-outline cartIcon" style={{color: '#5FA30E', fontSize: 50, background: 'none'}}></i>
+          </div>
+      
+           <div className="text-center mt-3">
+                <h5 className="mb-0">No {status} Orders Placed Yet!</h5>
+                <p className="mb-0 mt-3" style={{fontStyle: 'italic'}}>{status} orders will appear here as soon as you have any!</p>
+             </div>
+    
+        </div>
+      );
+   
+
+   const StatsLayout = (role) =>{
+       switch(role){
+        case 'Buyer':
+            return (
+                <div className="row mt-4">
+                <div className="col-lg-3">
+                    <div className="adminDash">
+    
+                        <div className="text-center adminPendingCircle">
+                        </div>
+    
+                        <div className="text-center mt-2">
+                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                                {stats ? stats.countNewOrder : "0"}
+                            </h5>
+                        </div>
+    
+                        <div className="text-center mt-1">
+                            <p className="mb-0">New Orders</p>
+                        </div>
+    
+                    </div>
+                </div>
+                <div className="col-lg-3 mt-lg-0 mt-3">
+                    <div className="adminDash">
+    
+                        <div className="text-center adminPendingDeliveryCircle">
+                        </div>
+    
+                        <div className="text-center mt-2">
+                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                                {stats ?  stats.countConfirmedOrder : "0"}
+                            </h5>
+                        </div>
+    
+                        <div className="text-center mt-1">
+                            <p className="mb-0">Pending Delivery</p>
+                        </div>
+    
+                    </div>
+                </div>
+                <div className="col-lg-3 mt-lg-0 mt-3">
+                    <div className="adminDash">
+    
+                        <div className="text-center adminCompletedOrdersCircle">
+                        </div>
+    
+                        <div className="text-center mt-2">
+                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                                {stats ? stats.countCompletedOrder : "0"}
+                            </h5>
+                        </div>
+    
+                        <div className="text-center mt-1">
+                            <p className="mb-0">Completed Orders</p>
+                        </div>
+    
+                    </div>
+                </div>
+                </div>
+                )
+        case 'Seller':
+            return (
+            <div className="row mt-4">
+            <div className="col-lg-3">
+                <div className="adminDash">
+
+                    <div className="text-center adminPendingCircle">
+                    </div>
+
+                    <div className="text-center mt-2">
+                        <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                            {stats ? stats.countNewOrder : "0"}
+                        </h5>
+                    </div>
+
+                    <div className="text-center mt-1">
+                        <p className="mb-0">New Orders</p>
+                    </div>
+
+                </div>
+            </div>
+            <div className="col-lg-3 mt-lg-0 mt-3">
+                <div className="adminDash">
+
+                    <div className="text-center adminPendingDeliveryCircle">
+                    </div>
+
+                    <div className="text-center mt-2">
+                        <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                            {stats ? stats.countConfirmedOrder : "0"}
+                        </h5>
+                    </div>
+
+                    <div className="text-center mt-1">
+                        <p className="mb-0">Pending Delivery</p>
+                    </div>
+
+                </div>
+            </div>
+            <div className="col-lg-3 mt-lg-0 mt-3">
+                <div className="adminDash">
+
+                    <div className="text-center adminCompletedOrdersCircle">
+                    </div>
+
+                    <div className="text-center mt-2">
+                        <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                            {stats ? stats.countCompletedOrder : "0"}
+                        </h5>
+                    </div>
+
+                    <div className="text-center mt-1">
+                        <p className="mb-0">Completed Orders</p>
+                    </div>
+
+                </div>
+            </div>
+            <div className="col-lg-3 mt-lg-0 mt-3">
+                <div className="adminDash">
+
+                    <div className="text-center adminPendingPaymentCircle">
+                    </div>
+
+                    <div className="text-center mt-2">
+                        <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                            {stats ? stats.countAllProductSeller : "0"}
+                        </h5>
+                    </div>
+
+                    <div className="text-center mt-1">
+                        <p className="mb-0">Farm Produce</p>
+                    </div>
+
+                </div>
+            </div>
+             </div>
+            )
+        case 'Logistics':
+            return  (
+                <div className="row mt-4">
+                <div className="col-lg-3 mt-lg-0 mt-3">
+                    <div className="adminDash">
+    
+                        <div className="text-center adminPendingDeliveryCircle">
+                        </div>
+    
+                        <div className="text-center mt-2">
+                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                                {stats? stats.countConfirmedOrder : "0"}
+                            </h5>
+                        </div>
+    
+                        <div className="text-center mt-1">
+                            <p className="mb-0">Pending Delivery</p>
+                        </div>
+    
+                    </div>
+                </div>
+                <div className="col-lg-3 mt-lg-0 mt-3">
+                    <div className="adminDash">
+    
+                        <div className="text-center adminCompletedOrdersCircle">
+                        </div>
+    
+                        <div className="text-center mt-2">
+                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                                {stats ? stats.countCompletedOrder : "0"}
+                            </h5>
+                        </div>
+    
+                        <div className="text-center mt-1">
+                            <p className="mb-0">Completed Delivery</p>
+                        </div>
+    
+                    </div>
+                </div>
+                </div>
+                )
+        case 'Admin':
+            return (
+                <div className="row mt-4">
+                <div className="col-lg-3">
+                    <div className="adminDash">
+    
+                        <div className="text-center adminPendingCircle">
+                        </div>
+    
+                        <div className="text-center mt-2">
+                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                                {stats ? stats.countNewOrder : "0"}
+                            </h5>
+                        </div>
+    
+                        <div className="text-center mt-1">
+                            <p className="mb-0">New Orders</p>
+                        </div>
+    
+                    </div>
+                </div>
+                <div className="col-lg-3 mt-lg-0 mt-3">
+                    <div className="adminDash">
+    
+                        <div className="text-center adminPendingDeliveryCircle">
+                        </div>
+    
+                        <div className="text-center mt-2">
+                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                                {stats ? stats.countConfirmedOrder : "0"}
+                            </h5>
+                        </div>
+    
+                        <div className="text-center mt-1">
+                            <p className="mb-0">Pending Delivery</p>
+                        </div>
+    
+                    </div>
+                </div>
+                <div className="col-lg-3 mt-lg-0 mt-3">
+                    <div className="adminDash">
+    
+                        <div className="text-center adminCompletedOrdersCircle">
+                        </div>
+    
+                        <div className="text-center mt-2">
+                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                                {stats ? stats.countCompletedOrder : "0"}
+                            </h5>
+                        </div>
+    
+                        <div className="text-center mt-1">
+                            <p className="mb-0">Completed Orders</p>
+                        </div>
+    
+                    </div>
+                </div>
+                <div className="col-lg-3 mt-lg-0 mt-3">
+                    <div className="adminDash">
+    
+                        <div className="text-center adminPendingPaymentCircle">
+                        </div>
+    
+                        <div className="text-center mt-2">
+                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
+                                {stats ? stats.countAllProductSeller : "0"}
+                            </h5>
+                        </div>
+    
+                        <div className="text-center mt-1">
+                            <p className="mb-0">Farm Produce</p>
+                        </div>
+    
+                    </div>
+                </div>
+                 </div>
+                )
+        default:
+        return 'hello'
+       }
+   }
 
 
 
@@ -85,13 +473,13 @@ const UserPortfolio = () => {
 
             {/* user info layout profile details */}
             <div className="mt-4 mt-lg-5">
-                <h6 style={{fontWeight: 'bold'}}>Peterson Aromole</h6>
+                <h6 style={{fontWeight: 'bold'}}>{user ? user.firstName : "Anonymous"} {user ? user.lastName : "Anonymous"}</h6>
             </div>
 
             <div className="portfolioDiv mt-3">
                 {/* image */}
                     <div style={{flex: 1}}>
-                        <img src={user} style={{width: '80px', height: '80px', borderRadius: '50%'}} alt="user" />
+                        <img src={user.profilePic ? user.profilePic : userProfile} style={{width: '80px', height: '80px', borderRadius: '50%'}} alt="user" />
                     </div>
                 {/* details */}
                 <div className="mt-lg-0 mt-4" style={{flex: 2}}>
@@ -100,7 +488,7 @@ const UserPortfolio = () => {
                             <p className="mb-0" style={{fontSize: 14, fontWeight: 'bold'}}>Name:</p>
                         </div>
                         <div style={{flex: 1}}>
-                            <p className="mb-0" style={{fontSize:  14}}>Jackson Aromole</p>
+                            <p className="mb-0" style={{fontSize:  14}}>{user ? user.firstName : "Anonymous"} {user ? user.lastName : "Anonymous"}</p>
                         </div>
                     </div>
                     <div className="mt-2" style={{display: 'flex'}}>
@@ -108,7 +496,7 @@ const UserPortfolio = () => {
                             <p className="mb-0" style={{fontSize: 14, fontWeight: 'bold'}}>Phone Number:</p>
                         </div>
                         <div style={{flex: 1}}>
-                            <p className="mb-0" style={{fontSize: 14 }}>0815433445223</p>
+                            <p className="mb-0" style={{fontSize: 14 }}>{user ? user.phoneNumber : ""}</p>
                         </div>
                     </div>
                     <div  className="mt-2" style={{display: 'flex'}}>
@@ -116,7 +504,7 @@ const UserPortfolio = () => {
                             <p className="mb-0" style={{fontSize: 14, fontWeight: 'bold'}}>Email Address:</p>
                         </div>
                         <div style={{flex: 1}}>
-                            <p className="mb-0" style={{fontSize: 14,}}>jacksonweb@gmail.com</p>
+                            <p className="mb-0" style={{fontSize: 14,}}>{user ? user.email : ""}</p>
                         </div>
                     </div>
                     <div  className="mt-2" style={{display: 'flex'}}>
@@ -124,7 +512,7 @@ const UserPortfolio = () => {
                             <p className="mb-0" style={{fontSize: 14, fontWeight: 'bold'}}>Portfolio:</p>
                         </div>
                         <div style={{flex: 1}}>
-                            <p className="mb-0" style={{fontSize: 14}}>Farmer</p>
+                            <p className="mb-0" style={{fontSize: 14}}>{user ? user.role: ""}</p>
                         </div>
                     </div>
                 </div>
@@ -146,78 +534,9 @@ const UserPortfolio = () => {
                         </div>
                        
                     </div>
+
+                    {StatsLayout(user.role)}
                     
-                    {/* counts */}
-                    <div className="row mt-4">
-                        {/* pending orders */}
-                        <div className="col-lg-3">
-                            <div className="adminDash">
-
-                                <div className="text-center adminPendingCircle">
-                                </div>
-
-                                <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">50</h5>
-                                </div>
-
-                                <div className="text-center mt-1">
-                                    <p className="mb-0">New Orders</p>
-                                </div>
-
-                            </div>
-                        </div>
-                        {/* pending delivery */}
-                        <div className="col-lg-3 mt-lg-0 mt-3">
-                            <div className="adminDash">
-
-                                <div className="text-center adminPendingDeliveryCircle">
-                                </div>
-
-                                <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">200</h5>
-                                </div>
-
-                                <div className="text-center mt-1">
-                                    <p className="mb-0">Pending Delivery</p>
-                                </div>
-
-                            </div>
-                        </div>
-                        {/* completed orders */}
-                        <div className="col-lg-3 mt-lg-0 mt-3">
-                            <div className="adminDash">
-
-                                <div className="text-center adminCompletedOrdersCircle">
-                                </div>
-
-                                <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">50</h5>
-                                </div>
-
-                                <div className="text-center mt-1">
-                                    <p className="mb-0">Completed Orders</p>
-                                </div>
-
-                            </div>
-                        </div>
-                        {/* farm produce */}
-                        <div className="col-lg-3 mt-lg-0 mt-3">
-                            <div className="adminDash">
-
-                                <div className="text-center adminPendingPaymentCircle">
-                                </div>
-
-                                <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">10</h5>
-                                </div>
-
-                                <div className="text-center mt-1">
-                                    <p className="mb-0">Farm Produce</p>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
 
                     {/* orders heading */}
                     <div className="mt-5">
@@ -228,60 +547,11 @@ const UserPortfolio = () => {
 
                     {/* orders layout */}
                     <div className="newOrders mt-4">
-                        {/* 1st */}
-                        <div className="mt-3 farmersOrders">
-                         <div>
-                            <div>
-                                <img src={item5} alt="cart" className="cartImage" />
-                            </div>
-                        </div>
 
-                        <div style={{flex: 4}}>
-                        <div className="ml-0">
-                                <p className="mb-0" style={{fontWeight: 'bold'}}>1 truck load of nigerian grade fresh maize</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 
-                                             23rd sept, 2020</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time: 
-                                    2:00pm</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 2</p>
-
-                                <div className="text-right mt-lg-0 mt-2">
-                                    <div onClick={()=>{handleRoute(2)}} style={{cursor: 'pointer'}}>
-                                        <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
-                                    </div>         
-                                </div>
-                        </div>
-                    </div>
-
-                    </div>
-                    {/* 2nd */}
-                    <div className="mt-3 farmersOrders">
-                         <div>
-                            <div>
-                                <img src={item1} alt="cart" className="cartImage" />
-                            </div>
-                        </div>
-
-                        <div style={{flex: 4}}>
-                        <div className="ml-0">
-                                <p className="mb-0" style={{fontWeight: 'bold'}}>1 truck load of nigerian grade fresh maize</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Order date by: 
-                                             23rd sept, 2020</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Order time: 
-                                    2:00pm</p>
-                                <p className="mb-0 mt-2" style={{fontSize: 14}}>Quantity: 2</p>
-
-                                <div className="text-right mt-lg-0 mt-2">
-                                    <div onClick={()=>{handleRoute(2)}} style={{cursor: 'pointer'}}>
-                                        <img src={Arrow} alt="navigate" style={{width: 20, height: 20}} className="img-fluid" />
-                                    </div>         
-                                </div>
-                        </div>
-                        </div>
-                    </div>
+                        {OrderLayout}                    
 
                     <div className="mt-4" style={{display: 'flex', justifyContent: 'flex-end'}}>
-                        <Link to="/farmers/order/new" className="next-page page-space" style={{textDecoration: 'none', color: '#323335'}}>
+                        <Link to="/admin/order/new" className="next-page page-space" style={{textDecoration: 'none', color: '#323335'}}>
                             <span>View All <i className="mdi mdi-chevron-right" style={{color: '#c4c4c4'}}></i></span>
                         </Link>
 
@@ -295,5 +565,27 @@ const UserPortfolio = () => {
         </>
       );
 }
+
+
+const mapStateToProps = (state, ownProps) =>{
+    const id = ownProps.match.params.id
+    const users = state.admin.users
+    const user = users.find(val => val.id === id);
+    return{
+        user: user,
+        auth: state.auth.isAuthenticated,
+        id: id,
+        role: user.role,
+        stats: state.admin.stats,
+        order: state.admin.userOrder
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        getStats: (id) => dispatch(getUserStatistics(id)),
+        getOrders: (status) => dispatch(getAdminUserOrder(status))
+    }
+}
  
-export default UserPortfolio;
+export default connect(mapStateToProps, mapDispatchToProps)(UserPortfolio);

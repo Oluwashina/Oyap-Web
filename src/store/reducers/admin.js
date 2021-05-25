@@ -2,7 +2,11 @@
 const initState = {
     dashboardCount: {},
     recentUsers: [],
-    recentOrders: []
+    recentOrders: [],
+    usersCount: {},
+    users: [],
+    stats: {},
+    userOrder: []
 }
 
 const adminReducer = (state=initState, action) => {
@@ -21,6 +25,26 @@ const adminReducer = (state=initState, action) => {
             return{
                 ...state,
                 recentOrders: action.data
+            }
+        case 'AdminUsersCount':
+            return{
+                ...state,
+                usersCount: action.data
+            }
+        case 'AdminUsers':
+            return{
+                ...state,
+                users: action.data
+            }
+        case 'Statistics':
+            return{
+                ...state,
+                stats: action.data
+            }
+        case 'UserOrder':
+            return{
+                ...state,
+                userOrder: action.data
             }
         default:
             return state

@@ -39,7 +39,7 @@ const AdminDashboard = (props) => {
     const recentUsersLayout = recentusers.length ? (
         recentusers.map((value) => {
           return (
-        <div key={value.id} className="userTable mb-3">
+        <div key={value.id} className="userTable">
             {/* image */}
             <div className="userImage">
                 <img src={value.profilePic ? value.profilePic : userProfile} alt="user" style={{width: '40px', height: '40px', borderRadius: '50%'}} />    
@@ -81,8 +81,8 @@ const AdminDashboard = (props) => {
         })
       ) : (
         <div>
-           <div className="text-center mt-3">
-                <p className="mb-0 mt-3" style={{fontStyle: 'italic'}}>No users available for display</p>
+           <div className="text-center">
+                <p className="mb-0" style={{fontStyle: 'italic'}}>No users available for display</p>
              </div>
         </div>
       );
