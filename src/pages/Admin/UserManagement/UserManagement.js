@@ -58,7 +58,7 @@ const AdminUserManage = (props) => {
                 break;
             case 4: 
             setTab(id);
-            getUser('Admin')
+            getUser('SubAdmin')
             break;
             default:
                 break;

@@ -39,7 +39,7 @@ const AdminDashboard = (props) => {
     const recentUsersLayout = recentusers.length ? (
         recentusers.map((value) => {
           return (
-        <div key={value.id} className="userTable">
+        <div key={value.id} className="userTable mb-3">
             {/* image */}
             <div className="userImage">
                 <img src={value.profilePic ? value.profilePic : userProfile} alt="user" style={{width: '40px', height: '40px', borderRadius: '50%'}} />    

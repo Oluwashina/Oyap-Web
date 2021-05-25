@@ -368,81 +368,9 @@ const UserPortfolio = (props) => {
                 </div>
                 </div>
                 )
-        case 'Admin':
+        case 'SubAdmin':
             return (
-                <div className="row mt-4">
-                <div className="col-lg-3">
-                    <div className="adminDash">
-    
-                        <div className="text-center adminPendingCircle">
-                        </div>
-    
-                        <div className="text-center mt-2">
-                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
-                                {stats ? stats.countNewOrder : "0"}
-                            </h5>
-                        </div>
-    
-                        <div className="text-center mt-1">
-                            <p className="mb-0">New Orders</p>
-                        </div>
-    
-                    </div>
-                </div>
-                <div className="col-lg-3 mt-lg-0 mt-3">
-                    <div className="adminDash">
-    
-                        <div className="text-center adminPendingDeliveryCircle">
-                        </div>
-    
-                        <div className="text-center mt-2">
-                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
-                                {stats ? stats.countConfirmedOrder : "0"}
-                            </h5>
-                        </div>
-    
-                        <div className="text-center mt-1">
-                            <p className="mb-0">Pending Delivery</p>
-                        </div>
-    
-                    </div>
-                </div>
-                <div className="col-lg-3 mt-lg-0 mt-3">
-                    <div className="adminDash">
-    
-                        <div className="text-center adminCompletedOrdersCircle">
-                        </div>
-    
-                        <div className="text-center mt-2">
-                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
-                                {stats ? stats.countCompletedOrder : "0"}
-                            </h5>
-                        </div>
-    
-                        <div className="text-center mt-1">
-                            <p className="mb-0">Completed Orders</p>
-                        </div>
-    
-                    </div>
-                </div>
-                <div className="col-lg-3 mt-lg-0 mt-3">
-                    <div className="adminDash">
-    
-                        <div className="text-center adminPendingPaymentCircle">
-                        </div>
-    
-                        <div className="text-center mt-2">
-                            <h5 style={{fontWeight: 'bold'}} className="mb-0">
-                                {stats ? stats.countAllProductSeller : "0"}
-                            </h5>
-                        </div>
-    
-                        <div className="text-center mt-1">
-                            <p className="mb-0">Farm Produce</p>
-                        </div>
-    
-                    </div>
-                </div>
+                <div className="">
                  </div>
                 )
         default:
@@ -528,25 +456,41 @@ const UserPortfolio = (props) => {
 
 
                  {/* recent orders head */}
-                 <div className="mt-4" style={{display: 'flex', justifyContent :'space-between'}}>
+                 {
+                     role === "SubAdmin" ?
+                     ""
+                     :
+                     <div className="mt-4" style={{display: 'flex', justifyContent :'space-between'}}>
                         <div>
                             <p className="mb-0 recentStyle">Statistics</p>
                         </div>
                        
                     </div>
+                 }
+                
 
                     {StatsLayout(user.role)}
                     
 
                     {/* orders heading */}
-                    <div className="mt-5">
-                        <div style={{display: 'flex'}}>
-                            {tabLayout}
-                        </div>
-                    </div>
+                    {
+                        role === "SubAdmin" ?
+                        ""
+                        :
+                        <div className="mt-5">
+                            <div style={{display: 'flex'}}>
+                                {tabLayout}
+                            </div>
+                          </div>
+                        }   
+                    
 
                     {/* orders layout */}
-                    <div className="newOrders mt-4">
+                    {
+                        role === "SubAdmin" ?
+                        ""
+                        :
+                        <div className="newOrders mt-4">
 
                         {OrderLayout}                    
 
@@ -557,7 +501,10 @@ const UserPortfolio = (props) => {
 
                     </div>
 
-                </div>
+                         </div>
+
+                    }
+                   
 
              </header>
             </main>
