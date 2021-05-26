@@ -1,10 +1,13 @@
 import React, {useState} from 'react';
 import {FaBars } from 'react-icons/fa';
 import AdminSidebar from '../../../components/AdminSidebar';
-import item1 from '../../../assets/images/item5.png'
+import {connect} from 'react-redux'
+import Moment from 'react-moment'
 
 
-const AdminOrderDetails = () => {
+const AdminOrderDetails = (props) => {
+
+    const {order} = props
 
     const [toggled, setToggled] = useState(false);
 
@@ -12,13 +15,11 @@ const AdminOrderDetails = () => {
         setToggled(value);
       };
 
-      const [timelineData] = useState([
-        { id: 1, status: "Payment Received", dateOccured: "April 12th, 2021"},
-      ]);
+      const id = props.match.params.id
 
-      //   tab layout
-      const timelineLayout = timelineData.length ? (
-        timelineData.map((value, index) => {
+      //   timeline layout
+      const timelineLayout = order.timeLine.length ? (
+        order.timeLine.map((value, index) => {
           return (
             <div key={index} className="mt-4 orderTimeline" >
                     <div>
@@ -30,13 +31,14 @@ const AdminOrderDetails = () => {
                             <div>
                             <h6 className="mb-0" style={{fontWeight: 700}}>{value.status}</h6>
                             <p className="mb-0 mt-2">
+                            <Moment format="MMMM Do, YYYY">
                                             {value.dateOccured}
-                           
+                            </Moment>
                             </p>
                             <p className="mb-0 mt-2">
-                                
-                                    2:00pm
-                                      
+                                <Moment format="LT">
+                                            {value.dateOccured}
+                                        </Moment>
                                 </p>
                             </div>
                     </div>
@@ -49,6 +51,11 @@ const AdminOrderDetails = () => {
           
         </div>
       );
+
+      const cancelOrder = (id) =>{
+          console.log(id)
+       alert('canceled order', id)
+    }
 
     return ( 
         <>
@@ -78,16 +85,16 @@ const AdminOrderDetails = () => {
                         <div className="mt-lg-4 mt-4 orderDetails" >
 
                             <div>
-                                <img src={item1} alt="cart" className="cartImage" />
+                                <img src={order.cartItem.productImages[0]} alt="cart" className="cartImage" />
                             </div>
 
                             <div className="ml-4 ml-lg-5">
                               <div className="">
                                     <p className="mb-0 mt-0 mt-lg-4" style={{fontWeight: 'bold', lineHeight: '25px'}}>Corn</p>
-                                    <p className="mb-0 mt-2" style={{fontSize: 14}}>Qty: 2</p>
+                                    <p className="mb-0 mt-2" style={{fontSize: 14}}>Qty: {order.cartItem.cartQty}</p>
                                     <div className="mt-2">
                                         <p className="mb-0" style={{color: '#ED881C', fontSize: 14, fontWeight: '500'}}>Status: <span style={{color: '#ED881C', fontWeight: 700, lineHeight: '20px'}}>
-                                            Order Recieved</span></p>
+                                        {order.timeLine.length ? order.timeLine[order.timeLine.length - 1].status : ""} </span></p>
                                     </div>
                                  </div>
                             </div>
@@ -103,8 +110,8 @@ const AdminOrderDetails = () => {
 
                             <div className="ml-4 ml-lg-5">
                               <div className="">
-                                    <p className="mb-0" style={{lineHeight: '25px', fontSize: 15}}>65, Adebiyi street Joyce-B Road Mobil bus stop Ring road</p>
-                                    <p className="mb-0 mt-3" style={{fontSize: 15}}>+2348183938024</p>
+                                    <p className="mb-0" style={{lineHeight: '25px', fontSize: 15}}>{order.billingDetails.address} {order.billingDetails.city} {order.billingDetails.state}</p>
+                                    <p className="mb-0 mt-3" style={{fontSize: 15}}>{order.billingDetails.phone}</p>
                                   
                                  </div>
                             </div>
@@ -120,8 +127,8 @@ const AdminOrderDetails = () => {
 
                             <div className="ml-4 ml-lg-5">
                               <div className="">
-                                    <p className="mb-0" style={{lineHeight: '25px', fontSize: 15, color:'#7BC30A'}}>Jimmydan Farms</p>
-                                    <p className="mb-0 mt-3" style={{fontSize: 15}}>+2348183938024</p>
+                                    <p className="mb-0" style={{lineHeight: '25px', fontSize: 15, color:'#7BC30A'}}>{order.cartItem.sellerFirstName} {order.cartItem.sellerLastName}</p>
+                                    <p className="mb-0 mt-3" style={{fontSize: 15}}>{order.cartItem.sellerphoneNumber}</p>
                                   
                                  </div>
                             </div>
@@ -148,7 +155,7 @@ const AdminOrderDetails = () => {
                                 </div>
                                 <div>
                                    <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>
-607432acf46d1a58781267bf</p> 
+                                   {order.id}</p> 
                                 </div>
                             </div>
 
@@ -162,7 +169,9 @@ const AdminOrderDetails = () => {
                                 </div>
                                 <div>
                                    <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>
-                                   April 12th, 2021
+                                   <Moment className="ml-1" format="MMMM Do, YYYY">
+                                            {order.createdAt}
+                                        </Moment>
                                         </p> 
                                 </div>
                             </div>
@@ -176,7 +185,7 @@ const AdminOrderDetails = () => {
                                     <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Amount</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 600}}>NGN 50</p> 
+                                   <p className="mb-0" style={{fontWeight: 600}}>NGN {order.cartItem.productPrice}</p> 
                                 </div>
                             </div>
                             
@@ -190,7 +199,7 @@ const AdminOrderDetails = () => {
                                     <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Shipping Fee</p>
                                 </div>
                                 <div>
-                                   <p className="mb-0" style={{fontWeight: 600}}>NGN 500</p> 
+                                   <p className="mb-0" style={{fontWeight: 600}}>NGN {order.shippingFee}</p> 
                                 </div>
                             </div>
 
@@ -218,14 +227,17 @@ const AdminOrderDetails = () => {
                                     <p className="mb-0" style={{fontWeight: 700}}>TOTAL PAID</p>
                                 </div>
                                 <div>
-                                   <h6 className="mb-0" style={{fontWeight: 600, color: '#5B9223'}}>NGN 900</h6> 
+                                   <h6 className="mb-0" style={{fontWeight: 600, color: '#5B9223'}}>NGN {order.totalAmountPaid}</h6> 
                                 </div>
                             </div>
                         </div>
 
                         {/* cancel and confirm order div for a new order */}
-                       
-                        <div className="mt-lg-4 mt-4" style={{background: ' rgba(196, 196, 196, 0.2)', borderRadius: '5px', padding: '30px 15px'}}>
+                        {
+                            order.status === "Completed" ?
+                            ""
+                            :
+                            <div className="mt-lg-4 mt-4" style={{background: ' rgba(196, 196, 196, 0.2)', borderRadius: '5px', padding: '30px 15px'}}>
 
                             <div className="text-center mt-2">
                                 <h6>Click here to cancel this order for any reason</h6>
@@ -248,11 +260,14 @@ const AdminOrderDetails = () => {
 
                             <div className="mt-4 text-center">
                                 <div>
-                                <button className="btn btn-cancel" >Cancel Order</button>
+                                <button className="btn btn-cancel"
+                                    onClick={() => cancelOrder(id)} >Cancel Order</button>
                                 </div>
                             </div>
 
                         </div>
+                        }
+                        
          
 
                     </div>
@@ -265,5 +280,19 @@ const AdminOrderDetails = () => {
         </>
      );
 }
+
+
+const mapStateToProps = (state) =>{
+    return{
+        auth: state.auth.isAuthenticated,
+        order: state.admin.order
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+       
+    }
+}
  
-export default AdminOrderDetails;
+export default connect(mapStateToProps, mapDispatchToProps)(AdminOrderDetails);

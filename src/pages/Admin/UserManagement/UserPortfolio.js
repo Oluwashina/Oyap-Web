@@ -4,23 +4,26 @@ import AdminSidebar from '../../../components/AdminSidebar';
 import '../AdminDashboard/AdminDashboard.css'
 import './UserPortfolio.css'
 import userProfile from '../../../assets/images/userProfile.svg'
+import {useHistory} from 'react-router-dom'
 
 
 // import Moment from "react-moment";
 import Arrow from "../../../assets/images/arrow.svg";
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { getAdminUserOrder, getUserStatistics } from '../../../store/actions/admin';
+import { cleanOrderStatus, getAdminOrderById, getAdminUserOrder, getUserStatistics } from '../../../store/actions/admin';
 import Moment from "react-moment";
 
 
 const UserPortfolio = (props) => {
 
-    const {user, getStats, id, stats, getOrders, role, order} = props
+    const {user, getStats, id, stats, getOrders, role, order, getOrder, order_fetched, cleanOrder} = props
 
-  
 
     const [toggled, setToggled] = useState(false);
+    const history = useHistory()
+
+    const [orderId, setOrderId] = useState("")
 
     const [status, setStatus] = useState(role === "Logistics" ? "Confirmed" : "Pending")
 
@@ -134,8 +137,17 @@ const UserPortfolio = (props) => {
      ));
 
     const handleRoute = (id) =>{
-        alert(id)
+        setOrderId(id)
+        // get Order by id
+        getOrder(id)
     }
+
+    useEffect(() =>{
+        if(order_fetched){
+         history.push("/admin/order/"+orderId)
+         cleanOrder()
+        } 
+    }, [order_fetched, history, cleanOrder, orderId])
 
 
     // order layout
@@ -495,7 +507,7 @@ const UserPortfolio = (props) => {
                         {OrderLayout}                    
 
                     <div className="mt-4" style={{display: 'flex', justifyContent: 'flex-end'}}>
-                        <Link to="/admin/order/new" className="next-page page-space" style={{textDecoration: 'none', color: '#323335'}}>
+                        <Link to="/admin/orders" className="next-page page-space" style={{textDecoration: 'none', color: '#323335'}}>
                             <span>View All <i className="mdi mdi-chevron-right" style={{color: '#c4c4c4'}}></i></span>
                         </Link>
 
@@ -524,14 +536,17 @@ const mapStateToProps = (state, ownProps) =>{
         id: id,
         role: user.role,
         stats: state.admin.stats,
-        order: state.admin.userOrder
+        order: state.admin.userOrder,
+        order_fetched: state.admin.order_fetched
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
         getStats: (id) => dispatch(getUserStatistics(id)),
-        getOrders: (status) => dispatch(getAdminUserOrder(status))
+        getOrders: (status) => dispatch(getAdminUserOrder(status)),
+        getOrder: (id) => dispatch(getAdminOrderById(id)),
+        cleanOrder: () => dispatch(cleanOrderStatus()),
     }
 }
  

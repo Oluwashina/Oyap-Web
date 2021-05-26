@@ -6,7 +6,9 @@ const initState = {
     usersCount: {},
     users: [],
     stats: {},
-    userOrder: []
+    userOrder: [],
+    order:{},
+    order_fetched: false
 }
 
 const adminReducer = (state=initState, action) => {
@@ -45,6 +47,17 @@ const adminReducer = (state=initState, action) => {
             return{
                 ...state,
                 userOrder: action.data
+            }
+        case 'OrderById':
+            return{
+                ...state,
+                order: action.data,
+                order_fetched: true
+            }
+        case 'cleanOrderStatus':
+            return{
+                ...state,
+                order_fetched: false
             }
         default:
             return state

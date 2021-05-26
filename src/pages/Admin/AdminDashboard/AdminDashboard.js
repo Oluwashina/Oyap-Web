@@ -8,15 +8,20 @@ import userProfile from '../../../assets/images/userProfile.svg'
 import declineIcon from '../../../assets/images/x-circle.svg'
 import approveIcon from '../../../assets/images/check-circle.svg'
 import ViewIcon from '../../../assets/images/eye.svg'
-import { getAdminDashboardCount, getAdminRecentOrders, getAdminRecentUsers } from '../../../store/actions/admin';
+import { getAdminDashboardCount, getAdminOrderById, getAdminRecentOrders, getAdminRecentUsers, cleanOrderStatus } from '../../../store/actions/admin';
 import {connect} from 'react-redux'
 import Moment from "react-moment";
+import {useHistory} from 'react-router-dom'
 
 const AdminDashboard = (props) => {
 
-    const {auth, getCount, count, getRecentUsers, recentusers, getRecentOrders, recentorders} = props
+    const {auth, getCount, count, getRecentUsers, recentusers, getRecentOrders, recentorders, getOrder, order_fetched, cleanOrder} = props
 
     const [toggled, setToggled] = useState(false);
+
+    const [orderId, setOrderId] = useState("")
+
+    const history = useHistory()
 
 
     const handleToggleSidebar = (value) => {
@@ -24,8 +29,18 @@ const AdminDashboard = (props) => {
       };
 
     const handleRoute = (id) =>{
-        alert(id)
+        setOrderId(id)
+        // get Order by id
+        getOrder(id)
+        
     }
+
+    useEffect(() =>{
+        if(order_fetched){
+         history.push("/admin/order/"+orderId)
+         cleanOrder()
+        } 
+    }, [order_fetched, history, cleanOrder, orderId])
 
     useEffect(() =>{
         if(auth){
@@ -289,7 +304,8 @@ const mapStateToProps = (state) =>{
         auth: state.auth.isAuthenticated,
         count: state.admin.dashboardCount,
         recentusers: state.admin.recentUsers,
-        recentorders: state.admin.recentOrders
+        recentorders: state.admin.recentOrders,
+        order_fetched: state.admin.order_fetched
     }
 }
 
@@ -298,6 +314,8 @@ const mapDispatchToProps = (dispatch) =>{
         getCount: () => dispatch(getAdminDashboardCount()),
         getRecentUsers: () => dispatch(getAdminRecentUsers()),
         getRecentOrders: () => dispatch(getAdminRecentOrders()),
+        getOrder: (id) => dispatch(getAdminOrderById(id)),
+        cleanOrder: () => dispatch(cleanOrderStatus()),
     }
 }
  

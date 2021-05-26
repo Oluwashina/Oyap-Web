@@ -127,3 +127,26 @@ export const getAdminDashboardCount = () => {
     };
   };  
 
+  // get an order by id
+  export const getAdminOrderById = (id) => {
+    return async (dispatch, getState) => {
+      try {
+        const res = await GetApi(`order/${id}`, getToken());
+        if (res.status === 200) {
+          dispatch({ type: "OrderById", data: res.data});
+        }
+        if(res.status === 400){
+          dispatch({ type: "OrderById_Error", err: res.data });
+        }
+      } catch (err) {
+       console.log(err)
+      }
+    };
+  }; 
+
+  export const cleanOrderStatus = () =>{
+    return dispatch =>{
+        dispatch({type: "cleanOrderStatus"})
+    }
+}
+

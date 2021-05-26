@@ -226,7 +226,6 @@ const AdminUserManage = (props) => {
                     </div>
 
                     {/* users layout */}
-                     {/* recent orders head */}
                      <div className="mt-5" style={{display: 'flex', justifyContent :'space-between'}}>
 
                         <div style={{display: 'flex'}}>
