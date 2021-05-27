@@ -1,0 +1,19 @@
+.revenueDiv{
+    background: rgba(196, 196, 196, 0.2);
+border-radius: 5px;
+padding: 30px 40px;
+}
+.revenueAmount h5{
+    color: #5B9223;
+    font-weight: bold;
+}
+
+.earnings{
+    background: rgba(196, 196, 196, 0.2);
+    border-radius: 5px;
+    padding: 30px 40px; 
+}
+.earnings h5{
+    color: #5B9223;
+    font-weight: bold;
+}

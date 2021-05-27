@@ -11,6 +11,7 @@ import {connect} from 'react-redux'
 import * as actions from "../store/actions";
 import './BuyerNavbar.css'
 import { getCartCount } from '../store/actions/carts';
+import tawkTo from "tawkto-react";
 
 const BuyerNav = (props) => {
 
@@ -19,6 +20,15 @@ const BuyerNav = (props) => {
     const [navShow, setNavShow] = useState(false);
 
     const [dropShow, setDropShow] = useState(false)
+
+    
+   const tawkToPropertyId = '60ae41f8de99a4282a19adcf'
+   const tawkToKey = '1f6kb3dn9'
+ 
+
+    useEffect(() =>{
+        tawkTo(tawkToPropertyId, tawkToKey)
+     }, [])
 
     const ToggleMenu = () =>{
         setNavShow(navShow ? false : true);

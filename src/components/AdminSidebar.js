@@ -70,6 +70,11 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, log
               <Link to="/admin/payments" />
            </MenuItem>
 
+           <MenuItem icon={<FaWallet />}>
+               Withdrawal Request
+              <Link to="/admin/withdrawalrequest" />
+           </MenuItem>
+
           <MenuItem icon={<FaPowerOff />}>
                Logout
                <Link to="/"  onClick={logout} />

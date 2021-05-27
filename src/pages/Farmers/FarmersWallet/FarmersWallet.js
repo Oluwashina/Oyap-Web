@@ -68,7 +68,7 @@ const FarmersWallet = (props) => {
                 </div>
                 <div className="transactionColumn mt-lg-0 mt-3">
                     <Link to={value.type === 'Credit' ? `/farmers/transactions/credit/${value.id}` : `/farmers/transactions/debit/${value.id}`} className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>View more</Link>
-                </div>`
+                </div>
             </div>
         </div>
 

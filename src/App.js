@@ -43,6 +43,8 @@ import AdminLogin from "./pages/Admin/AdminLogin/AdminLogin";
 import AdminForgot from './pages/ForgotPassword/adminForgotPassword'
 import AdminProfile from "./pages/Admin/AdminProfile/AdminProfile";
 import AdminOrderManage from "./pages/Admin/AdminOrders/AdminOrder";
+import AdminLogistics from "./pages/Admin/AdminLogistics/AdminLogistics";
+import AdminPayments from "./pages/Admin/AdminPayments/AdminPayments";
 
 // not found route
 import NotFoundPage from "./pages/404/NotFound";
@@ -50,7 +52,7 @@ import NotFoundPage from "./pages/404/NotFound";
 // protected routes
 import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
 import SellerRoute from './components/PrivateRoutes/SellerRoute'
-import AdminLogistics from "./pages/Admin/AdminLogistics/AdminLogistics";
+
 
 
 
@@ -104,6 +106,7 @@ function App() {
             <Route path="/admin/orders" component={AdminOrderManage} />
             <Route path="/admin/order/:id" component={AdminOrderDetails} />
             <Route path="/admin/logistics" component={AdminLogistics} />
+            <Route path="/admin/payments" component={AdminPayments} />
             <Route path="/admin/profile" component={AdminProfile} />
 
             {/* not found route */}
