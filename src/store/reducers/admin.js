@@ -3,12 +3,14 @@ const initState = {
     dashboardCount: {},
     recentUsers: [],
     recentOrders: [],
+    adminOrders: [],
     usersCount: {},
     users: [],
     stats: {},
     userOrder: [],
     order:{},
-    order_fetched: false
+    order_fetched: false,
+    order_cancelled: false
 }
 
 const adminReducer = (state=initState, action) => {
@@ -27,6 +29,11 @@ const adminReducer = (state=initState, action) => {
             return{
                 ...state,
                 recentOrders: action.data
+            }
+        case 'AdminOrders':
+            return{
+                ...state,
+                adminOrders: action.data
             }
         case 'AdminUsersCount':
             return{
@@ -58,6 +65,21 @@ const adminReducer = (state=initState, action) => {
             return{
                 ...state,
                 order_fetched: false
+            }
+        case 'OrderCancelled':
+            return{
+                ...state,
+                order_cancelled: true
+            }
+        case 'clearCancelStatus':
+            return{
+                ...state,
+                order_cancelled: false
+            }
+        case 'CancelOrder_Error':
+            return{
+                ...state,
+                order_cancelled: false
             }
         default:
             return state

@@ -15,6 +15,11 @@ export const forgotPasswordValidator = Yup.object({
     .required("Email is required"),
 });
 
+export const cancelOrderValidator = Yup.object({
+  reason: Yup.string()
+    .required("Reason is required"),
+});
+
 export const verifyCodeValidator = Yup.object({
   code:  Yup.string()
     .min(6, "Code cannot be less than 6 characters")

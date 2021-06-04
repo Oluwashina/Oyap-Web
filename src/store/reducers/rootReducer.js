@@ -6,7 +6,7 @@ import farmersReducer from "./farmers";
 import orderReducer from "./orders";
 import adminReducer from './admin'
 
-const appReducer = combineReducers({
+const rootReducer = combineReducers({
   auth: authReducer,
   products: productsReducer,
   cart: cartReducers,
@@ -15,12 +15,12 @@ const appReducer = combineReducers({
   admin: adminReducer
 });
 
-const rootReducer = (state, action) => {
-  if (action.type === 'logout') {
-    state = undefined
-  }
+// const rootReducer = (state, action) => {
+//   if (action.type === 'logout') {
+//     state = undefined
+//   }
 
-    return appReducer(state, action)
-  }
+//     return appReducer(state, action)
+//   }
 
 export default rootReducer;

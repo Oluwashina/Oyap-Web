@@ -77,7 +77,7 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, log
 
           <MenuItem icon={<FaPowerOff />}>
                Logout
-               <Link to="/"  onClick={logout} />
+               <Link to="/admin/login"  onClick={logout} />
           </MenuItem>
         </Menu>
         

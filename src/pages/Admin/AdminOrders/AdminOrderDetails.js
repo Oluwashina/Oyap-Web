@@ -1,13 +1,19 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FaBars } from 'react-icons/fa';
 import AdminSidebar from '../../../components/AdminSidebar';
 import {connect} from 'react-redux'
 import Moment from 'react-moment'
+import {Form, Formik} from 'formik'
+import {cancelOrderValidator} from '../../../validationSchema/validator'
+import { CancelAdminOrder, clearCancelStatus } from '../../../store/actions/admin';
+import {useHistory} from 'react-router-dom'
 
 
 const AdminOrderDetails = (props) => {
 
-    const {order} = props
+    const {order, cancelOrder, order_cancelled, clearCancel} = props
+
+    const history = useHistory()
 
     const [toggled, setToggled] = useState(false);
 
@@ -52,10 +58,17 @@ const AdminOrderDetails = (props) => {
         </div>
       );
 
-      const cancelOrder = (id) =>{
-          console.log(id)
-       alert('canceled order', id)
+    const handleSubmit = async (values) =>{
+        await cancelOrder(values, id);
     }
+
+    useEffect(() =>{
+        if(order_cancelled){
+         history.push('/admin/orders')
+         clearCancel()
+        } 
+    }, [order_cancelled, history, clearCancel])
+
 
     return ( 
         <>
@@ -234,7 +247,7 @@ const AdminOrderDetails = (props) => {
 
                         {/* cancel and confirm order div for a new order */}
                         {
-                            order.status === "Completed" ?
+                            order.status === "Completed" || order.status === "Cancelled" ?
                             ""
                             :
                             <div className="mt-lg-4 mt-4" style={{background: ' rgba(196, 196, 196, 0.2)', borderRadius: '5px', padding: '30px 15px'}}>
@@ -244,26 +257,55 @@ const AdminOrderDetails = (props) => {
                             </div>
 
                             {/* reason for cancellation input */}
-                            
-                            <div className="form-group mt-4">
-                              <label htmlFor="password">Reason for cancellation</label>
-                              <textarea className="form-control input-style mt-1"
-                              id="description"
-                              rows="4"
-                              style={{resize: 'none'}}
-                            
-                              placeholder="" />
-                              
-                            </div>
+                            <Formik
+                                onSubmit={(values, {setSubmitting}) =>
+                                    handleSubmit(values, setSubmitting)
+                                    }
+                                validationSchema={cancelOrderValidator}
+                                initialValues={{reason: ""}}
+                            >
+                                {({
+                                    handleChange,
+                                    isSubmitting,
+                                    handleSubmit,
+                                    handleBlur,
+                                    values,
+                                    touched,
+                                    errors
+                                })=>(
+                                    <Form onSubmit={handleSubmit}>
 
+                                     <div className="form-group mt-4">
+                                        <label htmlFor="reason">Reason for cancellation</label>
+                                        <textarea className="form-control input-style mt-1"
+                                        id="reason"
+                                        rows="4"
+                                        value={values.reason}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        style={{resize: 'none'}}
+                                        
+                                        placeholder="" />
 
+                                    <small style={{ color: "#dc3545" }}>
+                                         {touched.reason && errors.reason}
+                                    </small>
+                                        
+                                    </div>
 
-                            <div className="mt-4 text-center">
-                                <div>
-                                <button className="btn btn-cancel"
-                                    onClick={() => cancelOrder(id)} >Cancel Order</button>
-                                </div>
-                            </div>
+                                    <div className="text-center">
+                                        <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="btn btn-cancel mt-4">Cancel Order</button>
+
+                                    </div>
+                                       
+                                            
+                                    </Form>
+                                )}
+
+                            </Formik>
 
                         </div>
                         }
@@ -285,13 +327,15 @@ const AdminOrderDetails = (props) => {
 const mapStateToProps = (state) =>{
     return{
         auth: state.auth.isAuthenticated,
-        order: state.admin.order
+        order: state.admin.order,
+        order_cancelled: state.admin.order_cancelled
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-       
+        cancelOrder: (creds, id) => dispatch(CancelAdminOrder(creds, id)),
+        clearCancel: () => dispatch(clearCancelStatus()),
     }
 }
  

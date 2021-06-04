@@ -46,7 +46,27 @@ const authReducer = (state = initState, action) => {
         return {
             ...state,
             isAuthenticated: false,
+            token: ""
         }
+    case 'logout':
+      localStorage.removeItem("token")
+      return{
+        ...state,
+        isAuthenticated: false,
+        token: "",
+        firstname: "",
+        lastname: "",
+        id: "",
+        email: "",
+        phoneNumber: "",
+        isVerified: false,
+        isEnabled: false,
+        walletBalance: "",
+        billingDetails: {},
+        pickUpDetails: {},
+        profilePic: "",
+        role: null
+      }
     case 'UserById':
       return{
         ...state,

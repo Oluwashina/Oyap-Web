@@ -8,14 +8,15 @@ import userProfile from '../../../assets/images/userProfile.svg'
 import declineIcon from '../../../assets/images/x-circle.svg'
 import approveIcon from '../../../assets/images/check-circle.svg'
 import ViewIcon from '../../../assets/images/eye.svg'
-import { getAdminDashboardCount, getAdminOrderById, getAdminRecentOrders, getAdminRecentUsers, cleanOrderStatus } from '../../../store/actions/admin';
+import { getAdminDashboardCount, getAdminOrderById, getAdminRecentOrders, getAdminRecentUsers, cleanOrderStatus, enableUser, disableUser } from '../../../store/actions/admin';
 import {connect} from 'react-redux'
 import Moment from "react-moment";
 import {useHistory} from 'react-router-dom'
 
 const AdminDashboard = (props) => {
 
-    const {auth, getCount, count, getRecentUsers, recentusers, getRecentOrders, recentorders, getOrder, order_fetched, cleanOrder} = props
+    const {auth, getCount, count, getRecentUsers, recentusers, 
+        getRecentOrders, recentorders, getOrder, order_fetched, cleanOrder, handleApprove, handleDisApprove} = props
 
     const [toggled, setToggled] = useState(false);
 
@@ -85,7 +86,9 @@ const AdminDashboard = (props) => {
             
             {/* actions to approve or reject */}
             <div className="userActions">
-                <img src={value.isEnabled ? declineIcon : approveIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
+                <img src={value.isEnabled ? declineIcon : approveIcon} alt="decline"
+                onClick={() => HandleUser(value.isEnabled, value.email)}
+                 width="30" height="30" style={{cursor: 'pointer'}} />
                 <img className="ml-3"
                 onClick={() => ViewUser(value.id)}
                  src={ViewIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
@@ -157,6 +160,31 @@ const AdminDashboard = (props) => {
       const ViewUser = (id) =>{
           alert(id)
       }
+
+    //   suspend and enable a user
+    const HandleUser = (status, email) =>{
+        let confirm_flag;
+        let res;
+        // check for the active state of the user
+        if(status){
+            confirm_flag = window.confirm("You are about to disapprove this user. Are you sure you want to continue ?")
+            if(confirm_flag){
+                res = {
+                    email
+                }
+                handleDisApprove(res)
+            }
+        }
+        else{
+            confirm_flag = window.confirm("You are about to approve this user. Are you sure you want to continue ?")
+            if(confirm_flag){
+                res = {
+                        email
+                    }
+                handleApprove(res)
+            }
+        }
+    }
     
 
 
@@ -316,6 +344,8 @@ const mapDispatchToProps = (dispatch) =>{
         getRecentOrders: () => dispatch(getAdminRecentOrders()),
         getOrder: (id) => dispatch(getAdminOrderById(id)),
         cleanOrder: () => dispatch(cleanOrderStatus()),
+        handleApprove: (val) => dispatch(enableUser(val)),
+        handleDisApprove: (val) => dispatch(disableUser(val)),
     }
 }
  

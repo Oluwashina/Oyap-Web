@@ -1,4 +1,5 @@
-import {GetApi} from '../helpers';
+import {GetApi, PutApi, PostApi} from '../helpers';
+import cogoToast from 'cogo-toast'
 
 const getToken = () => {
 	const token = localStorage.getItem("token");
@@ -22,6 +23,24 @@ export const getAdminDashboardCount = () => {
       }
     };
   };
+
+   // get recent orders on admin dashboard
+   export const getAdminOrders = (val) => {
+    return async (dispatch, getState) => {
+      try {
+        const res = await GetApi(`allorders?status=${val}&limit=5`, getToken());
+        if (res.status === 200) {
+          dispatch({ type: "AdminOrders", data: res.data});
+        }
+        if(res.status === 400){
+          dispatch({ type: "AdminOrders_Error", err: res.data });
+        }
+      } catch (err) {
+       console.log(err)
+      }
+    };
+  };
+
 
   // get recent users on admin dashboard
   export const getAdminRecentUsers = () => {
@@ -143,6 +162,88 @@ export const getAdminDashboardCount = () => {
       }
     };
   }; 
+
+  // cancel order by admin
+  export const CancelAdminOrder = (creds, id) => {
+    return async (dispatch, getState) => {
+      try {
+        const res = await PutApi("cancel/orders/"+id, {...creds}, getToken());
+        if (res.status === 200) {
+          dispatch({ type: "OrderCancelled"});
+          cogoToast.success("Order Cancelled Successful!");
+        }
+        if(res.status === 400){
+          dispatch({ type: "CancelOrder_Error", err: res.data });
+        }
+      } catch (err) {
+       console.log(err)
+      }
+    };
+  };
+
+  // enable a user functionality
+  export const enableUser = (user) => {
+    return async (dispatch, getState) => {
+      try {
+        const res = await PostApi("enableuser", {...user}, "", "application/json")
+        if (res.status === 200) {
+          dispatch({ type: "UserEnabled" });
+          cogoToast.success('User enabled successfully!', { position: 'bottom-right', })
+
+          // fetch users again
+          const res = await GetApi("recentusers/admin?limit=5", getToken());
+          if (res.status === 200) {
+            dispatch({ type: "AdminRecentUsers", data: res.data});
+          }
+          if(res.status === 400){
+            dispatch({ type: "AdminUsers_Error", err: res.data });
+          }
+
+        }
+        if(res.status === 400){
+          dispatch({ type: "User_Error", err: res.data});
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    };
+  };
+
+  // disable a user functionality
+  export const disableUser = (user) => {
+    return async (dispatch, getState) => {
+      try {
+        const res = await PostApi("disableuser", {...user}, "", "application/json")
+        if (res.status === 200) {
+          dispatch({ type: "UserDisabled" });
+          cogoToast.success('User disabled successfully!', { position: 'bottom-right', })
+
+          // fetch recent users
+          const res = await GetApi("recentusers/admin?limit=5", getToken());
+          if (res.status === 200) {
+            dispatch({ type: "AdminRecentUsers", data: res.data});
+          }
+          if(res.status === 400){
+            dispatch({ type: "AdminUsers_Error", err: res.data });
+          }
+          
+        }
+        if(res.status === 400){
+          dispatch({ type: "User_Error", err: res.data});
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    };
+  };
+
+
+  export const clearCancelStatus = () =>{
+    return dispatch =>{
+        dispatch({type: "clearCancelStatus"})
+    }
+}
+
 
   export const cleanOrderStatus = () =>{
     return dispatch =>{

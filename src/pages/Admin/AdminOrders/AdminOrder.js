@@ -4,26 +4,35 @@ import AdminSidebar from '../../../components/AdminSidebar';
 import {connect} from 'react-redux'
 import Moment from "react-moment";
 import Arrow from "../../../assets/images/arrow.svg";
-import { getAdminRecentOrders } from '../../../store/actions/admin';
+import { cleanOrderStatus, getAdminDashboardCount, getAdminOrderById, getAdminOrders } from '../../../store/actions/admin';
+import {useHistory} from 'react-router-dom'
 
 
 const AdminOrderManage = (props) => {
 
-    const {count, recentorders, getRecentOrders, auth} = props
+    const {count, getCount, orders, getAdminOrders, auth, getOrder,order_fetched, cleanOrder} = props
+
+    const history = useHistory()
 
     const [toggled, setToggled] = useState(false);
 
     const [initialTab, setTab] = useState(1);
+
+    const [status, setStatus] = useState("Pending")
+
+    const [orderId, setOrderId] = useState("")
 
     const handleToggleSidebar = (value) => {
         setToggled(value);
       };
 
       useEffect(() =>{
+          let val = 'Pending'
         if(auth){
-          getRecentOrders()
+          getAdminOrders(val)
+          getCount()
         } 
-    }, [auth, getRecentOrders])
+    }, [auth, getAdminOrders, getCount])
 
       const [tabData] = useState([
         { id: 1, name: "tab-1", text: "New Orders"},
@@ -45,22 +54,28 @@ const AdminOrderManage = (props) => {
 
     
       const handleToggle = (id) => {
+          setTab(id)
+          var values;
         switch(id){
             case 1:
-                setTab(id)
-                // getUser('Buyer')
+                setStatus("Pending")
+                values = 'Pending'
+                getAdminOrders(values)
                 break;
           case 2:
-              setTab(id);
-            //   getUser('Seller')
+            setStatus("Confirmed")
+              values = 'Confirmed'
+              getAdminOrders(values)
               break;
           case 3:
-              setTab(id);
-            //   getUser('Logistics')
+            setStatus("Completed")
+              values = 'Completed'
+              getAdminOrders(values)
               break;
           case 4: 
-          setTab(id);
-        //   getUser('SubAdmin')
+          setStatus("Cancelled")
+          values = 'Cancelled'
+          getAdminOrders(values)
           break;
           default:
               break;
@@ -68,11 +83,11 @@ const AdminOrderManage = (props) => {
     }
 
      //   mapping orders
-     const recentOrderLayout = recentorders.length ? (
-        recentorders.map((value) => {
+     const OrderLayout = orders.length ? (
+        orders.map((value) => {
           return (
          <div key={value.id} 
-         className={recentorders.length > 1 ? "farmersOrders mb-3" : "farmersOrders"}
+         className={orders.length > 1 ? "farmersOrders mb-3" : "farmersOrders"}
          >
             <div>
                 <div>
@@ -112,8 +127,8 @@ const AdminOrderManage = (props) => {
           </div>
       
            <div className="text-center mt-3">
-                <h5 className="mb-0">No New Orders Placed Yet!</h5>
-                <p className="mb-0 mt-3" style={{fontStyle: 'italic'}}>New orders will appear here as soon as you have any!</p>
+                <h5 className="mb-0">No {status} Orders Yet!</h5>
+                <p className="mb-0 mt-3" style={{fontStyle: 'italic'}}>{status} orders will appear here as soon as you have any!</p>
              </div>
     
         </div>
@@ -121,9 +136,18 @@ const AdminOrderManage = (props) => {
     
   // viewong an order
   const handleRoute = (id) =>{
-    alert(id)
+    setOrderId(id)
+    // get Order by id
+    getOrder(id)
 }
 
+
+    useEffect(() =>{
+        if(order_fetched){
+        history.push("/admin/order/"+orderId)
+        cleanOrder()
+        } 
+    }, [order_fetched, history, cleanOrder, orderId])
     
 
     return ( 
@@ -155,11 +179,11 @@ const AdminOrderManage = (props) => {
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countAdmin: "200"}</h5>
+                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countPendingOrder: "200"}</h5>
                                 </div>
 
                                 <div className="text-center mt-1">
-                                    <p className="mb-0">New Delivery</p>
+                                    <p className="mb-0">New Orders</p>
                                 </div>
 
                             </div>
@@ -172,7 +196,7 @@ const AdminOrderManage = (props) => {
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countBuyer : "50"}</h5>
+                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countPendingDelivery : "50"}</h5>
                                 </div>
 
                                 <div className="text-center mt-1">
@@ -189,11 +213,11 @@ const AdminOrderManage = (props) => {
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countSeller : "44"}</h5>
+                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countCompletedOrder : "44"}</h5>
                                 </div>
 
                                 <div className="text-center mt-1">
-                                    <p className="mb-0">Completed Delivery</p>
+                                    <p className="mb-0">Completed Orders</p>
                                 </div>
 
                             </div>
@@ -207,11 +231,11 @@ const AdminOrderManage = (props) => {
                                 </div>
 
                                 <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countLogistics : "10"}</h5>
+                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countCancelledOrder : "10"}</h5>
                                 </div>
 
                                 <div className="text-center mt-1">
-                                    <p className="mb-0">Cancelled Delivery</p>
+                                    <p className="mb-0">Cancelled Orders</p>
                                 </div>
 
                             </div>
@@ -230,7 +254,7 @@ const AdminOrderManage = (props) => {
 
                      {/* recent orders layout */}
                      <div className="newOrders mt-4">
-                        {recentOrderLayout}
+                        {OrderLayout}
                     </div>
 
 
@@ -247,13 +271,18 @@ const AdminOrderManage = (props) => {
 const mapStateToProps = (state) =>{
     return{
         auth: state.auth.isAuthenticated,
-        recentorders: state.admin.recentOrders,
+        count: state.admin.dashboardCount,
+        orders: state.admin.adminOrders,
+        order_fetched: state.admin.order_fetched
     }
 }
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        getRecentOrders: () => dispatch(getAdminRecentOrders()),
+        getCount: () => dispatch(getAdminDashboardCount()),
+        getAdminOrders: (val) => dispatch(getAdminOrders(val)),
+        getOrder: (id) => dispatch(getAdminOrderById(id)),
+        cleanOrder: () => dispatch(cleanOrderStatus()),
     }
 }
  
