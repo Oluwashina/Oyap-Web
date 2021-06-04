@@ -185,7 +185,7 @@ export const getAdminDashboardCount = () => {
   export const enableUser = (user) => {
     return async (dispatch, getState) => {
       try {
-        const res = await PostApi("enableuser", {...user}, "", "application/json")
+        const res = await PostApi("enableuser", {...user}, getToken(), "application/json")
         if (res.status === 200) {
           dispatch({ type: "UserEnabled" });
           cogoToast.success('User enabled successfully!', { position: 'bottom-right', })
@@ -213,7 +213,7 @@ export const getAdminDashboardCount = () => {
   export const disableUser = (user) => {
     return async (dispatch, getState) => {
       try {
-        const res = await PostApi("disableuser", {...user}, "", "application/json")
+        const res = await PostApi("disableuser", {...user}, getToken(), "application/json")
         if (res.status === 200) {
           dispatch({ type: "UserDisabled" });
           cogoToast.success('User disabled successfully!', { position: 'bottom-right', })
