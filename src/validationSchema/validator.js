@@ -97,6 +97,10 @@ export const addProductValidator = Yup.object({
   quantity: Yup.string()
   .required("Quantity is required")
   .matches(/^-?[0-9]+(.[0-9]{1-7})?$/, "Enter a valid quantity"),
+  weight: Yup.string()
+  .required("Weight is required")
+  .matches(/^-?[0-9]+(.[0-9]{1-7})?$/, "Enter a valid weight"),
+  isLogistics: Yup.string().required("An option is required"),
   description: Yup.string()
     .required("Description is required"),
 });

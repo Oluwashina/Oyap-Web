@@ -80,6 +80,7 @@ const FarmersProductAdd = (props) => {
 
        // Add product button
   const handleSubmit = async (values, setSubmitting, resetForm, setFieldValue) =>{
+      console.log(values)
         // check if at least an image of the product  is added
         if(productZero === ''){
             cogoToast.error('Upload at least a first product image!!!')
@@ -128,7 +129,7 @@ const FarmersProductAdd = (props) => {
                     handleSubmit(values, setSubmitting, resetForm, setFieldValue)
                     }
                 validationSchema={addProductValidator}
-                initialValues={{type: "", category: "", name: "",  price: "", quantity: "", description: ""}}
+                initialValues={{type: "", category: "", name: "", weight: "", price: "", quantity: "", isLogistics: "", description: ""}}
               >
                   {({
                       handleChange,
@@ -199,6 +200,22 @@ const FarmersProductAdd = (props) => {
                               </small>
                             </div>
 
+
+                            {/* weight of product */}
+                            <div className="form-group">
+                              <label htmlFor="password">Product Weight(Kg)</label>
+                              <input className="form-control input-style"
+                              type="text"
+                              id="weight"
+                              value={values.weight}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              placeholder="" />
+                               <small style={{ color: "#dc3545" }}>
+                                  {touched.weight && errors.weight}
+                              </small>
+                            </div>
+
                
                             {/* product price */}
                             <div className="form-group">
@@ -247,6 +264,30 @@ const FarmersProductAdd = (props) => {
                                   {touched.description && errors.description}
                               </small>
                             </div>
+
+
+                            {/* logistics */}
+                            <div className="form-group">
+                              <label htmlFor="password">Do you want Logistics?</label>
+                            <div className="form-check form-check">
+                                <input className="form-check-input" type="radio" 
+                                name="isLogistics" id="Yes" value="Yes" 
+                                onChange={handleChange}
+                                 defaultChecked={values.isLogistics === "Yes"}
+                                 />
+                                <label className="form-check-label mt-1" for="Yes">Yes</label>
+                            </div>
+                            <div className="form-check form-check mt-2">
+                                <input className="form-check-input" type="radio"
+                                defaultChecked={values.isLogistics === 'No'}
+                                onChange={handleChange}
+                                 name="isLogistics" id="No" value="No" />
+                                <label className="form-check-label mt-1" for="No">No</label>
+                            </div>
+                            <small style={{ color: "#dc3545" }}>
+                                  {touched.isLogistics && errors.isLogistics}
+                              </small>
+                        </div>
 
                         {/* product images */}
                         <div>

@@ -71,7 +71,7 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, log
            </MenuItem>
 
            <MenuItem icon={<FaWallet />}>
-               Withdrawal Request
+               Withdrawal
               <Link to="/admin/withdrawalrequest" />
            </MenuItem>
 

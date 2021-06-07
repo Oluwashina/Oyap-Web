@@ -45,6 +45,7 @@ import AdminProfile from "./pages/Admin/AdminProfile/AdminProfile";
 import AdminOrderManage from "./pages/Admin/AdminOrders/AdminOrder";
 import AdminLogistics from "./pages/Admin/AdminLogistics/AdminLogistics";
 import AdminPayments from "./pages/Admin/AdminPayments/AdminPayments";
+import AdminWithdrawal from "./pages/Admin/AdminWithdrawal/AdminWithdrawal";
 
 // not found route
 import NotFoundPage from "./pages/404/NotFound";
@@ -52,6 +53,8 @@ import NotFoundPage from "./pages/404/NotFound";
 // protected routes
 import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
 import SellerRoute from './components/PrivateRoutes/SellerRoute'
+import AdminWithdrawRequest from "./pages/Admin/AdminWithdrawal/AdminWithdrawalById";
+
 
 
 
@@ -108,6 +111,8 @@ function App() {
             <Route path="/admin/logistics" component={AdminLogistics} />
             <Route path="/admin/payments" component={AdminPayments} />
             <Route path="/admin/profile" component={AdminProfile} />
+            <Route path="/admin/withdrawalrequest" component={AdminWithdrawal} />
+            <Route path="/admin/withdrawal/:id" component={AdminWithdrawRequest} />
 
             {/* not found route */}
             <Route path="*" component={NotFoundPage} />
