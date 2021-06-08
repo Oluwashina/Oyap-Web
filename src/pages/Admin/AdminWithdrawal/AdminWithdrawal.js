@@ -120,7 +120,7 @@ const AdminWithdrawal = () => {
                                         </p>
                                     </div>
                                     <div className="transactionColumn mt-lg-0 mt-3">
-                                        <Link to='/admin/payments' className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>Process Request</Link>
+                                        <Link to='/admin/confirm-request/1' className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>Process Request</Link>
                                     </div>
                                 </div>
                      </div>
@@ -157,7 +157,7 @@ const AdminWithdrawal = () => {
                                         </p>
                                     </div>
                                     <div className="transactionColumn mt-lg-0 mt-3">
-                                        <Link to='/admin/payments' className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>Process Request</Link>
+                                        <Link to='/admin/confirm-request/2' className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>Process Request</Link>
                                     </div>
                                 </div>
                             </div>

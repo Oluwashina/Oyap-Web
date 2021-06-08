@@ -112,7 +112,7 @@ function App() {
             <Route path="/admin/payments" component={AdminPayments} />
             <Route path="/admin/profile" component={AdminProfile} />
             <Route path="/admin/withdrawalrequest" component={AdminWithdrawal} />
-            <Route path="/admin/withdrawal/:id" component={AdminWithdrawRequest} />
+            <Route path="/admin/confirm-request/:id" component={AdminWithdrawRequest} />
 
             {/* not found route */}
             <Route path="*" component={NotFoundPage} />

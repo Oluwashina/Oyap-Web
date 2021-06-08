@@ -23,7 +23,8 @@ const adminReducer = (state=initState, action) => {
         case 'AdminRecentUsers':
             return{
                 ...state,
-                recentUsers: action.data
+                recentUsers: action.data,
+                users: action.data
             }
         case 'AdminRecentOrders':
             return{
