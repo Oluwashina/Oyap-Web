@@ -5,14 +5,15 @@ import {Form, Formik} from 'formik'
 import {addProductValidator} from '../../../validationSchema/validator'
 import Default from "../../../assets/images/default.png";
 import {connect} from 'react-redux'
-import {addProduct, UploadProductImage, clearProductImages} from '../../../store/actions/farmers'
+import {addProduct, UploadProductImage, clearProductImages, getProductType, getProductCategory} from '../../../store/actions/farmers'
 import cogoToast from "cogo-toast";
 
 
 
 const FarmersProductAdd = (props) => {
 
-    const {handlePicture, productZero, productOne, productTwo, productThree, handleAdd, emptyImage} = props
+    const {handlePicture, productZero, productOne, productTwo, 
+        productThree, handleAdd, emptyImage, getType, type, getCategory, category} = props
    
     const [toggled, setToggled] = useState(false);
 
@@ -21,24 +22,16 @@ const FarmersProductAdd = (props) => {
     const fileRef3 = useRef(null)
     const fileRef4 = useRef(null)
 
-    const [tabType] = useState([
-        { id: 1, value: "Goods"},
-        { id: 2, value: "Services"},
-      ]);
+    const ref = useRef()
 
-    const [tabCategory] = useState([
-        { id: 1, value: "Agro Chemical"},
-        { id: 2, value: "Agro Chemical(Inorganic)"},
-        { id: 3, value: "Fertilizers(organic)"},
-        { id: 4, value: "Fertilizers(Inorganic)"},
-        { id: 5, value: "Livestock Feeds"},
-        { id: 6, value: "Crop Seeds"},
-        { id: 6, value: "Vegetables"},
-        { id: 7, value: "Spices"},
-        { id: 8, value: "Farm Fresh Foods"},
-        { id: 9, value: "Fruits"},
-        { id: 10, value: "Cash Crops"},
-      ]);
+
+      useEffect(() =>{
+        getType()
+      }, [getType]);
+
+      const handleCategory = (id) =>{
+        getCategory(id)
+      }
 
 
     useEffect(() => {
@@ -79,7 +72,7 @@ const FarmersProductAdd = (props) => {
     }
 
        // Add product button
-  const handleSubmit = async (values, setSubmitting, resetForm, setFieldValue) =>{
+  const handleSubmit = async (values, setSubmitting, setFieldValue) =>{
       console.log(values)
         // check if at least an image of the product  is added
         if(productZero === ''){
@@ -87,12 +80,11 @@ const FarmersProductAdd = (props) => {
         }
         else{
             handleAdd(values)
-            resetForm({
-                name: '',
-                price: '',
-                quantity: '',
-                description: ''
-            })
+
+           // reset the form
+            setTimeout(() => {
+                ref.current.reset()
+            }, 500);
             
         }
      
@@ -125,8 +117,8 @@ const FarmersProductAdd = (props) => {
 
 
                     <Formik
-                onSubmit={(values, {setSubmitting, resetForm, setFieldValue}) =>
-                    handleSubmit(values, setSubmitting, resetForm, setFieldValue)
+                onSubmit={(values, {setSubmitting, setFieldValue}) =>
+                    handleSubmit(values, setSubmitting, setFieldValue)
                     }
                 validationSchema={addProductValidator}
                 initialValues={{type: "", category: "", name: "", weight: "", price: "", quantity: "", isLogistics: "", description: ""}}
@@ -141,20 +133,24 @@ const FarmersProductAdd = (props) => {
                       touched,
                       errors
                   })=>(
-                      <Form onSubmit={handleSubmit}>
+                      <Form ref={ref} onSubmit={handleSubmit}>
                           {/* Product type */}
                           <div className="form-group mt-3">
                             <label htmlFor="email">Product Type</label>
                             <select
                                  name="type"
                                  values={values.type}
-                                 onChange={handleChange}
+                                 onChange={(e) => {
+                                    handleChange(e)
+                                    handleCategory(e.currentTarget.value);
+                                  }}
+                                
                                     onBlur={handleBlur}
                                     className="form-control select-style" 
                                     id="type">
-                                    <option defaultValue="" >--Select--</option>
-                                    {tabType.map((opt, index) => {
-                                            return <option key={index} value={opt.value}>{opt.value}</option>
+                                    <option value="" disabled selected>--Select--</option>
+                                    {type.map((opt, index) => {
+                                            return <option key={index} value={opt.id}>{opt.categoryName}</option>
                                         })}
                                 
                                 </select>
@@ -174,9 +170,9 @@ const FarmersProductAdd = (props) => {
                                     onBlur={handleBlur}
                                     className="form-control select-style" 
                                     id="category">
-                                  <option defaultValue="" >--Select--</option>
-                                    {tabCategory.map((opt, index) => {
-                                            return <option key={index} value={opt.value}>{opt.value}</option>
+                                  <option defaultValue="" disabled selected>--Select--</option>
+                                    {category.map((opt, index) => {
+                                            return <option key={index} value={opt.id}>{opt.subcategoryName}</option>
                                         })}
 
                                 </select>
@@ -290,11 +286,11 @@ const FarmersProductAdd = (props) => {
                         </div>
 
                         {/* product images */}
-                        <div>
-                            <h6>Product Images</h6>
+                        <div className="form-group mt-4 mb-0">
+                            <label>Product Images</label>
                         </div>
 
-                        <div className="mt-2" style={{display: 'flex'}}>
+                        <div className="mt-1" style={{display: 'flex'}}>
 
                             <div style={{marginRight: '2%', position: 'relative',}}>
                                 <img src={productZero ? productZero : Default} width="70" height="70" alt="Default" />
@@ -369,7 +365,9 @@ const mapStateToProps = (state) =>{
         productZero: state.farmers.productZero,
         productOne: state.farmers.productOne,
         productTwo: state.farmers.productTwo,
-        productThree: state.farmers.productThree
+        productThree: state.farmers.productThree,
+        type: state.farmers.type,
+        category: state.farmers.category
     }
 }
 
@@ -377,7 +375,9 @@ const mapDispatchToProps = (dispatch) =>{
     return{
         handlePicture: (values, index) => dispatch(UploadProductImage(values, index)),
         handleAdd: (values) => dispatch(addProduct(values)),
-        emptyImage: (values) => dispatch(clearProductImages(values))
+        emptyImage: (values) => dispatch(clearProductImages(values)),
+        getType: () => dispatch(getProductType()),
+        getCategory:(id) => dispatch(getProductCategory(id))
 
     }
 }

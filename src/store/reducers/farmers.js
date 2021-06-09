@@ -2,6 +2,8 @@
 const initState = {
     isLoading: false,
     products:[],
+    type: [],
+    category: [],
     productImages: [],
     productZero: "",
     productOne: "",
@@ -21,6 +23,16 @@ const initState = {
 
 const farmersReducer = (state=initState, action) => {
     switch(action.type){
+        case 'ProductType':
+            return{
+                ...state,
+                type: action.data
+            }
+        case 'ProductCategory':
+            return{
+                ...state,
+                category: action.data
+            }
         case 'FarmersProducts':
             return{
                 ...state,

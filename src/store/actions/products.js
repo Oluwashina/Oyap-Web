@@ -21,6 +21,25 @@ export const getProducts = () => {
 };
 
 
+// get all related products in a category/subcategory
+export const getRelatedProducts = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await GetApi("relatedproduct/"+id, "");
+      if (res.status === 200) {
+        dispatch({ type: "RelatedProducts", data: res.data});
+      }
+      if(res.status === 400){
+        dispatch({ type: "Related_Error", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
+
+
+
 export const createProduct = (product) => {
   return async (dispatch, getState, { getFirestore }) => {
     dispatch({ type: actionTypes.CREATE_PRODUCT_START });

@@ -198,7 +198,12 @@ const FarmersProductDetails = (props) => {
                     {/* category */}
                     <div className="mt-4">
                             <h6 style={{fontWeight: 600}}>Category</h6>
-                           <p className="mt-2">{product.productCategory}</p>
+                           <p className="mt-2">{product.productCategory.categoryName}</p>
+                        </div>
+                    
+                    <div className="mt-4">
+                            <h6 style={{fontWeight: 600}}>Subcategory</h6>
+                           <p className="mt-2">{product.productSubcategory.subcategoryName}</p>
                         </div>
 
                         {/* add to cart and buy buttons */}

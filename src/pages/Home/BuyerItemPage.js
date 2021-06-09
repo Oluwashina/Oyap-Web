@@ -1,10 +1,5 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import BuyerNav from '../../components/BuyerNavbar';
-import Item1 from "../../assets/images/item1.png";
-import Item2 from "../../assets/images/item2.png";
-import Item3 from "../../assets/images/item3.png";
-import Item4 from "../../assets/images/item4.png";
-import Item5 from "../../assets/images/item5.png";
 import Default from "../../assets/images/default.png";
 import Seller from "../../assets/images/seller1.png";
 import './BuyerItemPage.css'
@@ -13,11 +8,21 @@ import { connect } from "react-redux";
 import { addToCart, Decrement, Increment } from '../../store/actions/carts';
 import moment from 'moment'
 import ImageZoom from 'react-medium-image-zoom'
+import { getRelatedProducts } from '../../store/actions/products';
+import Image, { Shimmer } from 'react-shimmer'
+import Skeleton from 'react-loading-skeleton'
 
 
 const ItemPage = (props) => {
 
-    const {product, count, Increment, Decrement, addCartClick, history, auth} = props
+    const {product, count, Increment, Decrement, addCartClick, history, auth, RelatedProducts, relatedproducts} = props
+
+    const subId = product.productSubcategory._id
+
+    // make call to fetch related products based on subcategory id
+    useEffect(() => {
+        RelatedProducts(subId);
+    }, [RelatedProducts, subId]);
 
 
       const BuyNow = (product) =>{
@@ -52,6 +57,42 @@ const ItemPage = (props) => {
           }
       }
 
+
+ const relatedProductLayout = relatedproducts.length ? (
+    relatedproducts.map((product) => {
+          return (
+            <div key={product.id} className="col-lg-2 col-6 mb-4 productCard" onClick={() => handleRoute(product.id)}>
+                {/* image */}
+                <div className="text-center">
+                    <Image
+                     src={product.productImages[0]} alt="oyap"
+                       NativeImgProps={{className: "productImage"}}
+                        fallback={<Shimmer width={140} height={150} />}
+                     />
+                </div>
+                {/* name */}
+                <div className="mt-3">
+                    <p className="mb-0 text-center">{product.productName ||  <Skeleton /> }</p>
+                </div>
+                {/* price */}
+                <div className="mt-2">
+                    <p className="mb-0 price text-center">NGN {product.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ||  <Skeleton /> }</p>
+                </div>
+            </div> 
+          );
+        })
+      ) : (
+        <div className="mt-4 text-center">
+            <p>No related products under this category</p>
+        </div>
+      );
+
+
+    const handleRoute = (id) =>{
+        history.push("/item/" + id);
+        window.scrollTo(0, 0);
+    }
+
     if(product){
     return ( 
         <>
@@ -60,7 +101,7 @@ const ItemPage = (props) => {
             {/* breadcrumbs */}
             <div style={{background: ' rgba(196, 196, 196, 0.2)', padding: '10px'}}> 
                 <div className="container">
-                     <p className="mb-0" style={{fontSize: 14}}><span style={{color: '#7BC30A'}}>Home/{product.productCategory}</span>/{product.productName}</p>
+                     <p className="mb-0" style={{fontSize: 14}}><span style={{color: '#7BC30A'}}>Home/{product.productSubcategory.subcategoryName}</span>/{product.productName}</p>
                 </div>
             </div>
 
@@ -197,7 +238,7 @@ const ItemPage = (props) => {
                         {/* status */}
                         <div>
                             <h6>Status: <span style={{color: '#5B9223', fontWeight: 'bold'}}>
-                                {product.productPrice < 1 ? "Out of Stock" : "In Stock"}
+                                {product.productQuantity < 1 ? "Out of Stock" : "In Stock"}
                                 </span></h6>
                         </div>
 
@@ -299,88 +340,10 @@ const ItemPage = (props) => {
                  </div>
 
                  {/* RELATED products display */}
-                   {/* first row */}
-                <div className="row mt-4 mb-5">
-                    <div className="col-lg-2 col-6 mb-4 productCard">
-                        {/* image */}
-                        <div className="text-center">
-                          <img src={Item1} alt="oyap" className="productImage" />
-                        </div>
-                        {/* name */}
-                        <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 20,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-2 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item2} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 8,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-2 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item3} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 40,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-2 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item4} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 40,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-2 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item5} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 10,000</p>
-                        </div>
-                    </div>
-                    <div className="col-lg-2 col-6 mb-4 productCard">
-                        <div className="text-center">
-                          <img src={Item1} alt="oyap" className="productImage" />
-                        </div>
-                         {/* name */}
-                         <div className="mt-3">
-                            <p className="mb-0 text-center">Green Beans clean and processed 50 kg</p>
-                        </div>
-                        {/* price */}
-                        <div className="mt-2">
-                            <p className="mb-0 price text-center">NGN 40,000</p>
-                        </div>
-                    </div>
-                </div>
+
+                 <div className="row mt-4 mb-5">
+                        {relatedProductLayout}
+                 </div>
 
             </div>
 
@@ -409,7 +372,8 @@ const mapStateToProps = (state, ownProps) => {
         count: state.cart.count,
         id: id,
         cartItems: state.cart.cartItems,
-        auth: state.auth.isAuthenticated
+        auth: state.auth.isAuthenticated,
+        relatedproducts: state.products.relatedproducts
     };
 };
 
@@ -418,6 +382,7 @@ const mapDispatchToProps = (dispatch) =>{
         Increment : () => dispatch(Increment()),
         Decrement : () => dispatch(Decrement()),
         addCartClick: (product) => dispatch(addToCart(product)),
+        RelatedProducts: (id) => dispatch(getRelatedProducts(id)),
     }
 }
  

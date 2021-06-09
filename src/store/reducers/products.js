@@ -2,7 +2,8 @@ import * as actionTypes from '../actions/actionTypes'
 
 const initState = {
     isLoading: false,
-    products:[]
+    products:[],
+    relatedproducts: []
 }
 
 const productsReducer = (state=initState, action) => {
@@ -26,6 +27,11 @@ const productsReducer = (state=initState, action) => {
             return{
                 ...state,
                 products: action.data
+            }
+        case 'RelatedProducts':
+            return{
+                ...state,
+                relatedproducts: action.data
             }
         default:
             return state

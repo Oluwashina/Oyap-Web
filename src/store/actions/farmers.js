@@ -9,6 +9,41 @@ const getToken = () => {
 }
 
 
+// get product type
+export const getProductType = () => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await GetApi("category/product", getToken());
+      if (res.status === 200) {
+        dispatch({ type: "ProductType", data: res.data});
+      }
+      if(res.status === 400){
+        dispatch({ type: "TypeError", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
+
+// get product category by product type id
+export const getProductCategory = (id) => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await GetApi("subcategory/product/"+id, getToken());
+      if (res.status === 200) {
+        dispatch({ type: "ProductCategory", data: res.data});
+      }
+      if(res.status === 400){
+        dispatch({ type: "CategoryError", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
+
+
 // get all products API
 export const getFarmersProducts = () => {
   return async (dispatch, getState) => {
@@ -78,6 +113,7 @@ export const addProduct = (val) => {
   return async (dispatch, getState) => {
     let image = [];
     let stock;
+    let isLogistics;
     var result = [
       ...image,
       getState().farmers.productZero,
@@ -91,15 +127,23 @@ export const addProduct = (val) => {
     else{
       stock = true
     }
+    if(val.isLogistics === "Yes"){
+      isLogistics = true
+    }
+    else{
+      isLogistics = false
+    }
       const data = {
         productName: val.name,
-        productType: val.type,
-        productCategory: val.category,
+        productCategory: val.type,
+        productSubcategory: val.category,
         productPrice: val.price,
         productQuantity: val.quantity,
         productDescription: val.description,
         productInStock: stock,
-        productImages: result
+        productImages: result,
+        productWeight: val.weight,
+        isLogistics: isLogistics
       }
     try {
       const res = await PostApi("product", {...data}, getToken(), "application/json")
