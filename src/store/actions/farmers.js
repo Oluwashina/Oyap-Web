@@ -179,6 +179,7 @@ export const updateProduct = (val) => {
   return async (dispatch, getState) => {
     let image = [];
     let stock;
+    let isLogistics;
     var result = [
       ...image,
       getState().farmers.productZero,
@@ -192,15 +193,24 @@ export const updateProduct = (val) => {
     else{
       stock = true
     }
+
+    if(val.isLogistics === "Yes"){
+      isLogistics = true
+    }
+    else{
+      isLogistics = false
+    }
     const data = {
       productName: val.name,
-      productType: val.type,
-      productCategory: val.category,
+      productCategory: val.type,
+      productSubcategory: val.category,
       productPrice: val.price,
       productQuantity: val.quantity,
       productDescription: val.description,
       productInStock: stock,
-      productImages: result
+      productImages: result,
+      productWeight: val.weight,
+      isLogistics: isLogistics
     }
     try {
       const res = await PutApi("products/"+val.id, {...data}, getToken())

@@ -5,34 +5,23 @@ import {Form, Formik} from 'formik'
 import {addProductValidator} from '../../../validationSchema/validator'
 import Default from "../../../assets/images/default.png";
 import {connect} from 'react-redux'
-import { EditProduct, UploadProductImage, updateProduct } from '../../../store/actions/farmers';
+import { EditProduct, UploadProductImage, updateProduct, getProductType, getProductCategory } from '../../../store/actions/farmers';
 import cogoToast from "cogo-toast";
 
 const FarmersProductEdit = (props) => {
 
-    const {product, handlePicture, id, filterProduct, productZero,productOne, productTwo, productThree, handleUpdate} = props
+    const {product, handlePicture, id,
+        getType, type, category,getCategory,
+         filterProduct, productZero,productOne, productTwo, productThree, handleUpdate} = props
 
     const [toggled, setToggled] = useState(false);
 
-    const [tabType] = useState([
-        { id: 1, value: "Goods"},
-        { id: 2, value: "Services"},
-      ]);
+    const categoryId = product.productCategory._id
 
-    const [tabCategory] = useState([
-        { id: 1, value: "Agro Chemical"},
-        { id: 2, value: "Agro Chemical(Inorganic)"},
-        { id: 3, value: "Fertilizers(organic)"},
-        { id: 4, value: "Fertilizers(Inorganic)"},
-        { id: 5, value: "Livestock Feeds"},
-        { id: 6, value: "Crop Seeds"},
-        { id: 6, value: "Vegetables"},
-        { id: 7, value: "Spices"},
-        { id: 8, value: "Farm Fresh Foods"},
-        { id: 9, value: "Fruits"},
-        { id: 10, value: "Cash Crops"},
-      ]);
-
+    useEffect(() =>{
+        getType()
+        getCategory(categoryId)
+      }, [getType,getCategory,categoryId]);
 
 
     const fileRef = useRef(null)
@@ -91,7 +80,7 @@ const handlePic4 = (index) =>{
                 ...values,
                 id
             }
-            handleUpdate(res)
+           await handleUpdate(res)
         }
     }
 
@@ -128,7 +117,7 @@ const handlePic4 = (index) =>{
                     handleSubmit(values, setSubmitting)
                     }
                 validationSchema={addProductValidator}
-                initialValues={{type: product.productType ? product.productType : "", category: product.productCategory ?  product.productCategory : "", name: product.productName,  price: product.productPrice, quantity: product.productQuantity, description: product.productDescription}}
+                initialValues={{type: product.productCategory._id ? product.productCategory._id  : "", category: product.productSubcategory._id ?  product.productSubcategory._id : "", name: product.productName ? product.productName: "", weight: product.productWeight ? product.productWeight : "",  price: product.productPrice ? product.productPrice : "", quantity: product.productQuantity ? product.productQuantity : "", isLogistics: product.isLogistics === true ? "Yes" : "No", description: product.productDescription ? product.productDescription : ""}}
               >
                   {({
                       handleChange,
@@ -150,10 +139,10 @@ const handlePic4 = (index) =>{
                                     onBlur={handleBlur}
                                     className="form-control select-style" 
                                     id="type">
-                                <option value={product.productType} >{product.productType}</option>
-                                {tabType.filter(val => val.value !== product.productType).map((opt, index) => {
+                                <option value={product.productCategory._id} >{product.productCategory.categoryName}</option>
+                                {type.filter(val => val.id !== product.productCategory._id).map((opt, index) => {
                                             return <option key={index}
-                                             value={opt.value}>{opt.value}</option>
+                                             value={opt.id}>{opt.categoryName}</option>
                                         })}
 
                                 </select>
@@ -172,10 +161,10 @@ const handlePic4 = (index) =>{
                                     onBlur={handleBlur}
                                     className="form-control select-style" 
                                     id="category">
-                                    <option value={product.productCategory} >{product.productCategory}</option>
-                                    {tabCategory.filter(val => val.value !== product.productCategory).map((opt, index) => {
+                                    <option value={product.productSubcategory._id} >{product.productSubcategory.subcategoryName}</option>
+                                    {category.filter(val => val.id !== product.productSubcategory._id).map((opt, index) => {
                                             return <option key={index}
-                                             value={opt.value}>{opt.value}</option>
+                                             value={opt.id}>{opt.subcategoryName}</option>
                                         })}
 
                                 
@@ -198,6 +187,21 @@ const handlePic4 = (index) =>{
                               placeholder="" />
                                <small style={{ color: "#dc3545" }}>
                                   {touched.name && errors.name}
+                              </small>
+                            </div>
+
+                             {/* weight of product */}
+                             <div className="form-group">
+                              <label htmlFor="password">Product Weight(Kg)</label>
+                              <input className="form-control input-style"
+                              type="text"
+                              id="weight"
+                              value={values.weight}
+                              onChange={handleChange}
+                              onBlur={handleBlur}
+                              placeholder="" />
+                               <small style={{ color: "#dc3545" }}>
+                                  {touched.weight && errors.weight}
                               </small>
                             </div>
 
@@ -247,6 +251,30 @@ const handlePic4 = (index) =>{
                                   {touched.description && errors.description}
                               </small>
                             </div>
+
+                            
+                            {/* logistics */}
+                            <div className="form-group">
+                              <label htmlFor="password">Do you want Logistics?</label>
+                            <div className="form-check form-check">
+                                <input className="form-check-input" type="radio" 
+                                name="isLogistics" id="Yes" value="Yes" 
+                                onChange={handleChange}
+                                 defaultChecked={values.isLogistics === "Yes"}
+                                 />
+                                <label className="form-check-label mt-1" for="Yes">Yes</label>
+                            </div>
+                            <div className="form-check form-check mt-2">
+                                <input className="form-check-input" type="radio"
+                                defaultChecked={values.isLogistics === 'No'}
+                                onChange={handleChange}
+                                 name="isLogistics" id="No" value="No" />
+                                <label className="form-check-label mt-1" for="No">No</label>
+                            </div>
+                            <small style={{ color: "#dc3545" }}>
+                                  {touched.isLogistics && errors.isLogistics}
+                              </small>
+                        </div>
 
 
                             
@@ -308,7 +336,7 @@ const handlePic4 = (index) =>{
                             <button
                             type="submit"
                             disabled={isSubmitting}
-                             className="btn btn-oyap mt-4">Update</button>
+                             className="btn btn-oyap mt-4">Update Product</button>
                          </div>
                       </Form>
                   )}
@@ -339,7 +367,9 @@ const mapStateToProps = (state, ownProps) =>{
         productZero: state.farmers.productZero,
         productOne: state.farmers.productOne,
         productTwo: state.farmers.productTwo,
-        productThree: state.farmers.productThree
+        productThree: state.farmers.productThree,
+        type: state.farmers.type,
+        category: state.farmers.category
     }
 }
 
@@ -347,7 +377,9 @@ const mapDispatchToProps = (dispatch) =>{
     return{
         handlePicture: (values, index) => dispatch(UploadProductImage(values, index)),
         filterProduct: (id) => dispatch(EditProduct(id)),
-        handleUpdate: (values) => dispatch(updateProduct(values))
+        handleUpdate: (values) => dispatch(updateProduct(values)),
+        getType: () => dispatch(getProductType()),
+        getCategory:(id) => dispatch(getProductCategory(id))
     }
 }
  

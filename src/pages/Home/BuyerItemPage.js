@@ -61,7 +61,7 @@ const ItemPage = (props) => {
  const relatedProductLayout = relatedproducts.length ? (
     relatedproducts.map((product) => {
           return (
-            <div key={product.id} className="col-lg-2 col-6 mb-4 productCard" onClick={() => handleRoute(product.id)}>
+            <div key={product.id} className="col-lg-2 col-6 mb-5 productCard" onClick={() => handleRoute(product.id)}>
                 {/* image */}
                 <div className="text-center">
                     <Image
@@ -82,8 +82,8 @@ const ItemPage = (props) => {
           );
         })
       ) : (
-        <div className="mt-4 text-center">
-            <p>No related products under this category</p>
+        <div className="">
+            <p></p>
         </div>
       );
 
@@ -341,9 +341,19 @@ const ItemPage = (props) => {
 
                  {/* RELATED products display */}
 
-                 <div className="row mt-4 mb-5">
+                 <div className="row mt-4">
                         {relatedProductLayout}
                  </div>
+
+                 {relatedproducts.length === 0 ?
+                    <div className="mt-2 mb-5 text-center">
+                        <p>No related products under this category</p>
+                    </div>
+                        :
+                     ""
+                     }
+
+
 
             </div>
 

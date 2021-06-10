@@ -79,7 +79,7 @@ const FarmersProductAdd = (props) => {
             cogoToast.error('Upload at least a first product image!!!')
         }
         else{
-            handleAdd(values)
+         await handleAdd(values)
 
            // reset the form
             setTimeout(() => {
