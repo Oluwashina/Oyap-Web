@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {FaBars } from 'react-icons/fa';
 import AdminSidebar from '../../../components/AdminSidebar';
 import '../AdminDashboard/AdminDashboard.css'
-import {Link} from 'react-router-dom'
+// import {Link} from 'react-router-dom'
 import declineIcon from '../../../assets/images/x-circle.svg'
 import approveIcon from '../../../assets/images/check-circle.svg'
 import ViewIcon from '../../../assets/images/eye.svg'
@@ -232,11 +232,11 @@ const AdminUserManage = (props) => {
                             {tabLayout}
                         </div>
 
-                        <div>
+                        {/* <div>
                             <Link to="/admin" style={{textDecoration: 'none'}}>
                              <p className="mb-0" style={{color: '#7BC30A'}}>View All</p>
                             </Link>
-                        </div>
+                        </div> */}
                     </div>
 
                     

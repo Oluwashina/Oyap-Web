@@ -66,6 +66,7 @@ ul{
 
 .mobile-div{
     display: flex;
+    align-items: center;
 }
 .cart-display{
     display: none;

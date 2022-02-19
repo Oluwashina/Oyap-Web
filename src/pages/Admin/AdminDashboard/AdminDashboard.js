@@ -158,7 +158,6 @@ const AdminDashboard = (props) => {
 
     // viewing a user
       const ViewUser = (id) =>{
-          alert(id)
           history.push('/admin/user/'+id)
       }
 

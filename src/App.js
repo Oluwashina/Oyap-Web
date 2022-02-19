@@ -72,9 +72,9 @@ function App() {
             <Route path="/item/:id" component={BuyerItemPage} />
             <BuyerRoute path="/checkout" component={CheckoutPage} />
             <Route path="/cart" component={Cart} />
-            <Route path="/orders" component={Orders} />
-            <Route path="/customer/account" component={BuyerProfile} />
-            <Route path="/order/:id" component={OrderDetails} />
+            <BuyerRoute path="/orders" component={Orders} />
+            <BuyerRoute path="/customer/account" component={BuyerProfile} />
+            <BuyerRoute path="/order/:id" component={OrderDetails} />
             <Route path="/signup/:id" component={UserSignup} />
             <Route path="/signup" component={SignUpStart} />
             <Route path="/verify-code" component={VerifyUser} />

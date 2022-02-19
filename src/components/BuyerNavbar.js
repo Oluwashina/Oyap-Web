@@ -48,6 +48,10 @@ const BuyerNav = (props) => {
         setDropShow(dropShow ? false : true)
     }
 
+    const handleLogout = () =>{
+        logout()
+    }
+
     // make call to get cart count
     useEffect(() => {
         if(auth){
@@ -141,7 +145,7 @@ const BuyerNav = (props) => {
                     </div>
                 </NavLink> 
 
-                <img src={Menu} alt="Open Nav" className="img-fluid mobile-menu" id="mobile-cta" onClick={ToggleMenu} />
+                <img src={Menu} alt="Open Nav" className="img-fluid mobile-menu" style={{width: '30px', height: '30px'}} id="mobile-cta" onClick={ToggleMenu} />
             </div>
            
 
@@ -181,7 +185,7 @@ const BuyerNav = (props) => {
 
                        {auth ? <div className="mt-4">
                             <button className="btn btn-logout"
-                            onClick={logout}
+                            onClick={handleLogout}
                             style={{padding: 0}}
                             >LOGOUT</button>
                         </div>
@@ -272,7 +276,7 @@ const BuyerNav = (props) => {
 
                         <div>
                             <button className="btn btn-logout"
-                            onClick={logout}
+                            onClick={handleLogout}
                             >LOGOUT</button>
                         </div>
                     </div>

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Logo from "../../assets/images/logo.png";
 import BuyImage from "../../assets/images/buy.svg";
 import SellImage from "../../assets/images/sell.svg";
-import DeliveryImage from "../../assets/images/delivery.svg";
+// import DeliveryImage from "../../assets/images/delivery.svg";
 import WelcomeImg from "../../assets/images/welcome-img.png";
 import "./signup.css";
 import {connect} from 'react-redux'
@@ -15,7 +15,6 @@ const UserLogin = (props) => {
   const [tabData] = useState([
     { id: 1, name: "tab-1", text: "Buyer", imageUrl: BuyImage},
     { id: 2, name: "tab-2", text: "Seller" , imageUrl: SellImage},
-    { id: 3, name: "tab-3", text: "Logistics", imageUrl: DeliveryImage },
   ]);
 
   
@@ -40,6 +39,7 @@ const UserLogin = (props) => {
    const tabLayout = tabData.map((item) => (
     <div 
     key={item.id}
+    className="mr-4"
       onClick={() => ToggleTab(item.id)}>
         <div className="buy-div">
             <img src={item.imageUrl} alt="oyap" width="70" height="70" />
@@ -72,7 +72,7 @@ const UserLogin = (props) => {
 
             
               {/* options to sign up layout */}
-              <div className="mt-2" style={{display: "flex", justifyContent: 'space-between'}}>
+              <div className="mt-2" style={{display: "flex"}}>
                   {tabLayout}
               </div>
 

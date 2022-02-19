@@ -64,7 +64,7 @@ const FarmerNav = (props) => {
                                 <img src={Bell}  alt="logo" width="30" height="30" />   
                                 <div
                                 className="cartDiv">
-                                <span style={{color: '#ED881C', fontWeight: 'bold'}}>6</span>
+                                <span style={{color: '#ED881C', fontWeight: 'bold'}}>0</span>
                                 </div>
                         </NavLink> 
                      </li>

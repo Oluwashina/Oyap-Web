@@ -21,7 +21,6 @@ const UserLogin = (props) => {
   const [tabData] = useState([
     { id: 1, name: "tab-1", text: "Buyer"},
     { id: 2, name: "tab-2", text: "Seller" },
-    { id: 3, name: "tab-3", text: "Logistics" },
   ]);
 
 
@@ -61,9 +60,6 @@ const UserLogin = (props) => {
             case 'Seller':
                 history.push('/farmers')
                 break;
-            case 'Logistics':
-              history.push('/signup')
-              break;
             default:
               history.push('/')
               break;

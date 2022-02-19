@@ -79,7 +79,7 @@ const orderLayout = customerOrder.length ? (
                                         </Moment>     
                              </p>
                             <div className="mt-2">
-                                <p className="mb-0" style={{color: '#ED881C', fontSize: 14}}>{value.status} Payment</p>
+                                <p className="mb-0" style={{color: '#ED881C', fontSize: 14}}>{value.status}</p>
                             </div>
                     </div>
                 </div>
