@@ -22,8 +22,8 @@ const BuyerNav = (props) => {
     const [dropShow, setDropShow] = useState(false)
 
     
-   const tawkToPropertyId = '60ae41f8de99a4282a19adcf'
-   const tawkToKey = '1f6kb3dn9'
+   const tawkToPropertyId = '62168bffa34c24564127de22'
+   const tawkToKey = '1fsk15p3c'
  
 
     useEffect(() =>{

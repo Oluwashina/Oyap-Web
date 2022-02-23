@@ -274,6 +274,50 @@ export const completeOrderRequest = (id) => {
     };
   };
 
+   // restore a user functionality
+   export const RestoreUser = (user) => {
+    return async (dispatch, getState) => {
+      try {
+        let id  = user.id
+        let name = 'Restore'
+        const res = await PostApi("enableuser", {
+          email: user.email
+        }, getToken(), "application/json")
+        if (res.status === 200) {
+          dispatch({ type: "UserActivity", id, name });
+          cogoToast.success('User enabled successfully!', { position: 'bottom-right', })
+        }
+        if(res.status === 400){
+          dispatch({ type: "User_Error", err: res.data});
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    };
+  };
+
+  // suspend a user
+  export const SuspendUser = (user) => {
+    return async (dispatch, getState) => {
+      try {
+        let id  = user.id
+         let name = 'Suspend'
+        const res = await PostApi("disableuser", {
+          email: user.email
+        }, getToken(), "application/json")
+        if (res.status === 200) {
+          dispatch({ type: "UserActivity", id, name });
+          cogoToast.success('User enabled successfully!', { position: 'bottom-right', })
+        }
+        if(res.status === 400){
+          dispatch({ type: "User_Error", err: res.data});
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    };
+  };
+
 
   export const clearCancelStatus = () =>{
     return dispatch =>{
@@ -340,6 +384,33 @@ export const approveWithdrawalRequest = (id, creds) => {
       }
     } catch (err) {
      console.log(err)
+    }
+  };
+};
+
+
+// add admin functionalit
+export const adminRegister = (user) => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await PostApi("admin", {
+                   firstName: user.firstName,
+                   lastName: user.lastName,
+                   phoneNumber: user.phoneNumber,
+                   email: user.email,
+                   password: user.password,
+                   role: user.role
+                  }, "", "application/json")
+      if (res.status === 201) {
+        dispatch({ type: "SIGNUP_SUCCESS", data: res.data });
+        cogoToast.success("Admin created successfully!");
+      }
+      if(res.status === 400){
+        dispatch({ type: "SIGNUP_FAIL", err: res.data});
+        cogoToast.error('Email already exists!!!')
+      }
+    } catch (err) {
+      console.log(err)
     }
   };
 };

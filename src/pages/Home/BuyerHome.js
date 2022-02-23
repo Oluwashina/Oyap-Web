@@ -86,7 +86,7 @@ const BuyerHome = (props) => {
 
       {/* farm image */}
       <div className="mt-5 mb-lg-5 mb-4" style={{ position: "relative" }}>
-        <img src={Farm} alt="farm" className="img-fluid" />
+        <img src={Farm} alt="farm" className="img-fluid" style={{width: '100vw'}} />
         <div className="sell_circle">
           <h3>
             Are you an <br />

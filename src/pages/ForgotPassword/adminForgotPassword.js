@@ -99,7 +99,7 @@ const AdminForgot = (props) => {
 
         </div>
         <div className="col-lg-8 d-none d-md-block">
-          <img src={WelcomeImg} alt="oyap" className="img-fluid" />
+          <img src={WelcomeImg} alt="oyap" className="img-fluid" style={{width: '100vw'}} />
         </div>
       </div>
     </div>

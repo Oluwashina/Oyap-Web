@@ -54,6 +54,7 @@ import NotFoundPage from "./pages/404/NotFound";
 import BuyerRoute from './components/PrivateRoutes/BuyerRoute'
 import SellerRoute from './components/PrivateRoutes/SellerRoute'
 import AdminWithdrawRequest from "./pages/Admin/AdminWithdrawal/AdminWithdrawalById";
+import AddAdminPage from "./pages/Admin/AdminManagement/AddAdmin";
 
 
 
@@ -113,6 +114,7 @@ function App() {
             <Route path="/admin/profile" component={AdminProfile} />
             <Route path="/admin/withdrawalrequest" component={AdminWithdrawal} />
             <Route path="/admin/confirm-request/:id" component={AdminWithdrawRequest} />
+            <Route path="/admin/add" component={AddAdminPage} />
 
             {/* not found route */}
             <Route path="*" component={NotFoundPage} />

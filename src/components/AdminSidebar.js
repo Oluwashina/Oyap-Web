@@ -86,7 +86,7 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, log
           }}
         >
           <Link
-             to="/farmers/addproduct"
+             to="/admin/add"
             className="sidebar-btn"
           >
            

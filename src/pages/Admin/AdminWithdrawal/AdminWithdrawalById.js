@@ -10,6 +10,7 @@ import Moment from 'react-moment'
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { declineWithdrawalRequest } from '../../../store/actions/admin';
+import Account from '../../../assets/images/userProfile.svg'
 
 const AdminWithdrawRequest = ({requests, declineRequest,loader}) => {
 
@@ -110,7 +111,7 @@ const AdminWithdrawRequest = ({requests, declineRequest,loader}) => {
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
 
                                 <div>   
-                                    <img src={request.userDetails.profilePic} alt="user" className="" style={{width: 140, height: 150}} />
+                                    <img src={request.userDetails.profilePic ? request.userDetails.profilePic : Account} alt="user" className="" style={{width: 140, height: 150}} />
                                 </div>
 
                                 <div>

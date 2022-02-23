@@ -120,6 +120,22 @@ const adminReducer = (state=initState, action) => {
                 ...state,
                 orderLoader: false
             }
+        case 'UserActivity':
+            let res;
+            switch(action.name){
+                case 'Suspend':
+                res =  state.users.map((item)=> item.id === action.id ? {...item, isEnabled: false} : [...state.users])
+                break;
+                case 'Restore':
+                res =  state.users.map((item)=> item.id === action.id ? {...item, isEnabled: true} : [...state.users])
+                break;
+                default:
+                break;
+            }
+            return{
+                ...state,
+                users: res
+            }
         default:
             return state
     }

@@ -11,13 +11,13 @@ import {useHistory} from 'react-router-dom'
 import Arrow from "../../../assets/images/arrow.svg";
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import { cleanOrderStatus, getAdminOrderById, getAdminUserOrder, getUserStatistics } from '../../../store/actions/admin';
+import { cleanOrderStatus, getAdminOrderById, getAdminUserOrder, getUserStatistics, RestoreUser, SuspendUser } from '../../../store/actions/admin';
 import Moment from "react-moment";
 
 
 const UserPortfolio = (props) => {
 
-    const {user, getStats, id, stats, getOrders, role, order, getOrder, order_fetched, cleanOrder} = props
+    const {user, getStats, id, stats, getOrders, role, order, getOrder, order_fetched, cleanOrder, suspend, restore} = props
 
 
     const [toggled, setToggled] = useState(false);
@@ -54,6 +54,33 @@ const UserPortfolio = (props) => {
         { id: 1, name: "tab-1", text: "Pending Delivery" },
         { id: 2, name: "tab-2", text: "Completed Delivery" }
       ]);
+
+         //   suspend and enable a user
+    const HandleUser = (status, email,id) =>{
+        let confirm_flag;
+        let res;
+        // check for the active state of the user
+        if(status){
+            confirm_flag = window.confirm("You are about to disapprove this user. Are you sure you want to continue ?")
+            if(confirm_flag){
+                res = {
+                    email,
+                    id
+                }
+                suspend(res)
+            }
+        }
+        else{
+            confirm_flag = window.confirm("You are about to approve this user. Are you sure you want to continue ?")
+            if(confirm_flag){
+                res = {
+                        email,
+                        id
+                    }
+                restore(res)
+            }
+        }
+    }
 
       const handleToggle = (val) => {
         setTab(val)
@@ -459,8 +486,14 @@ const UserPortfolio = (props) => {
                 {/* block */}
                 <div className="mt-lg-0 mt-4"  style={{flex: 2}}>
                     <div style={{display: 'flex', justifyContent:'center'}}>
-                            <button className="btn btn-delete mr-3">Delete</button>
-                            <button className="btn btn-blocking">Block</button>                       
+                            <button
+                            onClick={() => HandleUser(user.isEnabled, user.email, user.id)}
+                             className={
+                                user.isEnabled ? "btn btn-delete": "btn btn-oyap"
+                            }>{
+                                user.isEnabled ? "Suspend" : "Restore"
+                            }</button>
+                                                
                     </div>
                 </div>
             </div>
@@ -547,6 +580,8 @@ const mapDispatchToProps = (dispatch) =>{
         getOrders: (status) => dispatch(getAdminUserOrder(status)),
         getOrder: (id) => dispatch(getAdminOrderById(id)),
         cleanOrder: () => dispatch(cleanOrderStatus()),
+        suspend: (val) => dispatch(SuspendUser(val)),
+        restore: (val) => dispatch(RestoreUser(val)),
     }
 }
  

@@ -54,6 +54,26 @@ export const registerValidator = Yup.object({
     .oneOf([Yup.ref("password"), null], "Passwords must match"),
 });
 
+
+export const registerAdminValidator = Yup.object({
+  firstName: Yup.string().required("Firstname is required"),
+  lastName: Yup.string().required("Lastname is required"),
+  phoneNumber: Yup.string()
+  .min(11, 'Phone number cannot be less than 11 digits')
+  .max(11, 'Exceeded characters for phone number')
+    .required("Phonenumber is required")
+    .matches(/^-?[0-9]+(.[0-9]{1-7})?$/, "Enter a valid phone number"),
+  email: Yup.string()
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password cannot be less than 6 characters")
+    .required("Password is required"),
+  confirm_password: Yup.string()
+    .required("Passwords must match")
+    .oneOf([Yup.ref("password"), null], "Passwords must match"),
+});
+
 export const ProfileAddressValidator = Yup.object({
   store: Yup.string(),
   state: Yup.string()

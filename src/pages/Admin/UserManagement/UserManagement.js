@@ -3,8 +3,8 @@ import {FaBars } from 'react-icons/fa';
 import AdminSidebar from '../../../components/AdminSidebar';
 import '../AdminDashboard/AdminDashboard.css'
 // import {Link} from 'react-router-dom'
-import declineIcon from '../../../assets/images/x-circle.svg'
-import approveIcon from '../../../assets/images/check-circle.svg'
+// import declineIcon from '../../../assets/images/x-circle.svg'
+// import approveIcon from '../../../assets/images/check-circle.svg'
 import ViewIcon from '../../../assets/images/eye.svg'
 import {connect} from 'react-redux'
 import {useHistory} from 'react-router-dom'
@@ -108,7 +108,7 @@ const AdminUserManage = (props) => {
             
             {/* actions to approve or reject */}
             <div className="userActions">
-                <img src={value.isEnabled ? declineIcon : approveIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
+                {/* <img src={value.isEnabled ? declineIcon : approveIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} /> */}
                 <img className="ml-3"
                 onClick={() => ViewUser(value.id)}
                  src={ViewIcon} alt="decline" width="30" height="30" style={{cursor: 'pointer'}} />
