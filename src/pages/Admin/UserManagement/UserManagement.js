@@ -30,7 +30,6 @@ const AdminUserManage = (props) => {
       const [tabData] = useState([
         { id: 1, name: "tab-1", text: "Members"},
         { id: 2, name: "tab-2", text: "Farmers" },
-        { id: 3, name: "tab-3", text: "Logistics" },
         { id: 4, name: "tab-4", text: "Admins" },
       ]);
 
@@ -51,10 +50,6 @@ const AdminUserManage = (props) => {
             case 2:
                 setTab(id);
                 getUser('Seller')
-                break;
-            case 3:
-                setTab(id);
-                getUser('Logistics')
                 break;
             case 4: 
             setTab(id);
@@ -156,13 +151,13 @@ const AdminUserManage = (props) => {
                     {/* counts */}
                     <div className="row">
                         {/* Admin */}
-                        <div className="col-lg-3">
+                        <div className="col-lg-4">
                             <div className="adminDash">
 
                                 <div className="text-center adminPendingCircle">
                                 </div>
 
-                                <div className="text-center mt-2">
+                                <div className="text-center mt-3">
                                     <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countAdmin: "0"}</h5>
                                 </div>
 
@@ -173,13 +168,13 @@ const AdminUserManage = (props) => {
                             </div>
                         </div>
                         {/* Members */}
-                        <div className="col-lg-3 mt-lg-0 mt-3">
+                        <div className="col-lg-4 mt-lg-0 mt-3">
                             <div className="adminDash">
 
                                 <div className="text-center adminPendingDeliveryCircle">
                                 </div>
 
-                                <div className="text-center mt-2">
+                                <div className="text-center mt-3">
                                     <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countBuyer : "0"}</h5>
                                 </div>
 
@@ -190,13 +185,13 @@ const AdminUserManage = (props) => {
                             </div>
                         </div>
                         {/* farmers */}
-                        <div className="col-lg-3 mt-lg-0 mt-3">
+                        <div className="col-lg-4 mt-lg-0 mt-3">
                             <div className="adminDash">
 
                                 <div className="text-center adminCompletedOrdersCircle">
                                 </div>
 
-                                <div className="text-center mt-2">
+                                <div className="text-center mt-3">
                                     <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countSeller : "0"}</h5>
                                 </div>
 
@@ -206,23 +201,7 @@ const AdminUserManage = (props) => {
 
                             </div>
                         </div>
-                        {/* logistics */}
-                        <div className="col-lg-3 mt-lg-0 mt-3">
-                            <div className="adminDash">
-
-                                <div className="text-center adminPendingPaymentCircle">
-                                </div>
-
-                                <div className="text-center mt-2">
-                                    <h5 style={{fontWeight: 'bold'}} className="mb-0">{count ? count.countLogistics : "0"}</h5>
-                                </div>
-
-                                <div className="text-center mt-1">
-                                    <p className="mb-0">Logistics</p>
-                                </div>
-
-                            </div>
-                        </div>
+                    
                     </div>
 
                     {/* users layout */}

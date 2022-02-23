@@ -59,12 +59,7 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, log
             Order Management
             <Link to="/admin/orders" />
           </MenuItem>
-         
-          <MenuItem icon={<FaWallet />}>
-               Logistics
-              <Link to="/admin/logistics" />
-           </MenuItem>
-
+        
            <MenuItem icon={<FaWallet />}>
                Payment
               <Link to="/admin/payments" />

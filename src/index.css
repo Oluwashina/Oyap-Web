@@ -23,6 +23,11 @@ body {
   transition: all ease-in 0.5s;
 }
 
+.btn-oyap.disabled{
+  pointer-events: none;
+  opacity: 0.5;
+}
+
 .btn-outline-oyap{
   border: 1px solid #7BC30A;
   border-radius: 5px;

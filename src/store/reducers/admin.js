@@ -10,7 +10,10 @@ const initState = {
     userOrder: [],
     order:{},
     order_fetched: false,
-    order_cancelled: false
+    order_cancelled: false,
+    requests: [],
+    declinedLoader: false,
+    orderLoader: false
 }
 
 const adminReducer = (state=initState, action) => {
@@ -81,6 +84,41 @@ const adminReducer = (state=initState, action) => {
             return{
                 ...state,
                 order_cancelled: false
+            }
+        case "WithdrawalRequests":
+            return{
+                ...state,
+                requests: action.data
+            }
+        case "Declined_Start":
+            return{
+                ...state,
+                declinedLoader: true
+            }
+        case "Declined_Success":
+            return{
+                ...state,
+                declinedLoader: false
+            }
+        case "Declined_Error":
+            return{
+                ...state,
+                declinedLoader: false
+            }
+        case "Order_Start":
+            return{
+                ...state,
+                orderLoader: true
+            }
+        case "Order_Success":
+            return{
+                ...state,
+                orderLoader: false
+            }
+        case "Order_Error":
+            return{
+                ...state,
+                orderLoader: false
             }
         default:
             return state

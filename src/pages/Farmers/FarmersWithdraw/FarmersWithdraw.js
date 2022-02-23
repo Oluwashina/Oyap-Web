@@ -4,13 +4,13 @@ import {FaBars } from 'react-icons/fa';
 import {Form, Formik} from 'formik'
 import {withdrawValidator} from '../../../validationSchema/validator'
 import {connect } from 'react-redux'
-import { CloseWithdrawModal, WithdrawAmount } from '../../../store/actions/farmers';
+import { CloseWithdrawModal, getBanks, WithdrawAmount } from '../../../store/actions/farmers';
 import { useHistory } from "react-router-dom";
 
 
 const FarmersWithdraw = (props) => {
 
-    const {handleWithdraw, success, handleClose} = props
+    const {handleWithdraw, success, handleClose, fetchBanks, banks} = props
 
     let history = useHistory()
 
@@ -24,7 +24,13 @@ const FarmersWithdraw = (props) => {
 
      // Withdraw button
   const handleSubmit = async (values, setSubmitting) =>{
-       await handleWithdraw(values)
+      var bankCode = values.bank
+      var bankName = banks.find(pro=> pro.code === bankCode).name
+        var res = {
+          ...values,
+          bankName
+      }
+       await handleWithdraw(res)
   }
 
   const handleProceed = () =>{
@@ -32,6 +38,10 @@ const FarmersWithdraw = (props) => {
     history.push("/farmers/wallet");
     handleClose()
   }
+
+  useEffect(()=>{
+    fetchBanks();
+  },[fetchBanks])
 
   useEffect(() =>{
     if(success){
@@ -138,17 +148,23 @@ const FarmersWithdraw = (props) => {
                               </small>
                             </div>
 
-                            {/* Bank */}
+
                             <div className="form-group">
-                              <label htmlFor="password">Bank</label>
-                              <input className="form-control input-style"
-                              type="text"
-                              id="bank"
-                              value={values.bank}
-                              onChange={handleChange}
-                              onBlur={handleBlur}
-                              placeholder="Bank" />
-                               <small style={{ color: "#dc3545" }}>
+                              <label htmlFor="bank">Bank</label>
+                              <select
+                                 name="bank"
+                                 values={values.bank}
+                                 onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className="form-control select-style" 
+                                    id="bank">
+                                  <option defaultValue="" disabled selected>--Select--</option>
+                                    {banks.map((opt, index) => {
+                                            return <option key={index} value={opt.code}>{opt.name}</option>
+                                        })}
+
+                                </select>
+                                <small style={{ color: "#dc3545" }}>
                                   {touched.bank && errors.bank}
                               </small>
                             </div>
@@ -210,7 +226,8 @@ const FarmersWithdraw = (props) => {
 
 const mapStateToProps = (state) =>{
   return{
-      success: state.farmers.withdrawsuccess
+      success: state.farmers.withdrawsuccess,
+      banks: state.farmers.banks
   }
 }
 
@@ -218,6 +235,7 @@ const mapDispatchToProps =(dispatch) =>{
   return{
     handleWithdraw: (val) => dispatch(WithdrawAmount(val)),
     handleClose: (val) => dispatch(CloseWithdrawModal()),
+    fetchBanks: (val) => dispatch(getBanks()),
   }
 }
  

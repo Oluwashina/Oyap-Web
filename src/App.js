@@ -43,7 +43,7 @@ import AdminLogin from "./pages/Admin/AdminLogin/AdminLogin";
 import AdminForgot from './pages/ForgotPassword/adminForgotPassword'
 import AdminProfile from "./pages/Admin/AdminProfile/AdminProfile";
 import AdminOrderManage from "./pages/Admin/AdminOrders/AdminOrder";
-import AdminLogistics from "./pages/Admin/AdminLogistics/AdminLogistics";
+// import AdminLogistics from "./pages/Admin/AdminLogistics/AdminLogistics";
 import AdminPayments from "./pages/Admin/AdminPayments/AdminPayments";
 import AdminWithdrawal from "./pages/Admin/AdminWithdrawal/AdminWithdrawal";
 
@@ -108,7 +108,7 @@ function App() {
             <Route path="/admin/user/:id" component={UserPortfolio} />
             <Route path="/admin/orders" component={AdminOrderManage} />
             <Route path="/admin/order/:id" component={AdminOrderDetails} />
-            <Route path="/admin/logistics" component={AdminLogistics} />
+            {/* <Route path="/admin/logistics" component={AdminLogistics} /> */}
             <Route path="/admin/payments" component={AdminPayments} />
             <Route path="/admin/profile" component={AdminProfile} />
             <Route path="/admin/withdrawalrequest" component={AdminWithdrawal} />

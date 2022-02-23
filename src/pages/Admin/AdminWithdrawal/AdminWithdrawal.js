@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FaBars } from 'react-icons/fa';
 import AdminSidebar from '../../../components/AdminSidebar';
 import revenueIcon from '../../../assets/images/revenue.svg'
-// import ArrowUp from '../../../assets/images/arrow-up-circle.svg'
+import ArrowUp from '../../../assets/images/arrow-up-circle.svg'
 import ArrowDown from '../../../assets/images/arrow-down-circle.svg'
-// import Moment from "react-moment";
 import {Link} from 'react-router-dom'
+import { connect } from 'react-redux';
+import { getWithdrawalRequests } from '../../../store/actions/admin';
+import Moment from 'react-moment'
 
-const AdminWithdrawal = () => {
+const AdminWithdrawal = ({fetchRequest, request}) => {
     const [toggled, setToggled] = useState(false);
 
     const [initialTab, setTab] = useState(1);
@@ -16,10 +18,14 @@ const AdminWithdrawal = () => {
         setToggled(value);
       };
 
+      useEffect(()=>{
+        fetchRequest('Pending')
+      },[fetchRequest])
+
       const [tabData] = useState([
-        { id: 1, name: "tab-1", text: "Pending Requests"},
-        { id: 2, name: "tab-2", text: "Completed Requests" },
-        { id: 3, name: "tab-3", text: "Cancelled Requests" },
+        { id: 1, name: "tab-1", text: "Pending Requests", tag: "Pending"},
+        { id: 2, name: "tab-2", text: "Completed Requests", tag: "Completed" },
+        { id: 3, name: "tab-3", text: "Cancelled Requests", tag: "Cancelled" },
       ]);
 
         //   tab layout
@@ -27,14 +33,16 @@ const AdminWithdrawal = () => {
         <div 
         key={item.id}
           className={initialTab === item.id ? "activeAdminTab tabSpace" : "adminTab tabSpace"}
-          onClick={() => handleToggle(item.id)}
+          onClick={() => handleToggle(item)}
             >
           <p className="mb-0 text-center">{item.text}</p>
         </div>
       ));
 
-      const handleToggle = (id) => {
+      const handleToggle = (val) => {
+          const {id, tag} = val
         setTab(id)
+        fetchRequest(tag)
       }
 
     return ( 
@@ -70,7 +78,7 @@ const AdminWithdrawal = () => {
                                             
                                         </div>
                                         <div className="revenueAmount mt-2">
-                                            <h5>NGN 1,020,000</h5>
+                                            <h5>NGN 0</h5>
                                         </div>
                                 </div>
                             </div>
@@ -89,84 +97,70 @@ const AdminWithdrawal = () => {
                     
                         {/* transactions layout */}
                         {/* credit */}
-                        <div 
-                            className="creditDiv mt-4"
-                            >
-                                <div className="transactionRow">
-                                    <div className="transactionColumn">
-                                    <img 
-                                    src={ArrowDown}
-                                        alt="transactionbar" width="25" height="25" />
-                                    </div>
-                                    <div className="nameColumn mt-lg-0 mt-3">
-                                        <p 
-                                        className="mb-0 creditColor"
-                                        >Courtney Henry</p>
-                                    </div>
-                                    <div className="transactionColumn mt-lg-0 mt-3">
-                                        <p className="mb-0" style={{color:'#3A5654'}}>
-                                            Withdraw
-                                        </p>
-                                    </div>
-                                    <div className="amountColumn mt-lg-0 mt-3">
-                                        <p 
-                                        className="mb-0 creditColor" 
-                                        >
-                                            NGN 4,000</p>
-                                    </div>
-                                    <div className="doubleColumn mt-lg-0 mt-3">
-                                        <p className="mb-0" style={{color:'#3A5654'}}>
-                                            28 Dec, 2020
-                                        </p>
-                                    </div>
-                                    <div className="transactionColumn mt-lg-0 mt-3">
-                                        <Link to='/admin/confirm-request/1' className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>Process Request</Link>
-                                    </div>
-                                </div>
-                     </div>
 
-                     {/* 2nd */}
-                     <div 
-                            className="creditDiv mt-4"
-                            >
-                                <div className="transactionRow">
-                                    <div className="transactionColumn">
-                                    <img 
-                                    src={ArrowDown}
-                                        alt="transactionbar" width="25" height="25" />
-                                    </div>
-                                    <div className="nameColumn mt-lg-0 mt-3">
-                                        <p 
-                                        className="mb-0 creditColor"
-                                        >Jackson Pelman</p>
-                                    </div>
-                                    <div className="transactionColumn mt-lg-0 mt-3">
-                                        <p className="mb-0" style={{color:'#3A5654'}}>
-                                            Withdraw
-                                        </p>
-                                    </div>
-                                    <div className="amountColumn mt-lg-0 mt-3">
-                                        <p 
-                                        className="mb-0 creditColor" 
-                                        >
-                                            NGN 4,000</p>
-                                    </div>
-                                    <div className="doubleColumn mt-lg-0 mt-3">
-                                        <p className="mb-0" style={{color:'#3A5654'}}>
-                                            28 Dec, 2020
-                                        </p>
-                                    </div>
-                                    <div className="transactionColumn mt-lg-0 mt-3">
-                                        <Link to='/admin/confirm-request/2' className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>Process Request</Link>
-                                    </div>
+                  { request.length ? (
+                    request.map((value) => {
+                    return (
+                        <div 
+                        className="creditDiv mt-4"
+                        >
+                            <div className="transactionRow">
+                                <div className="transactionColumn">
+                                <img 
+                                src={
+                                    value.status === "COMPLETED" ? ArrowUp :ArrowDown}
+                                    alt="transactionbar" width="25" height="25" />
+                                </div>
+                                <div className="nameColumn mt-lg-0 mt-3">
+                                    <p 
+                                    className="mb-0 creditColor"
+                                    >{value.userDetails.firstName} {value.userDetails.lastName}</p>
+                                </div>
+                                <div className="transactionColumn mt-lg-0 mt-3">
+                                    <p className="mb-0" style={{color:'#3A5654'}}>
+                                        Withdraw
+                                    </p>
+                                </div>
+                                <div className="amountColumn mt-lg-0 mt-3">
+                                    <p 
+                                    className="mb-0 creditColor" 
+                                    >
+                                        NGN {value.amount}</p>
+                                </div>
+                                <div className="doubleColumn mt-lg-0 mt-3">
+                                    <p className="mb-0" style={{color:'#3A5654'}}>
+                                    <Moment format="MMMM Do, YYYY">
+                                            {value.createdAt}
+                                         </Moment>
+                                    </p>
+                                </div>
+                                <div className="transactionColumn mt-lg-0 mt-3">
+                                    <Link to={`/admin/confirm-request/${value.id}`} className="mb-0" style={{color: '#5B9223', textDecoration: 'none'}}>Process Request</Link>
                                 </div>
                             </div>
+                      </div>
+                    );
+                    })
+                ) : (
+                    <div>
+                    <div className="text-center mt-5">
+                            <p className="mb-0" style={{fontStyle: 'italic'}}>No withdrawal request made yet</p>
+                        </div>
+                    </div>
+                )
+             }
 
+                    {
+                        request.length > 0 ? 
                         <div className="mt-4" style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Link to="/admin/logistics" className="next-page page-space" style={{textDecoration: 'none', color: '#323335', background: '#F3F3F3'}}>
                                 <span>View All <i className="mdi mdi-chevron-right" style={{color: '#5B9223'}}></i></span>
                             </Link>
                         </div>
+                        :
+                        ""
+                    }
+                        
 
 
 
@@ -178,5 +172,17 @@ const AdminWithdrawal = () => {
         </>
      );
 }
+
+const mapStateToProps = (state)=>{
+    return{
+        request: state.admin.requests
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        fetchRequest: (status) => dispatch(getWithdrawalRequests(status)),
+    }
+}
  
-export default AdminWithdrawal;
+export default connect(mapStateToProps, mapDispatchToProps)(AdminWithdrawal);

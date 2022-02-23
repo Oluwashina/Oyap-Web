@@ -3,14 +3,81 @@ import React,{useState} from 'react';
 import {FaBars } from 'react-icons/fa';
 import AdminSidebar from '../../../components/AdminSidebar';
 import './AdminWithdrawal.css'
-import RequestUser from '../../../assets/images/request.png'
+// import RequestUser from '../../../assets/images/request.png'
+import { connect } from 'react-redux';
+import {useParams, useHistory} from 'react-router-dom'
+import Moment from 'react-moment'
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { declineWithdrawalRequest } from '../../../store/actions/admin';
 
-const AdminWithdrawRequest = () => {
+const AdminWithdrawRequest = ({requests, declineRequest,loader}) => {
+
     const [toggled, setToggled] = useState(false);
 
+    const {id} = useParams()
+
+    const history = useHistory()
+
+    const request = requests.find(val => val.id === id);
+
+    console.log(request)
 
     const handleToggleSidebar = (value) => {
         setToggled(value);
+    };
+
+    const Decline = (id) => {
+        confirmAlert({
+          title: "Confirm to submit",
+          message: `You are about to decline this request, Do you wish to continue?`,
+          buttons: [
+            {
+              label: "Yes",
+              onClick: () => confirmDecline(id),
+            },
+            {
+              label: "No",
+            },
+          ],
+        });
+    };
+
+    const confirmDecline = (id) => {
+        declineRequest(id)
+
+        setTimeout(()=>{
+            history.push('/admin/withdrawalrequest')
+        }, 3000)
+    };
+
+    const Approve = (id) => {
+        confirmAlert({
+          title: "Confirm to submit",
+          message: `You are about to approve this request, Do you wish to continue`,
+          buttons: [
+            {
+                label: "Approve",
+                onClick: () => FlutterwavePay(id),
+            },
+            {
+              label: "No",
+            }
+          ],
+        });
+    };
+
+    const FlutterwavePay = (id) => {
+        // flutterPay(id)
+        alert(id)
+        // const res = {
+        //     account_bank: account.bankCode,
+        //     account_number: account.accountNumber,
+        //     amount: trade.amount,
+        //     narration: "Giftcard Payment from Tacit Exchange",
+        //     currency: "NGN",
+        //     debit_currency: "NGN",
+        //   };
       };
 
       
@@ -43,13 +110,15 @@ const AdminWithdrawRequest = () => {
                             <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
 
                                 <div>   
-                                    <img src={RequestUser} alt="user" className="" style={{width: 140, height: 150}} />
+                                    <img src={request.userDetails.profilePic} alt="user" className="" style={{width: 140, height: 150}} />
                                 </div>
 
                                 <div>
-                                    <h5 className="mb-0">Courtney Henry</h5>
-                                    <p className="mb-0 mt-1">Logistic</p>
-                                    <p className="mt-1" style={{color: '#ED881C'}}>Join Date: 10/12/2020</p>
+                                    <h5 className="mb-0">{request.userDetails.firstName} {request.userDetails.lastName}</h5>
+                                    <p className="mb-0 mt-1">{request.userDetails.role}</p>
+                                    <p className="mt-1" style={{color: '#ED881C'}}>Join Date: <Moment format="MMMM Do, YYYY">
+                                         {request.userDetails.createdAt}
+                                         </Moment></p>
                                 </div>
 
 
@@ -67,7 +136,10 @@ const AdminWithdrawRequest = () => {
                                     </div>
 
                                     <div>
-                                        <p>10/03/2021</p>
+                                        <p>
+                                        <Moment format="MMMM Do, YYYY">
+                                         {request.createdAt}
+                                         </Moment></p>
                                     </div>
                                 </div>
 
@@ -77,36 +149,49 @@ const AdminWithdrawRequest = () => {
                                     </div>
 
                                     <div>
-                                        <p style={{color: '#ED881C'}}>Pending</p>
+                                        <p style={{color: '#ED881C'}}>{request.status}</p>
                                     </div>
                                 </div>
 
                             </div>
 
+                        {
+                            request.status === "CANCELLED" && request.status === "COMPLETED" ?
                             <div className="requestBy mt-4">
-                                 <p className="text-center" style={{lineHeight: '21px'}}>
-                                    Click here to confirm when the request has been processed succesfully or cancelled
-                                </p>
+                            <p className="text-center" style={{lineHeight: '21px'}}>
+                               Click here to confirm when the request has been processed succesfully or cancelled
+                           </p>
 
-                                <div className="mt-2" style={{display: 'flex', justifyContent: 'space-between'}}>
+                           <div className="mt-2" style={{display: 'flex', justifyContent: 'space-between'}}>
 
-                                    <div>
-                                         <button
-                                        type="submit"
-                                        className="btn btn-cancel btn-sm">Cancel Request</button>
-                                    </div>
-
-                                    <div>
+                               <div>
                                     <button
-                                        type="submit"
-                                        className="btn btn-oyap btn-sm">Confirm Request</button>
+                                   type="submit"
+                                   disabled={loader}
+                                    onClick={() => {
+                                        Decline(request.id);
+                                    }}
+                                   className="btn btn-cancel btn-sm">Cancel Request</button>
+                               </div>
 
-                                    </div>
+                               <div>
+                               <button
+                                   type="submit"
+                                   disabled={loader}
+                                   onClick={() => {
+                                    Approve(request.id);
+                                }}
+                                   className="btn btn-oyap btn-sm">Confirm Request</button>
 
-                                </div>
+                               </div>
 
+                           </div>
 
-                            </div>
+                       </div>
+                       :
+                       ""
+                        }
+                           
 
 
                         </div>
@@ -118,11 +203,11 @@ const AdminWithdrawRequest = () => {
 
                                 <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                     <div>
-                                        <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>Order Id</p>
+                                        <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>Request Id</p>
                                     </div>
                                     <div>
                                     <p className="mb-0" style={{fontWeight: 500, fontSize: 14}}>
-                                    123343432DHG</p> 
+                                    {request.id}</p> 
                                     </div>
                                 </div>
 
@@ -136,7 +221,7 @@ const AdminWithdrawRequest = () => {
                                     </div>
                                     <div>
                                     <p className="mb-0" style={{fontWeight: 600, fontSize: 14,}}>
-                                        NGN 40,000
+                                        NGN {request.amount}
                                             </p> 
                                     </div>
                                 </div>
@@ -150,7 +235,7 @@ const AdminWithdrawRequest = () => {
                                         <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Account Number</p>
                                     </div>
                                     <div>
-                                    <p className="mb-0" style={{fontWeight: 600}}>3042314777</p> 
+                                    <p className="mb-0" style={{fontWeight: 600}}>{request.accountNumber}</p> 
                                     </div>
                                 </div>
 
@@ -164,7 +249,7 @@ const AdminWithdrawRequest = () => {
                                         <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Account Name</p>
                                     </div>
                                     <div>
-                                    <p className="mb-0" style={{fontWeight: 600}}>Courtney Henry</p> 
+                                    <p className="mb-0" style={{fontWeight: 600}}>{request.accountName}</p> 
                                     </div>
                                 </div>
 
@@ -177,7 +262,7 @@ const AdminWithdrawRequest = () => {
                                         <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Bank</p>
                                     </div>
                                     <div>
-                                    <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>Firstbank Nigeria</p> 
+                                    <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>{request.bankName}</p> 
                                     </div>
                                 </div>
 
@@ -191,7 +276,7 @@ const AdminWithdrawRequest = () => {
                                         <p className="mb-0" style={{fontSize: 14, lineHeight: '21px'}}>Narration</p>
                                     </div>
                                     <div>
-                                    <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>Pay me my money</p> 
+                                    <p className="mb-0" style={{fontWeight: 500, fontSize: 14,}}>{request.narration ? request.narration: "No narration"}</p> 
                                     </div>
                                 </div>
 
@@ -205,7 +290,7 @@ const AdminWithdrawRequest = () => {
                                         <p className="mb-0" style={{fontWeight: 700}}>TOTAL WITHDRAWAL</p>
                                     </div>
                                     <div>
-                                    <h6 className="mb-0" style={{fontWeight: 600, color: '#5B9223'}}>NGN 40,000</h6> 
+                                    <h6 className="mb-0" style={{fontWeight: 600, color: '#5B9223'}}>NGN {request.amount}</h6> 
                                     </div>
                                 </div>
                                 </div>
@@ -224,4 +309,17 @@ const AdminWithdrawRequest = () => {
      );
 }
  
-export default AdminWithdrawRequest;
+const mapStateToProps = (state)=>{
+    return{
+        requests: state.admin.requests,
+        loader: state.admin.declinedLoader
+    }
+}
+
+const mapDispatchToProps = (dispatch) =>{
+    return{
+        declineRequest: (id) => dispatch(declineWithdrawalRequest(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AdminWithdrawRequest);

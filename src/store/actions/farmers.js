@@ -1,5 +1,6 @@
 import {GetApi, PutApi, PostApi, DeleteApi} from '../helpers'
 import cogoToast from "cogo-toast";
+import axios from 'axios';
 
 
 
@@ -113,7 +114,7 @@ export const addProduct = (val) => {
   return async (dispatch, getState) => {
     let image = [];
     let stock;
-    let isLogistics;
+    // let isLogistics;
     var result = [
       ...image,
       getState().farmers.productZero,
@@ -127,12 +128,12 @@ export const addProduct = (val) => {
     else{
       stock = true
     }
-    if(val.isLogistics === "Yes"){
-      isLogistics = true
-    }
-    else{
-      isLogistics = false
-    }
+    // if(val.isLogistics === "Yes"){
+    //   isLogistics = true
+    // }
+    // else{
+    //   isLogistics = false
+    // }
       const data = {
         productName: val.name,
         productCategory: val.type,
@@ -143,8 +144,8 @@ export const addProduct = (val) => {
         productDescription: val.description,
         productInStock: stock,
         productImages: result,
-        productWeight: val.weight,
-        isLogistics: isLogistics
+        productWeight: parseFloat(val.weight),
+        isLogistics: false
       }
     try {
       const res = await PostApi("product", {...data}, getToken(), "application/json")
@@ -180,7 +181,7 @@ export const updateProduct = (val) => {
   return async (dispatch, getState) => {
     let image = [];
     let stock;
-    let isLogistics;
+    // let isLogistics;
     var result = [
       ...image,
       getState().farmers.productZero,
@@ -195,12 +196,12 @@ export const updateProduct = (val) => {
       stock = true
     }
 
-    if(val.isLogistics === "Yes"){
-      isLogistics = true
-    }
-    else{
-      isLogistics = false
-    }
+    // if(val.isLogistics === "Yes"){
+    //   isLogistics = true
+    // }
+    // else{
+    //   isLogistics = false
+    // }
     const data = {
       productName: val.name,
       productCategory: val.type,
@@ -211,8 +212,8 @@ export const updateProduct = (val) => {
       productDescription: val.description,
       productInStock: stock,
       productImages: result,
-      productWeight: val.weight,
-      isLogistics: isLogistics
+      productWeight: parseFloat(val.weight),
+      isLogistics: false
     }
     try {
       const res = await PutApi("products/"+val.id, {...data}, getToken())
@@ -401,6 +402,23 @@ export const getFarmersTransactions = () => {
   };
 };
 
+// get the transactions for a farmer
+export const getBanks = () => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await axios.get("https://exchanger.tacitexchange.com/bank/code");
+      if (res.status === 200) {
+        dispatch({ type: "Banks", data: res.data.bankCode.data});
+      }
+      if(res.status === 400){
+        dispatch({ type: "Banks_Error", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
+
 // withdraw functionality
 export const WithdrawAmount = (val) => {
   return async (dispatch, getState) => {
@@ -409,7 +427,8 @@ export const WithdrawAmount = (val) => {
                       amount: val.amount,
                       accountName: val.accountName,
                       accountNumber: val.accountNumber,
-                      bankName: val.bank,
+                      bankName: val.bankName,
+                      bankCode: val.bank,
                       narration: val.narration
                      }, getToken(), "application/json")
       if (res.status === 200) {  
@@ -436,4 +455,5 @@ export const CloseWithdrawModal = (id, qty) =>{
       dispatch({type: 'WithdrawClose'})
   }
 }
+
   

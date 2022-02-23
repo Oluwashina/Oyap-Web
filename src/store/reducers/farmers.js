@@ -17,6 +17,7 @@ const initState = {
     confirmloader: false,
     success: false,
     transactions: [],
+    banks: [],
     withdrawsuccess: false,
     deleteBtn: false
 }
@@ -147,6 +148,11 @@ const farmersReducer = (state=initState, action) => {
             return{
                 ...state,
                 transactions: action.data
+            }
+        case "Banks":
+            return{
+                ...state, 
+                banks: action.data
             }
         case 'Withdraw':
             return{

@@ -179,7 +179,44 @@ export const getAdminDashboardCount = () => {
        console.log(err)
       }
     };
+};
+
+// dispatch an order functionality
+export const dispatchOrderRequest = (id) => {
+  return async (dispatch, getState) => {
+      dispatch({ type: "Order_Start"});
+    try {
+      const res = await PostApi("ontransit/order/"+id, "", getToken());
+      if (res.status === 200) {
+        dispatch({ type: "Order_Success"});
+        cogoToast.success("Your request has been dispatched successfully!");
+      }
+      if(res.status === 400){
+        dispatch({ type: "Order_Error" });
+      }
+    } catch (err) {
+     console.log(err)
+    }
   };
+};
+
+export const completeOrderRequest = (id) => {
+  return async (dispatch, getState) => {
+      dispatch({ type: "Order_Start"});
+    try {
+      const res = await PostApi("logistics/confirm/order/"+id, "", getToken());
+      if (res.status === 200) {
+        dispatch({ type: "Order_Success"});
+        cogoToast.success("Your request has been completed successfully!");
+      }
+      if(res.status === 400){
+        dispatch({ type: "Order_Error" });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
 
   // enable a user functionality
   export const enableUser = (user) => {
@@ -251,3 +288,58 @@ export const getAdminDashboardCount = () => {
     }
 }
 
+
+// get all withdrawal requests by a farmer
+export const getWithdrawalRequests = (status) => {
+  return async (dispatch, getState) => {
+    try {
+      const res = await GetApi(`withdrawer?status=${status}&limit=5&offset-=1`, getToken());
+      if (res.status === 200) {
+        dispatch({ type: "WithdrawalRequests", data: res.data});
+      }
+      if(res.status === 400){
+        dispatch({ type: "Request_Error", err: res.data });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
+
+// decline a withdrawal request
+export const declineWithdrawalRequest = (id) => {
+  return async (dispatch, getState) => {
+      dispatch({ type: "Declined_Start"});
+    try {
+      const res = await PostApi("cancelrequest/"+id, "", getToken());
+      if (res.status === 200) {
+        dispatch({ type: "Declined_Success"});
+        cogoToast.success("Your request has been declined successfully!");
+      }
+      if(res.status === 400){
+        dispatch({ type: "Declined_Error" });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};
+
+// approve a withdrawal request
+export const approveWithdrawalRequest = (id, creds) => {
+  return async (dispatch, getState) => {
+      dispatch({ type: "Approve_Start"});
+    try {
+      const res = await PostApi("completerequest/"+id, {...creds}, getToken());
+      if (res.status === 200) {
+        dispatch({ type: "Approve_Success"});
+        cogoToast.success("Your request has been approved successfully");
+      }
+      if(res.status === 400){
+        dispatch({ type: "Approve_Error" });
+      }
+    } catch (err) {
+     console.log(err)
+    }
+  };
+};

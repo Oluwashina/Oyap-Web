@@ -5,13 +5,15 @@ import {connect} from 'react-redux'
 import Moment from 'react-moment'
 import {Form, Formik} from 'formik'
 import {cancelOrderValidator} from '../../../validationSchema/validator'
-import { CancelAdminOrder, clearCancelStatus } from '../../../store/actions/admin';
+import { CancelAdminOrder, clearCancelStatus, completeOrderRequest, dispatchOrderRequest } from '../../../store/actions/admin';
 import {useHistory} from 'react-router-dom'
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 
 const AdminOrderDetails = (props) => {
 
-    const {order, cancelOrder, order_cancelled, clearCancel} = props
+    const {order, cancelOrder, order_cancelled, clearCancel, dispatchOrder, orderloader, completeOrder} = props
 
     const history = useHistory()
 
@@ -69,6 +71,55 @@ const AdminOrderDetails = (props) => {
         } 
     }, [order_cancelled, history, clearCancel])
 
+    const handleOrderRequest = () =>{
+        confirmAlert({
+            title: "Confirm to submit",
+            message: `You are about to dispatch this order, Do you wish to continue?`,
+            buttons: [
+              {
+                label: "Yes",
+                onClick: () => confirmDispatch(),
+              },
+              {
+                label: "No",
+              },
+            ],
+          });
+    }
+
+    const handleCompleteRequest = () =>{
+        confirmAlert({
+            title: "Confirm to submit",
+            message: `You are about to complete the delivery of this order, Do you wish to continue?`,
+            buttons: [
+              {
+                label: "Yes",
+                onClick: () => confirmDelivery(),
+              },
+              {
+                label: "No",
+              },
+            ],
+          });
+    }
+
+
+    const confirmDispatch = () =>{
+        dispatchOrder(id)
+
+        setTimeout(()=>{
+            history.push('/admin/orders')
+        }, 3000)
+    }
+
+
+    const confirmDelivery = () =>{
+        completeOrder(id)
+
+        setTimeout(()=>{
+            history.push('/admin/orders')
+        }, 3000) 
+    }
 
     return ( 
         <>
@@ -292,12 +343,35 @@ const AdminOrderDetails = (props) => {
                                     </small>
                                         
                                     </div>
-
+                                    
                                     <div className="text-center">
                                         <button
                                         type="submit"
                                         disabled={isSubmitting}
-                                        className="btn btn-cancel mt-4">Cancel Order</button>
+                                        className="btn btn-cancel mt-4 mr-4">Cancel Order</button>
+
+                                    {
+                                        order.timeLine.length === 2 &&
+                                        <p  
+                                        onClick={() => handleOrderRequest()}
+                                        className={
+                                            orderloader ? 
+                                            "btn btn-oyap mt-4 mb-0 disabled": "btn btn-oyap mt-4 mb-0"
+                                        }
+                                       >Dispatch Order</p>
+                                    }
+
+                                    {
+                                        order.timeLine.length === 3 &&
+                                        <p  
+                                        onClick={() => handleCompleteRequest()}
+                                        className={
+                                            orderloader ? 
+                                            "btn btn-oyap mt-4 mb-0 disabled": "btn btn-oyap mt-4 mb-0"
+                                        }
+                                       >Complete Order</p>
+                                    }
+                                       
 
                                     </div>
                                        
@@ -328,7 +402,8 @@ const mapStateToProps = (state) =>{
     return{
         auth: state.auth.isAuthenticated,
         order: state.admin.order,
-        order_cancelled: state.admin.order_cancelled
+        order_cancelled: state.admin.order_cancelled,
+        orderloader: state.admin.orderLoader
     }
 }
 
@@ -336,6 +411,8 @@ const mapDispatchToProps = (dispatch) =>{
     return{
         cancelOrder: (creds, id) => dispatch(CancelAdminOrder(creds, id)),
         clearCancel: () => dispatch(clearCancelStatus()),
+        dispatchOrder: (id) => dispatch(dispatchOrderRequest(id)),
+        completeOrder: (id) => dispatch(completeOrderRequest(id)),
     }
 }
  
