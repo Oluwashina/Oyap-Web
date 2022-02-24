@@ -3,7 +3,8 @@ import * as actionTypes from '../actions/actionTypes'
 const initState = {
     isLoading: false,
     products:[],
-    relatedproducts: []
+    relatedproducts: [],
+    productloader: false
 }
 
 const productsReducer = (state=initState, action) => {
@@ -22,6 +23,11 @@ const productsReducer = (state=initState, action) => {
             return {
                 ...state,
                 isLoading: false
+            }
+        case "ProductLoader":
+            return{
+                ...state,
+                 productloader: !state.productloader
             }
         case 'AllProducts':
             return{

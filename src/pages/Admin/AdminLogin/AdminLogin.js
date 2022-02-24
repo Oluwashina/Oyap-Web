@@ -14,7 +14,31 @@ const AdminLogin = (props) => {
 
   const history = useHistory()
 
-  const [role] = useState("Admin");
+  const [initialTab, setTab] = useState(1);
+
+  const [role, setRole] = useState("Admin");
+
+  const [tabData] = useState([
+    { id: 1, name: "tab-1", text: "Admin"},
+    { id: 2, name: "tab-2", text: "SubAdmin" },
+  ]);
+
+   // tab Layout
+   const tabLayout = tabData.map((item) => (
+    <div 
+    key={item.id}
+      className={initialTab === item.id ? "active-tab" : "tab"}
+      onClick={() => handleTabToggleAndSetRole(item.id, item.text)}
+     style={{flex: 1}}>
+      <p className="mb-0 text-center">{item.text}</p>
+    </div>
+  ));
+
+  
+  const handleTabToggleAndSetRole = (id, role) => {
+    setTab(id);
+    setRole(role);
+  } 
 
   // submit login button
   const handleSubmit = async (values) => {
@@ -42,6 +66,9 @@ const AdminLogin = (props) => {
             case 'Admin':
                 history.push('/admin/dashboard')
                 break;
+            case 'SubAdmin':
+              history.push('/admin/dashboard')
+              break;
             default:
               history.push('/')
               break;
@@ -61,7 +88,14 @@ const AdminLogin = (props) => {
 
             {/* Form submission */}
           <div className="login-container mb-4">
-            <h3 className="mt-4 login-head">Login as Administrator</h3>
+            <h3 className="mt-4 login-head">Login as</h3>
+
+              {/* tabs select */}
+              <div
+              className="mt-4" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+              {tabLayout}
+              </div>
+                
 
               <Formik
                 onSubmit={(values, {setSubmitting}) =>
@@ -81,7 +115,7 @@ const AdminLogin = (props) => {
                   })=>(
                       <Form onSubmit={handleSubmit}>
                           {/* email */}
-                          <div className="form-group mt-4">
+                          <div className="form-group mt-5">
                             <label htmlFor="email">Enter your email address</label>
                             <input
                               className="form-control input-style"

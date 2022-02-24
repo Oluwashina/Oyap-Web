@@ -157,40 +157,40 @@ const AdminWithdrawRequest = ({requests, declineRequest,loader}) => {
                             </div>
 
                         {
-                            request.status === "CANCELLED" && request.status === "COMPLETED" ?
-                            <div className="requestBy mt-4">
-                            <p className="text-center" style={{lineHeight: '21px'}}>
-                               Click here to confirm when the request has been processed succesfully or cancelled
-                           </p>
-
-                           <div className="mt-2" style={{display: 'flex', justifyContent: 'space-between'}}>
-
-                               <div>
-                                    <button
-                                   type="submit"
-                                   disabled={loader}
-                                    onClick={() => {
-                                        Decline(request.id);
-                                    }}
-                                   className="btn btn-cancel btn-sm">Cancel Request</button>
-                               </div>
-
-                               <div>
-                               <button
-                                   type="submit"
-                                   disabled={loader}
-                                   onClick={() => {
-                                    Approve(request.id);
-                                }}
-                                   className="btn btn-oyap btn-sm">Confirm Request</button>
-
-                               </div>
-
-                           </div>
-
-                       </div>
+                            request.status === "CANCELLED" || request.status === "COMPLETED" ?
+                           ""
                        :
-                       ""
+                       <div className="requestBy mt-4">
+                       <p className="text-center" style={{lineHeight: '21px'}}>
+                          Click here to confirm when the request has been processed succesfully or cancelled
+                      </p>
+
+                      <div className="mt-2" style={{display: 'flex', justifyContent: 'space-between'}}>
+
+                          <div>
+                               <button
+                              type="submit"
+                              disabled={loader}
+                               onClick={() => {
+                                   Decline(request.id);
+                               }}
+                              className="btn btn-cancel btn-sm">Cancel Request</button>
+                          </div>
+
+                          <div>
+                          <button
+                              type="submit"
+                              disabled={loader}
+                              onClick={() => {
+                               Approve(request.id);
+                           }}
+                              className="btn btn-oyap btn-sm">Confirm Request</button>
+
+                          </div>
+
+                      </div>
+
+                  </div>
                         }
                            
 

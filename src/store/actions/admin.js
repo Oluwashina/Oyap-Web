@@ -393,7 +393,7 @@ export const approveWithdrawalRequest = (id, creds) => {
 export const adminRegister = (user) => {
   return async (dispatch, getState) => {
     try {
-      const res = await PostApi("admin", {
+      const res = await PostApi("user", {
                    firstName: user.firstName,
                    lastName: user.lastName,
                    phoneNumber: user.phoneNumber,

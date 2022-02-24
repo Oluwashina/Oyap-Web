@@ -287,7 +287,7 @@ const AdminDashboard = (props) => {
                             <p className="mb-0 recentStyle">Recent Orders</p>
                         </div>
                         <div>
-                            <Link to="/admin" style={{textDecoration: 'none'}}>
+                            <Link to="/admin/orders" style={{textDecoration: 'none'}}>
                              <p className="mb-0" style={{color: '#7BC30A'}}>View All</p>
                             </Link>
                         </div>

@@ -8,19 +8,63 @@ import Skeleton from 'react-loading-skeleton'
 const BuyerProducts = (props) => {
     
 
-    const {itemRoute, products} = props
+    const {itemRoute, products, loader} = props
     
 
     const handleRoute = (val) =>{
         itemRoute(val)
     }
 
-    const AllProducts = !products ?
+    const AllProducts = loader ?
     (
-        <div className="">
+        <>
+        <div className="col-lg-2 col-6 mb-4 productCard">
+            <Image
+                src='https://source.unsplash.com/random/800x600'
+                fallback={<Shimmer width={140} height={150} />}
+                NativeImgProps={{className: "productImage"}}
+            />
         </div>
+        <div className="col-lg-2 col-6 mb-4 productCard">
+            <Image
+                src='https://source.unsplash.com/random/800x600'
+                fallback={<Shimmer width={140} height={150} />}
+                NativeImgProps={{className: "productImage"}}
+            />
+        </div>
+        <div className="col-lg-2 col-6 mb-4 productCard">
+            <Image
+                src='https://source.unsplash.com/random/800x600'
+                fallback={<Shimmer width={140} height={150} />}
+                NativeImgProps={{className: "productImage"}}
+            />
+        </div>
+        <div className="col-lg-2 col-6 mb-4 productCard">
+            <Image
+                src='https://source.unsplash.com/random/800x600'
+                fallback={<Shimmer width={140} height={150} />}
+                NativeImgProps={{className: "productImage"}}
+            />
+        </div>
+        <div className="col-lg-2 col-6 mb-4 productCard">
+            <Image
+                src='https://source.unsplash.com/random/800x600'
+                fallback={<Shimmer width={140} height={150} />}
+                NativeImgProps={{className: "productImage"}}
+            />
+        </div>
+        <div className="col-lg-2 col-6 mb-4 productCard">
+            <Image
+                src='https://source.unsplash.com/random/800x600'
+                fallback={<Shimmer width={140} height={150} />}
+                NativeImgProps={{className: "productImage"}}
+            />
+        </div>
+        </>
+        
     )
-     : products.map(product =>{
+     :
+     ( products.length > 0 ? products.map(product =>{
             return(
                 <div key={product.id} className="col-lg-2 col-6 mb-4 productCard" onClick={() => handleRoute(product.id)}>
                 {/* image */}
@@ -37,11 +81,16 @@ const BuyerProducts = (props) => {
                 </div>
                 {/* price */}
                 <div className="mt-2">
-                    <p className="mb-0 price text-center">NGN {product.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ||  <Skeleton /> }</p>
+                    <p className="mb-0 price text-center">NGN {product.displayPrice ? product.displayPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : product.productPrice ||  <Skeleton /> }</p>
                 </div>
             </div> 
             )
-        }) 
+        })
+        :
+        <div>
+             <p>There are no items to display</p>
+        </div>
+     ) 
 
     return ( 
         <>

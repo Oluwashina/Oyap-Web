@@ -15,7 +15,7 @@ import Account from "../assets/images/account.svg";
 import {connect} from 'react-redux'
 import * as actions from "../store/actions";
 
-const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, logout }) => {
+const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, logout, role }) => {
 
 
     return ( 
@@ -87,7 +87,10 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, log
         >
           <Link
              to="/admin/add"
-            className="sidebar-btn"
+            className={
+              role === "SubAdmin" ? "sidebar-btn disabled":
+              "sidebar-btn"
+            }
           >
            
             <span> Add Admin</span>
@@ -105,7 +108,8 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, log
 const mapStateToProps = (state) =>{
   return{
     firstname: state.auth.firstname,
-    profileUrl: state.auth.profilePic
+    profileUrl: state.auth.profilePic,
+    role: state.auth.role
   }
 }
 

@@ -7,7 +7,7 @@ import { adminRegister } from '../../../store/actions/admin';
 import { connect } from 'react-redux';
 
 
-const AddAdminPage = () => {
+const AddAdminPage = ({add}) => {
 
     const [toggled, setToggled] = useState(false);
 
@@ -24,6 +24,12 @@ const AddAdminPage = () => {
             role
         }
         console.log(result)
+
+       await add(result)
+
+        setTimeout(()=>{
+            ref.current.reset();
+        }, 3000)
     }
 
     return ( 

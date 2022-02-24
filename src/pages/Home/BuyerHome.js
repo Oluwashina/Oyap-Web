@@ -13,7 +13,7 @@ import { getProducts } from "../../store/actions/products";
 
 const BuyerHome = (props) => {
   
-  const { history, products, ProductsFetch } = props;
+  const { history, products, ProductsFetch, productloader } = props;
 
 
   // make call to fetch products on load of page
@@ -82,7 +82,7 @@ const BuyerHome = (props) => {
         </div>
       </div>
 
-      <BuyerProducts itemRoute={itemProduct} products={products} />
+      <BuyerProducts itemRoute={itemProduct} loader={productloader} products={products} />
 
       {/* farm image */}
       <div className="mt-5 mb-lg-5 mb-4" style={{ position: "relative" }}>
@@ -108,6 +108,7 @@ const BuyerHome = (props) => {
 const mapStateToProps = (state) => {
   return {
     products: state.products.products,
+    productloader: state.products.productloader
   };
 };
 

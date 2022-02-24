@@ -6,13 +6,16 @@ import {GetApi} from '../helpers'
 // get all products API
 export const getProducts = () => {
   return async (dispatch, getState) => {
+    dispatch({ type: "ProductLoader"});
     try {
       const res = await GetApi("products", "");
       if (res.status === 200) {
         dispatch({ type: "AllProducts", data: res.data});
+        dispatch({ type: "ProductLoader"});
       }
       if(res.status === 400){
         dispatch({ type: "Product_Error", err: res.data });
+        dispatch({ type: "ProductLoader"});
       }
     } catch (err) {
      console.log(err)

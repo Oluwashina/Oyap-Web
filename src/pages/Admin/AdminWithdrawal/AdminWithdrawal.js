@@ -153,7 +153,7 @@ const AdminWithdrawal = ({fetchRequest, request}) => {
                     {
                         request.length > 0 ? 
                         <div className="mt-4" style={{display: 'flex', justifyContent: 'flex-end'}}>
-                            <Link to="/admin/logistics" className="next-page page-space" style={{textDecoration: 'none', color: '#323335', background: '#F3F3F3'}}>
+                            <Link to="/admin/withdrawalrequest" className="next-page page-space" style={{textDecoration: 'none', color: '#323335', background: '#F3F3F3'}}>
                                 <span>View All <i className="mdi mdi-chevron-right" style={{color: '#5B9223'}}></i></span>
                             </Link>
                         </div>
