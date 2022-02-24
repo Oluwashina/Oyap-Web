@@ -88,3 +88,10 @@ i.mdi-minus.disabled{
     opacity: 0.65;
 }
 
+.feedbackDiv{
+    border-bottom: 1px solid rgba(196, 196, 196, 0.2);
+}
+
+.feedbackDiv:last-child{
+    border-bottom: none;
+}

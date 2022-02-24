@@ -20,6 +20,11 @@ export const cancelOrderValidator = Yup.object({
     .required("Reason is required"),
 });
 
+export const reviewValidator = Yup.object({
+  feedback: Yup.string()
+    .required("Review is required"),
+});
+
 export const verifyCodeValidator = Yup.object({
   code:  Yup.string()
     .min(6, "Code cannot be less than 6 characters")

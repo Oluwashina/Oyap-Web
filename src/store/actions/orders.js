@@ -1,5 +1,5 @@
 import {PostApi,GetApi} from '../helpers'
-
+import cogoToast from 'cogo-toast';
 
 
 const getToken = () => {
@@ -45,6 +45,29 @@ export const getCustomersOrders = (value) => {
       }
     } catch (err) {
      console.log(err)
+    }
+  };
+};
+
+
+export const AddOrderReview = (val) => {
+  return async (dispatch, getState) => {
+      const data = {
+        feedback: val.feedback,
+        rating: val.rating,
+        rateMeaning: val.rateMeaning,
+        orderId: val.orderId
+      }
+    try {
+      const res = await PostApi("product/feedback/"+val.id, {...data}, getToken(), "application/json")
+      if (res.status === 200) {
+        cogoToast.success('Feedback submitted successfully!')
+      }
+      if(res.status === 400){
+        dispatch({ type: "Order_Error", err: res.data});
+      }
+    } catch (err) {
+      console.log(err)
     }
   };
 };

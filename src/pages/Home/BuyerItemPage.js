@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React,{useEffect } from 'react';
 import BuyerNav from '../../components/BuyerNavbar';
 import Default from "../../assets/images/default.png";
 import Seller from "../../assets/images/seller1.png";
@@ -11,6 +11,8 @@ import ImageZoom from 'react-medium-image-zoom'
 import { getRelatedProducts } from '../../store/actions/products';
 import Image, { Shimmer } from 'react-shimmer'
 import Skeleton from 'react-loading-skeleton'
+import { Rating } from 'react-simple-star-rating'
+import Moment from 'react-moment'
 
 
 const ItemPage = (props) => {
@@ -76,7 +78,7 @@ const ItemPage = (props) => {
                 </div>
                 {/* price */}
                 <div className="mt-2">
-                    <p className="mb-0 price text-center">NGN {product.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") ||  <Skeleton /> }</p>
+                    <p className="mb-0 price text-center">NGN {product.displayPrice ? product.displayPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : product.productPrice ||  <Skeleton /> }</p>
                 </div>
             </div> 
           );
@@ -232,7 +234,7 @@ const ItemPage = (props) => {
                     <div className="col-lg-5">
                         {/* amount */}
                         <div className="mt-4">
-                            <h5 style={{color: '#5B9223', fontWeight: 'bold'}}>NGN {product.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h5>
+                            <h5 style={{color: '#5B9223', fontWeight: 'bold'}}>NGN {product.displayPrice ? product.displayPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : product.productPrice}</h5>
                         </div>
 
                         {/* status */}
@@ -352,6 +354,53 @@ const ItemPage = (props) => {
                         :
                      ""
                      }
+
+              {/* related products section */}
+              <div className='mb-5'>
+                <div style={{background: ' rgba(196, 196, 196, 0.2)', padding: '10px 20px'}}> 
+                    <div>
+                     <p className="mb-0" style={{fontWeight: 600}}>Verified Customer Feedback</p>
+                    </div>
+                 </div>
+
+                {
+                    product.feedback.length > 0 && product.feedback.map(val =>{
+                        return(
+                         <div key={val.id} className='feedbackDiv mt-4 mb-4'>
+                            <div>
+                                <Rating 
+                                transition
+                                initialValue={val.rating}
+                                readonly
+                                size={20}
+                                
+                                />
+                            </div>
+                            <div className='mt-3'>
+                                <h6 style={{fontWeight: '600'}}>{val.rateMeaning}</h6>
+                            </div>
+                            <div className='mt-3'>
+                                <h6>{val.message}</h6>
+                            </div>
+                            <div className='mt-3 mb-3' style={{fontSize: 14, color: '#75757a'}}>
+                                
+                            <Moment format="MMMM Do, YYYY">
+                            {val.date}
+                            </Moment> by {val.buyerName}
+                            </div>
+                        </div>
+                        )})
+                 }
+
+                 {
+                     product.feedback.length === 0 && 
+                     <div className='text-center mt-4'>
+                         <p style={{fontStyle: 'italic'}}>There are no feedbacks yet fot this product</p>
+                    </div>
+                 }
+            
+                
+             </div>
 
 
 

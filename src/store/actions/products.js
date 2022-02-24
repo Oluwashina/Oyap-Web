@@ -42,7 +42,6 @@ export const getRelatedProducts = (id) => {
 };
 
 
-
 export const createProduct = (product) => {
   return async (dispatch, getState, { getFirestore }) => {
     dispatch({ type: actionTypes.CREATE_PRODUCT_START });

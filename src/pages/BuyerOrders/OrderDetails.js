@@ -1,14 +1,27 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import BuyerNav from '../../components/BuyerNavbar';
 import BuyerFooter from '../../components/BuyerFooter';
 import {connect} from 'react-redux'
 import Moment from "react-moment";
+import {Form, Formik} from 'formik'
+import {reviewValidator} from '../../validationSchema/validator'
+import { AddOrderReview } from '../../store/actions/orders';
+import { Rating } from 'react-simple-star-rating'
+import cogoToast from 'cogo-toast';
+import { useHistory } from 'react-router-dom';
 
 const OrderDetails = (props) => {
 
-    const {order} = props
+    const {order, reviewAdd} = props
+
+    const history = useHistory()
 
     console.log(order)
+
+    const [rating, setRating] = useState(0)
+
+    const [rateMeaning, setRateMeaning] = useState("Terrible")
+
 
     // tab Layout
  const timelineLayout = order.timeLine.length ? (
@@ -44,6 +57,56 @@ const OrderDetails = (props) => {
           
         </div>
       );
+
+      const handleRating = (rate) => {
+        setRating(rate/20)
+        console.log(rate/20)
+        // other logic
+      }
+
+      useEffect(()=>{
+          switch(rating){
+            case 1: 
+            setRateMeaning("Terrible")
+            break;
+            case 2:
+                setRateMeaning("Bad")
+                break;
+            case 3:
+                setRateMeaning("Average")
+                break;
+            case 4:
+                setRateMeaning("Great")
+                break;
+            case 5:
+                setRateMeaning("Perfect")
+                break;
+            default:
+                break;
+          }
+
+      },[rating])
+
+      const handleSubmit = async (values) =>{
+          const creds = {
+              ...values,
+              rating,
+              rateMeaning,
+              id: order.cartItem.productId,
+              orderId: order.id
+          }
+          console.log(creds)
+          if(rating === 0){
+            cogoToast.info("Please give at least a rating for this order!")
+          }
+          else{
+            await reviewAdd(creds)
+
+            setTimeout(()=>{
+                history.push('/orders')
+            }, 3000)
+          }
+      }
 
 
     return ( 
@@ -202,6 +265,73 @@ const OrderDetails = (props) => {
                             </div>
                         </div>
 
+                        {/* feedback section */}
+                        {
+                            order.status === "Completed" && !order.isFeedbackGiven ? 
+                                        <div className='mt-5'>
+
+                                        <h6 style={{fontWeight: '600'}}>Leave a Review</h6>
+
+                                <div className='mt-4'>
+                                    <Rating onClick={handleRating} ratingValue={rating}
+                                        transition
+                                        showTooltip
+                                        tooltipArray={['Terrible', 'Bad', 'Average', 'Great', 'Perfect']}
+                                        />
+                                    
+                                </div>
+
+                                        
+                        <Formik
+                        onSubmit={(values, {setSubmitting}) =>
+                            handleSubmit(values, setSubmitting)
+                            }
+                        validationSchema={reviewValidator}
+                        initialValues={{feedback: ""}}
+                        >
+                            {({
+                                handleChange,
+                                isSubmitting,
+                                handleSubmit,
+                                handleBlur,
+                                values,
+                                touched,
+                                errors
+                            })=>(
+                                <Form onSubmit={handleSubmit}>
+                                
+                                    {/* Last name */}
+                                    <div className="form-group mt-4">
+                                        <label htmlFor="feedback">Detailed Review</label>
+                                        <textarea className="form-control input-style"
+                                        type="text"
+                                        id="feedback"
+                                        value={values.feedback}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
+                                        rows="6"
+                                        style={{resize: 'none'}}
+                                        placeholder="Tell us more about your rating!" />
+                                        <small style={{ color: "#dc3545" }}>
+                                            {touched.feedback && errors.feedback}
+                                        </small>
+                                    </div>
+                            
+                                    <button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                                className="btn btn-oyap btn-block text-uppercase mt-4">Submit Your Review</button>
+                                        </Form>
+                                    )}
+
+                                </Formik>
+
+                                </div>
+                                :
+                                ""
+                        }
+                      
+
                     </div>
             </div>
 
@@ -228,7 +358,7 @@ const mapStateToProps = (state, ownProps) =>{
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-
+        reviewAdd: (creds) => dispatch(AddOrderReview(creds))
     }
 }
  

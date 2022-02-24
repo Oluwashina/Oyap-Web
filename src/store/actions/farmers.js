@@ -1,6 +1,6 @@
 import {GetApi, PutApi, PostApi, DeleteApi} from '../helpers'
 import cogoToast from "cogo-toast";
-import axios from 'axios';
+// import axios from 'axios';
 
 
 
@@ -406,7 +406,7 @@ export const getFarmersTransactions = () => {
 export const getBanks = () => {
   return async (dispatch, getState) => {
     try {
-      const res = await axios.get("https://exchanger.tacitexchange.com/bank/code");
+      const res = await GetApi("bank/code", getToken());
       if (res.status === 200) {
         dispatch({ type: "Banks", data: res.data.bankCode.data});
       }
