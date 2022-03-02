@@ -16,7 +16,7 @@ const OrderSummary = (props) => {
       let price = 0;
 
       cartItems.forEach(item =>{
-          price += item.cartQty * item.productPrice
+          price += item.cartQty * item.displayPrice ? item.displayPrice : item.productPrice
       })
 
       setTotalPrice(price + shippingFee)

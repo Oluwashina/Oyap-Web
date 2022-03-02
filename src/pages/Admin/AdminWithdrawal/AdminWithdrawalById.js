@@ -9,10 +9,10 @@ import {useParams, useHistory} from 'react-router-dom'
 import Moment from 'react-moment'
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
-import { declineWithdrawalRequest } from '../../../store/actions/admin';
+import { declineWithdrawalRequest, approveWithdrawalRequest } from '../../../store/actions/admin';
 import Account from '../../../assets/images/userProfile.svg'
 
-const AdminWithdrawRequest = ({requests, declineRequest,loader}) => {
+const AdminWithdrawRequest = ({requests, declineRequest,loader, approveRequest}) => {
 
     const [toggled, setToggled] = useState(false);
 
@@ -69,16 +69,11 @@ const AdminWithdrawRequest = ({requests, declineRequest,loader}) => {
     };
 
     const FlutterwavePay = (id) => {
-        // flutterPay(id)
-        alert(id)
-        // const res = {
-        //     account_bank: account.bankCode,
-        //     account_number: account.accountNumber,
-        //     amount: trade.amount,
-        //     narration: "Giftcard Payment from Tacit Exchange",
-        //     currency: "NGN",
-        //     debit_currency: "NGN",
-        //   };
+        approveRequest(id)
+
+        setTimeout(()=>{
+            history.push('/admin/withdrawalrequest')
+        }, 3000)
       };
 
       
@@ -319,7 +314,8 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch) =>{
     return{
-        declineRequest: (id) => dispatch(declineWithdrawalRequest(id))
+        declineRequest: (id) => dispatch(declineWithdrawalRequest(id)),
+        approveRequest: (id) => dispatch(approveWithdrawalRequest(id))
     }
 }
 

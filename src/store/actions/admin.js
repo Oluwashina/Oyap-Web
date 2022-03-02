@@ -370,17 +370,21 @@ export const declineWithdrawalRequest = (id) => {
 };
 
 // approve a withdrawal request
-export const approveWithdrawalRequest = (id, creds) => {
+export const approveWithdrawalRequest = (id) => {
   return async (dispatch, getState) => {
       dispatch({ type: "Approve_Start"});
     try {
-      const res = await PostApi("completerequest/"+id, {...creds}, getToken());
+      const res = await PostApi("completerequest/"+id, "", getToken());
       if (res.status === 200) {
         dispatch({ type: "Approve_Success"});
         cogoToast.success("Your request has been approved successfully");
       }
       if(res.status === 400){
         dispatch({ type: "Approve_Error" });
+        cogoToast.error("There was an error approving this request, Please check if you have sufficient funds!");
+      }
+      if(res.status === 500){
+        cogoToast.error("There was an error approving this request, Please check if you have sufficient funds!");
       }
     } catch (err) {
      console.log(err)

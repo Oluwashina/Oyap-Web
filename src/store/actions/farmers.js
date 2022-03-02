@@ -429,7 +429,9 @@ export const WithdrawAmount = (val) => {
                       accountNumber: val.accountNumber,
                       bankName: val.bankName,
                       bankCode: val.bank,
-                      narration: val.narration
+                      narration: val.narration,
+                      currency: "NGN",
+                      debit_currency: "NGN",
                      }, getToken(), "application/json")
       if (res.status === 200) {  
         dispatch({ type: 'Withdraw' });

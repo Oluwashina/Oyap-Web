@@ -19,7 +19,7 @@ const Cart = (props) => {
         let price = 0;
 
         cartItems.forEach(item =>{
-            price += item.cartQty * item.productPrice
+            price += item.cartQty * item.displayPrice ? item.displayPrice : item.productPrice
         })
 
         setTotalPrice(price)
@@ -36,7 +36,7 @@ const Cart = (props) => {
         let result = {
             ...item,
             cartQty:  -1,
-            subTotal: -1  * item.productPrice
+            subTotal: -1  * item.displayPrice ? item.displayPrice : item.productPrice
         }
         console.log(result)
         Decrement(result)
@@ -46,7 +46,7 @@ const Cart = (props) => {
         let result = {
             ...item,
             cartQty: +1,
-            subTotal: 1 * item.productPrice
+            subTotal: 1 * item.displayPrice ? item.displayPrice : item.productPrice
         }
         console.log(result)
         Increment(result)
@@ -93,7 +93,7 @@ const Cart = (props) => {
                         </div>
                 </div>
                 <div style={{flex: 1,}}>
-                    <h6 className="mt-4 mt-lg-0 mb-4 mb-lg-0" style={{fontWeight: 700}}>NGN {items.productPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h6>
+                    <h6 className="mt-4 mt-lg-0 mb-4 mb-lg-0" style={{fontWeight: 700}}>NGN {items.displayPrice ? items.displayPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : items.productPrice}</h6>
                 </div>
                 <div style={{flex: 1}}>
                     <h6 className="d-none d-md-block" style={{fontWeight: 700}}>NGN {items.subTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</h6>

@@ -44,7 +44,7 @@ import AdminForgot from './pages/ForgotPassword/adminForgotPassword'
 import AdminProfile from "./pages/Admin/AdminProfile/AdminProfile";
 import AdminOrderManage from "./pages/Admin/AdminOrders/AdminOrder";
 // import AdminLogistics from "./pages/Admin/AdminLogistics/AdminLogistics";
-import AdminPayments from "./pages/Admin/AdminPayments/AdminPayments";
+// import AdminPayments from "./pages/Admin/AdminPayments/AdminPayments";
 import AdminWithdrawal from "./pages/Admin/AdminWithdrawal/AdminWithdrawal";
 
 // not found route
@@ -110,7 +110,7 @@ function App() {
             <Route path="/admin/orders" component={AdminOrderManage} />
             <Route path="/admin/order/:id" component={AdminOrderDetails} />
             {/* <Route path="/admin/logistics" component={AdminLogistics} /> */}
-            <Route path="/admin/payments" component={AdminPayments} />
+            {/* <Route path="/admin/payments" component={AdminPayments} /> */}
             <Route path="/admin/profile" component={AdminProfile} />
             <Route path="/admin/withdrawalrequest" component={AdminWithdrawal} />
             <Route path="/admin/confirm-request/:id" component={AdminWithdrawRequest} />

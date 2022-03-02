@@ -61,11 +61,6 @@ const AdminSidebar = ({ toggled, handleToggleSidebar, profileUrl, firstname, log
           </MenuItem>
         
            <MenuItem icon={<FaWallet />}>
-               Payment
-              <Link to="/admin/payments" />
-           </MenuItem>
-
-           <MenuItem icon={<FaWallet />}>
                Withdrawal
               <Link to="/admin/withdrawalrequest" />
            </MenuItem>

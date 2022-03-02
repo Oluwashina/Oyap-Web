@@ -32,7 +32,7 @@ const ItemPage = (props) => {
             let result = {
                 ...product,
                 cartQty: count,
-                subTotal: count * product.productPrice
+                subTotal: count * product.displayPrice ? product.displayPrice : product.productPrice
             }
             console.log(result)
             addCartClick(result)
@@ -48,7 +48,7 @@ const ItemPage = (props) => {
             let result = {
                 ...product,
                 cartQty: count,
-                subTotal: count * product.productPrice
+                subTotal: count * product.displayPrice ? product.displayPrice : product.productPrice
             }
             console.log(result)
             addCartClick(result)
